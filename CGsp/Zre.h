@@ -1,7 +1,12 @@
 #include "Primitives.h"
 #include "Modifiers.h"
+#include "Animation.h"
 
 
+/* Interpolators */
+#include "Interpolators\Constant.h"
+
+/* Primitives */
 #include "Primitives\3D\Box_3.h"
 #include "Primitives\3D\Capsule_3.h"
 #include "Primitives\3D\ChamferCyl_3.h"
@@ -21,7 +26,7 @@
 #include "Primitives\2D\Plane_3.h"
 #include "Primitives\2D\Rectangle_2.h"
 
-
+/* Modifiers */
 #include "Modifiers\Facet\Bridge.h"
 #include "Modifiers\Facet\Extrude.h"
 #include "Modifiers\Facet\Outline.h"

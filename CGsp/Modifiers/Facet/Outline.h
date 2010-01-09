@@ -2,7 +2,7 @@ class Outline : Modifier
 {
 public:
 	int Fnum;
-	double OutlineAmount;
+	AnimatablePropery<double,ConstantInterpolator> OutlineAmount;
 
 	Outline(int FaceNum ,double OAmount) : Fnum(FaceNum),OutlineAmount(OAmount)
 	{}
@@ -18,7 +18,7 @@ public:
 		Point_3 o=iter->facet_begin()->vertex()->point(); //arbitary face vertex
 		
 		t.setIdentity();
-		t.scale(OutlineAmount);
+		t.scale(OutlineAmount.val);
 		Aff3 aff= CalcExecInFaceCoordSys(t,iter,px,o);
 		ApplyTransformOnFace(aff,iter);
 	}

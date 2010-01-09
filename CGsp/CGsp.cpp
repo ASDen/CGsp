@@ -31,6 +31,13 @@ struct Normal_vector {
 
 int main() {
 	std::ofstream of("C:\\123.off");
+	//
+	Outline oA(5,1.0);;
+	FrameCreater::FillFrames(0,4,0.1,0.1,&Outline::OutlineAmount,oA);
+	FrameCreater::FillFrames(5,7,0.4,0.4,&Outline::OutlineAmount,oA);
+	FrameCreater::FillFrames(8,12,0.7,0.7,&Outline::OutlineAmount,oA);
+	std::ostream_iterator< double > output( std::cout, " " );
+	std::copy( oA.OutlineAmount.FrameValues.begin(), oA.OutlineAmount.FrameValues.end(), output );
 	/*
 	char bufferF[3];
 	itoa (i,bufferF,10);
@@ -79,7 +86,7 @@ int main() {
 	//Rectangle_2 s(20,10);
 
 	//Box_3 s(2,4,8,5,20,5);
-	Box_3 s(2,4,8,40,40,40);
+	Box_3 s(2,4,8,4,4,4);
 	//Capsule_3 s(30,200,10,10);
 	//ChamferCyl_3 s(30,60,10,10,5,5,15);
 	//Cone_3 s(2,5,10,11,2,3);
@@ -103,8 +110,8 @@ int main() {
 	Extrude E(18,1.25,Polygon);
 	//E.Do(P);
 	
-	Outline O(18,2.25);
-	//O.Do(P);
+	Outline O(5,2.25);
+	O.Do(P);
 
 	Bridge Br(18,20);
 	//Br.Do(P);
@@ -124,6 +131,10 @@ int main() {
 	Stretch St(-1,Center,Z_ax);
 	//St.Do(P);
 	
+	////
+
+	////
+
 	// Write polyhedron in Object File Format (OFF).
 	CGAL::set_ascii_mode( of );
 	of << "OFF" << std::endl << P.size_of_vertices() << ' ' << P.size_of_facets() << " 0" << std::endl;
