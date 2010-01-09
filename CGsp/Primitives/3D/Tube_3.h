@@ -1,4 +1,4 @@
-class Tube_3 : Primitives
+class Tube_3 : public Primitives
 {
 	template <class HDS>
 	class Build_tube : public CGAL::Modifier_base<HDS> {

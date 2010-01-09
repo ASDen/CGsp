@@ -1,6 +1,6 @@
-#include "Primitives.h"
-#include "Modifiers.h"
 #include "Animation.h"
+#include "Modifiers.h"
+#include "Primitives.h"
 
 
 /* Interpolators */

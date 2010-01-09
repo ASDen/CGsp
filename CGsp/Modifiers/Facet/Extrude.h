@@ -1,4 +1,4 @@
-class Extrude : Modifier
+class Extrude : public Modifier
 {
 public:
 	int Fnum;

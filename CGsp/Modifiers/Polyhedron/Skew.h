@@ -1,4 +1,4 @@
-class Skew : Modifier
+class Skew : public Modifier
 {
 public:
 	double SkAmount;

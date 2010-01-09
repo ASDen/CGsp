@@ -1,4 +1,4 @@
-class Taper : Modifier
+class Taper : public Modifier
 {
 public:
 	double TaAmount;

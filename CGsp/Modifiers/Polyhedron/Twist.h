@@ -1,4 +1,4 @@
-class Twist : Modifier
+class Twist : public Modifier
 {
 public:
 	double TwAngle;

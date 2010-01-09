@@ -1,4 +1,4 @@
-class Bevel : Modifier
+class Bevel : public Modifier
 {
 public:
 	int Fnum;

@@ -1,5 +1,5 @@
 //this could have also been implemented by delegation
-class Cylinder_3 : Primitives 
+class Cylinder_3 : public Primitives 
 {
 public:
 	//Basic parametes of the cylinder

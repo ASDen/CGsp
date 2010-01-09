@@ -1,7 +1,7 @@
 // Algorithm source 
 // http://www.codeproject.com/KB/WPF/XamlUVSphere.aspx
 
-class Sphere_3 : Primitives
+class Sphere_3 : public Primitives
 {
 	template <class HDS>
 	class Build_sphere : public CGAL::Modifier_base<HDS> {

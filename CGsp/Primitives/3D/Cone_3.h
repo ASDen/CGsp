@@ -1,5 +1,5 @@
 //this could have also been implemented by delegation
-class Cone_3 : Primitives 
+class Cone_3 : public Primitives 
 {
 public:
 	//Basic parametes of the CONE

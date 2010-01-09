@@ -1,5 +1,4 @@
-//this could have also been implemented by delegation
-class Pyramid_3 : Primitives 
+class Pyramid_3 : public Primitives 
 {
 public:
 	//The basic parameters in the Pyramid

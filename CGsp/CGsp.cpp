@@ -32,10 +32,21 @@ struct Normal_vector {
 int main() {
 	std::ofstream of("C:\\123.off");
 	//
-	Outline oA(5,1.0);;
+	Outline oA(5,1.0);
 	FrameCreater::FillFrames(0,4,0.1,0.1,&Outline::OutlineAmount,oA);
 	FrameCreater::FillFrames(5,7,0.4,0.4,&Outline::OutlineAmount,oA);
 	FrameCreater::FillFrames(8,12,0.7,0.7,&Outline::OutlineAmount,oA);
+
+	FrameCreater::FillFrames(0,5,2,2,&Outline::Fnum,oA);
+	FrameCreater::FillFrames(6,12,5,5,&Outline::Fnum,oA);
+	//
+	Box_3 ms(2,4,8,4,4,4);
+	Polyhedron mP= ms.Draw();
+
+
+	oA.DoAtFrame(mP,11);
+
+	std::cout<<oA.OutlineAmount.val<<" "<<oA.Fnum.val<<std::endl;
 	std::ostream_iterator< double > output( std::cout, " " );
 	std::copy( oA.OutlineAmount.FrameValues.begin(), oA.OutlineAmount.FrameValues.end(), output );
 	/*
@@ -99,6 +110,7 @@ int main() {
 	//Torus_3 s(20,5,0,0,10,20);
 	//Tube_3 s(4,3,5,4,5,20);
 
+	
 	Polyhedron P;
 	P = s.Draw();
 
@@ -132,6 +144,8 @@ int main() {
 	//St.Do(P);
 	
 	////
+	s.ApplyModifier(&Br);
+	s.ApplyModifier(&Ta);
 
 	////
 

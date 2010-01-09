@@ -1,4 +1,4 @@
-class Spring_3 : Primitives
+class Spring_3 : public Primitives
 {
 	template <class HDS>
 	class Build_Spring : public CGAL::Modifier_base<HDS> {

@@ -1,7 +1,21 @@
 class Modifier
 {
 public:
+	typedef std::vector<AnimatableProperyParent*> propsVector;
+
+	propsVector props;
+
 	virtual void Do(Polyhedron&) = 0;
+
+	void DoAtFrame(Polyhedron& P,int Frame)
+	{
+		propsVector::iterator i;
+		for(i=props.begin();i!=props.end();i++)
+		{
+			(*i)->SetAtFrame(Frame);
+			Do(P);
+		}
+	}
 
 	inline Aff3 Cgal2Eign_TM (Eigen::Transform3d& T)
 	{

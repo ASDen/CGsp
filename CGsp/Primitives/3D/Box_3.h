@@ -1,5 +1,5 @@
 //this could have also been implemented by delegation
-class Box_3 : Primitives
+class Box_3 : public Primitives
 {
 public:
     //The basic parameters in the BOX

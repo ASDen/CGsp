@@ -1,4 +1,4 @@
-class Spindle_3 : Primitives
+class Spindle_3 : public Primitives
 {
 	template <class HDS>
 	class Build_Spindle : public CGAL::Modifier_base<HDS> {

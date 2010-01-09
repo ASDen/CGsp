@@ -8,8 +8,14 @@ public:
 	*/
 };
 
+class AnimatableProperyParent
+{
+public:
+	virtual void SetAtFrame(int Frame)=0;
+};
+
 template<class Type,class Interp>
-class AnimatablePropery
+class AnimatablePropery : public AnimatableProperyParent
 {
 public:
 
@@ -21,6 +27,11 @@ public:
 
 	AnimatablePropery(Type nval):val(nval),NumberOfFrames(0)
 	{}
+
+	void SetAtFrame(int Frame)
+	{
+		val=FrameValues[Frame];
+	}
 };
 
 class FrameCreater

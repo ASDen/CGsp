@@ -1,11 +1,14 @@
-class Outline : Modifier
+class Outline : public Modifier
 {
 public:
-	int Fnum;
+	AnimatablePropery<int,ConstantInterpolator> Fnum;
 	AnimatablePropery<double,ConstantInterpolator> OutlineAmount;
 
 	Outline(int FaceNum ,double OAmount) : Fnum(FaceNum),OutlineAmount(OAmount)
-	{}
+	{
+		props.push_back(&Fnum);
+		props.push_back(&OutlineAmount);
+	}
 
 	void Do(Polyhedron &P)
 	{
@@ -13,8 +16,8 @@ public:
 		Facet_iterator     iter=P.facets_begin ();
 		Eigen::Transform3d t;
 
-		std::advance (iter,Fnum);
-		std::advance (px  ,Fnum);
+		std::advance (iter,Fnum.val);
+		std::advance (px  ,Fnum.val);
 		Point_3 o=iter->facet_begin()->vertex()->point(); //arbitary face vertex
 		
 		t.setIdentity();

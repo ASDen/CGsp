@@ -1,4 +1,4 @@
-class Bend : Modifier
+class Bend : public Modifier
 {
 public:
 	double BeAngle;

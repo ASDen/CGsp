@@ -1,4 +1,4 @@
-class Stretch : Modifier
+class Stretch : public Modifier
 {
 public:
 	double StAmount;

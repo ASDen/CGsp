@@ -1,7 +1,14 @@
 class Primitives
 {
 public:
+	std::vector<Modifier*> ModStack;
+
 	virtual Polyhedron Draw()=0;
+
+	void ApplyModifier(Modifier* M)
+	{
+		ModStack.push_back(M);
+	}
 };
 /////////////
 /////////////

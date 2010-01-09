@@ -1,4 +1,4 @@
-class Bridge : Modifier
+class Bridge : public Modifier
 {
 public:
 	int Face1;

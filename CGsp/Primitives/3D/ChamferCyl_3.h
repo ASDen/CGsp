@@ -1,4 +1,4 @@
-class ChamferCyl_3 : Primitives
+class ChamferCyl_3 : public Primitives
 {
 	template <class HDS>
 	class Build_ChamferCyl : public CGAL::Modifier_base<HDS> {
