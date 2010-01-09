@@ -25,12 +25,14 @@ public:
 	Interp InterpTech;
 	int NumberOfFrames;
 
-	AnimatablePropery(Type nval):val(nval),NumberOfFrames(0)
-	{}
+	AnimatablePropery(Type nval):val(nval),NumberOfFrames(1)
+	{
+		FrameValues.push_back(val);
+	}
 
 	void SetAtFrame(int Frame)
 	{
-		val=FrameValues[Frame];
+		val=FrameValues[std::min(Frame,NumberOfFrames-1)];
 	}
 };
 
@@ -47,7 +49,7 @@ public:
 	{
 		(ModObject.*Property).KeyFrames[SFrame]=SVal;
 		(ModObject.*Property).KeyFrames[EFrame]=EVal;
-		(ModObject.*Property).NumberOfFrames=std::max( EFrame , (ModObject.*Property).NumberOfFrames );
+		(ModObject.*Property).NumberOfFrames=std::max( EFrame+1 , (ModObject.*Property).NumberOfFrames );
 		
 		Interp::Interpolate( ModObject.*Property );
 	}

@@ -9,7 +9,6 @@ public:
 		for(i=prop.KeyFrames.begin();i!=prop.KeyFrames.end();i++)
 		{
 			std::fill(prop.FrameValues.begin()+i->first,prop.FrameValues.end(),i->second);
-			//prop.FrameValues.assign(i->first,i->second);
 		}
 	}
 };
