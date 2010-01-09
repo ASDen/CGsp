@@ -1,0 +1,39 @@
+class Primitives
+{
+public:
+	virtual Polyhedron Draw()=0;
+};
+/////////////
+/////////////
+typedef struct {
+   double x,y,z;
+} XYZ;
+typedef struct {
+   XYZ p1,p2,p3;   
+} FACET3;
+////////////
+void Normalise(XYZ *p)
+{
+   double length;
+
+   length = sqrt(p->x * p->x + p->y * p->y + p->z * p->z);
+   if (length != 0) {
+      p->x /= length;
+      p->y /= length;
+      p->z /= length;
+   } else {
+      p->x = 0;
+      p->y = 0;
+      p->z = 0;
+   }
+}
+XYZ MidPoint(XYZ p1,XYZ p2)
+{
+   XYZ p;
+
+   p.x = (p1.x + p2.x) / 2;
+   p.y = (p1.y + p2.y) / 2;
+   p.z = (p1.z + p2.z) / 2;
+
+   return(p);
+}
