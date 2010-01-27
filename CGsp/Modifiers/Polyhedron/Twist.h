@@ -1,14 +1,16 @@
 class Twist : public Modifier
 {
 public:
-	double TwAngle;
+	AnimatablePropery<double,Interpolator> TwAngle;
 	Point_3 Center;
 	Axis TwAxis;
 	double Upper;
 	double Lower;
 
 	Twist(double TAngle,Point_3 C, Axis TAxis, double max, double min) : TwAngle(TAngle),Center(C),TwAxis(TAxis),Upper(max),Lower(min)
-	{}
+	{
+		props.push_back(&TwAngle);
+	}
 
 	void Do(Polyhedron &P)
 	{
@@ -70,7 +72,7 @@ public:
 				x_max -= x_c;
 				x_min -= x_c;
 
-				TwAmount = TwAngle / (x_max - x_min) * CGAL_PI / 180;
+				TwAmount = TwAngle.val / (x_max - x_min) * CGAL_PI / 180;
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
@@ -104,7 +106,7 @@ public:
 				y_max -= y_c;
 				y_min -= y_c;
 
-				TwAmount = TwAngle / (y_max - y_min) * CGAL_PI / 180;
+				TwAmount = TwAngle.val / (y_max - y_min) * CGAL_PI / 180;
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
@@ -138,7 +140,7 @@ public:
 				z_max -= z_c;
 				z_min -= z_c;
 
-				TwAmount = TwAngle / (z_max - z_min) * CGAL_PI / 180;
+				TwAmount = TwAngle.val / (z_max - z_min) * CGAL_PI / 180;
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();

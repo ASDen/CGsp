@@ -40,11 +40,11 @@ int main() {
 	//FrameCreater::FillFrames(0,5,2,2,&Outline::Fnum,oA);
 	//FrameCreater::FillFrames(6,7,5,5,&Outline::Fnum,oA);
 	//
-	Box_3 ms(2,4,8,4,4,4);
-	Polyhedron mP= ms.Draw();
+	//Box_3 ms(2,4,8,4,4,4);
+	//Polyhedron mP= ms.Draw();
 
 
-	oA.DoAtFrame(mP,8);
+	//oA.DoAtFrame(mP,8);
 
 	std::cout<<oA.OutlineAmount.val<<" "<<oA.Fnum.val<<std::endl;
 	std::ostream_iterator< double > output( std::cout, " " );
@@ -88,7 +88,7 @@ int main() {
 	arr.push_back(Point_3 (0,1.75,3));
 	*/
 
-	Point_3 Center = Point_3(50,50,100);
+	Point_3 Center = Point_3(0,0,0);
 
 	//Circle_2 s(4,20);
 	//Arc_2 s(6,270,true);
@@ -97,7 +97,7 @@ int main() {
 	//Rectangle_2 s(20,10);
 
 	//Box_3 s(2,4,8,5,20,5);
-	Box_3 s(2,4,8,4,4,4);
+	Box_3 s(200,400,800,80,80,80);;
 	//Capsule_3 s(30,200,10,10);
 	//ChamferCyl_3 s(30,60,10,10,5,5,15);
 	//Cone_3 s(2,5,10,11,2,3);
@@ -116,25 +116,27 @@ int main() {
 
 	std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
 
-	Bevel B(18,1.25,1.25,Polygon);
+	Bevel B(18,1.25,1.25);
 	//B.Do(P);
 
-	Extrude E(18,1.25,Polygon);
+	Extrude E(18,1.25);
 	//E.Do(P);
 	
 	Outline O(5,2.25);
-	O.Do(P);
+	//O.Do(P);
 
 	Bridge Br(18,20);
 	//Br.Do(P);
 
-	Twist Tw(230,Center,Z_ax,40,-40);
-	//Tw.Do(P);
-
+	Twist Tw(900,Center,X_ax,4000,-4000);
+	Twist Tw3(900,Center,Z_ax,4000,-4000);
+	Tw3.Do(P);
+	Tw.Do(P);
+	
 	Taper Ta(1,Center,X_ax,20,-20);
 	//Ta.Do(P);
 
-	Bend Be(90,Center,Z_ax,30,-30);
+	Bend Be(90,Center,Z_ax,3,-3);
 	//Be.Do(P);
 
 	Skew S(30,Center,Y_ax,20,-20);
@@ -144,8 +146,8 @@ int main() {
 	//St.Do(P);
 	
 	////
-	s.ApplyModifier(&Br);
-	s.ApplyModifier(&Ta);
+	//s.ApplyModifier(&Br);
+	//s.ApplyModifier(&Ta);
 
 	////
 

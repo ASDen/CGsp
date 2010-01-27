@@ -3,9 +3,8 @@ class Extrude : public Modifier
 public:
 	int Fnum;
 	double ExAmount;
-	Type ExType;
-
-	Extrude(int FaceNum, double Amount, Type EType) : Fnum(FaceNum),ExAmount(Amount),ExType(EType)
+	
+	Extrude(int FaceNum, double Amount) : Fnum(FaceNum),ExAmount(Amount)
 	{}
 
 	void Do(Polyhedron &P)

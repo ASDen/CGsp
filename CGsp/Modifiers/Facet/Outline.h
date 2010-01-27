@@ -1,8 +1,8 @@
 class Outline : public Modifier
 {
 public:
-	AnimatablePropery<int,ConstantInterpolator> Fnum;
-	AnimatablePropery<double,ConstantInterpolator> OutlineAmount;
+	AnimatablePropery<int,Interpolator> Fnum;
+	AnimatablePropery<double,Interpolator> OutlineAmount;
 
 	Outline(int FaceNum ,double OAmount) : Fnum(FaceNum),OutlineAmount(OAmount)
 	{

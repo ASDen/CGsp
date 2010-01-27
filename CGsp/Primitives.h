@@ -1,13 +1,27 @@
+typedef Modifier* pModifier;
+
 class Primitives
 {
 public:
-	std::vector<Modifier*> ModStack;
+	std::vector<pModifier> ModStack;
+	Polyhedron Mesh;
+	Polyhedron ModifiedMesh;
 
 	virtual Polyhedron Draw()=0;
 
-	void ApplyModifier(Modifier* M)
+	void ApplyModifier(pModifier M)
 	{
 		ModStack.push_back(M);
+	}
+
+	void UpdateAtFrame(int Fnum)
+	{
+		std::vector<pModifier>::iterator i;
+		ModifiedMesh=Mesh;
+		for(i=ModStack.begin();i!=ModStack.end();i++)
+		{
+			(*i)->DoAtFrame(ModifiedMesh,Fnum);
+		}
 	}
 };
 /////////////

@@ -1,12 +1,4 @@
-class Interpolator
-{
-public:
 
-	/*
-	template<class Type>
-	static virtual void Interpolate(std::map<int,Type> KeyFrames,std::vector<Type>& FrameValues) = 0;
-	*/
-};
 
 class AnimatableProperyParent
 {

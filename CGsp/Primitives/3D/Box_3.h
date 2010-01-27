@@ -273,6 +273,9 @@ public:
                 }
             }
         }
+
+		Mesh=P;
+		ModifiedMesh=P;
         return P;
     }
 };

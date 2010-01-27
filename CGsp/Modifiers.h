@@ -95,7 +95,7 @@ typedef enum
 	X_ax,Y_ax,Z_ax
 }Axis;
 
-typedef enum
-{
-	Group,Loacl_Normal,Polygon
-}Type;
+//typedef enum
+//{
+//	Group,Loacl_Normal,Polygon
+//}Type;

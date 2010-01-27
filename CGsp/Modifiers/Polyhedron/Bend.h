@@ -1,18 +1,20 @@
 class Bend : public Modifier
 {
 public:
-	double BeAngle;
+	AnimatablePropery<double,Interpolator> BeAngle;
 	Point_3 Center;
 	Axis RoAxis;
 	double Upper;
 	double Lower;
 
 	Bend(double BAngle,Point_3 C, Axis RAxis, double max, double min) : BeAngle(BAngle),Center(C),RoAxis(RAxis),Upper(max),Lower(min)
-	{}
+	{
+		props.push_back(&BeAngle);
+	}
 
 	void Do(Polyhedron &P)
 	{
-		if (BeAngle == 0)
+		if (BeAngle.val == 0)
 			return;
 		Eigen::Transform3d t;
 		Eigen::Vector3d org;
@@ -82,7 +84,7 @@ public:
 				if (x_min < Lower)
 					x_min = Lower;
 
-				double k = -BeAngle * CGAL_PI / 180 / (Upper - Lower);
+				double k = -BeAngle.val * CGAL_PI / 180 / (Upper - Lower);
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
@@ -124,7 +126,7 @@ public:
 				if (y_min < Lower)
 					y_min = Lower;
 
-				double k = BeAngle * CGAL_PI / 180 / (Upper - Lower);
+				double k = BeAngle.val * CGAL_PI / 180 / (Upper - Lower);
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
@@ -169,7 +171,7 @@ public:
 				if (z_min < Lower)
 					z_min = Lower;
 
-				double k = BeAngle * CGAL_PI / 180 / (Upper - Lower);
+				double k = BeAngle.val * CGAL_PI / 180 / (Upper - Lower);
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
