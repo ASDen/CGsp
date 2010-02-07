@@ -109,6 +109,7 @@ public:
 		Polyhedron P;
 		Build_sphere<HalfedgeDS> sphere(radius,Segs);
 		P.delegate( sphere );
+		setMesh(P);
 		return P;
 	}
 };

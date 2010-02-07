@@ -113,6 +113,7 @@ public:
 		Polyhedron P;
 		Build_Spring<HalfedgeDS> Spring(radius1,radius2,height,turn_number,Seg,side_Seg);
 		P.delegate( Spring );
+		setMesh(P);
 		return P;
 	}
 };

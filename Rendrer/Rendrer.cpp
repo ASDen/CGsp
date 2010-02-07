@@ -8,8 +8,12 @@
 
 int main( int argc, char **argv )
 {
-	Box_3* s=new Box_3(2,4,8,50,50,50);
-	s->Draw();
+	/*Box_3* s=new Box_3(2,4,8,50,50,50);
+	s->Draw();*/
+	Sphere_3* s=new Sphere_3(20,150);
+    s->Draw ();
+	Sphere_3* s2=new Sphere_3(20,150);
+    s2->Draw ();
 	
 
 	//Outline oA(10,1.0);
@@ -41,19 +45,26 @@ int main( int argc, char **argv )
 	s->ApplyModifier(&Tw);
 	//s->ApplyModifier(&Tw2);
 	s->ApplyModifier(&Tw3);
+
+	s2->ApplyModifier(&Tw);
+	//s->ApplyModifier(&Tw2);
+	s2->ApplyModifier(&Tw3);
 	
-	//s->ApplyModifier(&Be);
-	//s->ApplyModifier(&Be2);
-	//s->ApplyModifier(&Be3);
+	/*s->ApplyModifier(&Be);
+	s->ApplyModifier(&Be2);
+	s->ApplyModifier(&Be3);*/
 
 
-	PolyhedronNode* c=new PolyhedronNode(s);
-	//c->WireFrame=true;
+	PolyhedronNode* c=new PolyhedronNode(s,osg::Vec3(5,5,5));
+	PolyhedronNode* c2=new PolyhedronNode(s2,osg::Vec3(-40,5,5));
+	//c->WireFrame=false;
 	
 
 
 	osgPolyManager* pman=new osgPolyManager;
 	pman->AddPolyhedron(c);
+	pman->AddPolyhedron(c2);
+
 	
 
 	//

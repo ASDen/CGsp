@@ -6,11 +6,12 @@ class PolyhedronNode : public osg::Drawable
 public:
 
 	pPrimitive P;
+	osg::Vec3 Position;
 	bool WireFrame;
 	bool AntialisedLines;
 
 	PolyhedronNode():WireFrame(true){}
-	PolyhedronNode(pPrimitive iP):P(iP) {}
+	PolyhedronNode(pPrimitive iP,osg::Vec3 Pos=osg::Vec3(0,0,0)):P(iP),Position(Pos) {}
 	PolyhedronNode(const PolyhedronNode& poly,const osg::CopyOp& copyop=osg::CopyOp::SHALLOW_COPY):
 	osg::Drawable(poly,copyop) {}
 
@@ -89,9 +90,12 @@ public:
 	{
 		Pn->setUseDisplayList( false );
 		PolyBag.push_back(Pn);
+		osg::PositionAttitudeTransform* pat=new osg::PositionAttitudeTransform();
+		pat->setPosition(Pn->Position);
+		root->addChild(pat);
 		osg::Geode* g = new osg::Geode();
 		g->addDrawable(Pn);
-		root->addChild(g);
+		pat->addChild(g);
 	}
 
 	void UpdateFrame(int Fnum)

@@ -33,10 +33,7 @@ typedef Kernel::Aff_transformation_3                   Aff3;
 #include <CGAL/bounding_box.h>
 
 #include <osg/Geode>
-#include <osg/Config>
-#include <osgViewer/Viewer>
-
-
+#include <osg/PositionAttitudeTransform>
 #include <osg/Config>
 #include <osgViewer/Viewer>
 #include <osgViewer/ViewerEventHandlers>

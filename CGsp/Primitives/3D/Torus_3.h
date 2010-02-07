@@ -98,6 +98,7 @@ public:
 		Polyhedron P;
 		Build_torus<HalfedgeDS> torus(radius1,radius2,rotation,twist,Seg,side_Seg);
 		P.delegate( torus );
+		setMesh(P);
 		return P;
 	}
 };

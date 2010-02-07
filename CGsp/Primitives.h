@@ -9,6 +9,12 @@ public:
 
 	virtual Polyhedron Draw()=0;
 
+	inline void setMesh(Polyhedron& P)
+	{
+		Mesh=P;
+		ModifiedMesh=P;
+	}
+
 	void ApplyModifier(pModifier M)
 	{
 		ModStack.push_back(M);
