@@ -89,6 +89,7 @@ public:
 	void AddPolyhedron(PolyhedronNode* Pn)
 	{
 		Pn->setUseDisplayList( false );
+		Pn->setUseVertexBufferObjects( true ); 
 		PolyBag.push_back(Pn);
 		osg::PositionAttitudeTransform* pat=new osg::PositionAttitudeTransform();
 		pat->setPosition(Pn->Position);

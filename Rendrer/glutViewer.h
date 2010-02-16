@@ -38,10 +38,11 @@ void display(void)
 		//update scence
 		Man->UpdateFrame(fnum++);
 		std::cout<<"Frame #"<<fnum<<std::endl;
+		if (viewer.valid()) viewer->frame();
 	}
 
 	// render the scene graph
-	if (viewer.valid()) viewer->frame();
+	
 
 	// Swap Buffers
 	glutSwapBuffers();

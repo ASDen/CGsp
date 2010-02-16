@@ -2,7 +2,7 @@
 
 #include "stdafx.h"
 
-typedef CGAL::Simple_cartesian<double>                 Kernel;
+typedef CGAL::Simple_cartesian<float>                 Kernel;
 typedef Kernel::Point_3                                Point_3;
 typedef Kernel::Vector_3                               Vector_3;
 typedef CGAL::Polyhedron_traits_with_normals_3<Kernel> Traits;
@@ -97,7 +97,7 @@ int main() {
 	//Rectangle_2 s(20,10);
 
 	//Box_3 s(2,4,8,5,20,5);
-	Box_3 s(200,400,800,80,80,80);;
+	//Box_3 s(200,400,800,80,80,80);;
 	//Capsule_3 s(30,200,10,10);
 	//ChamferCyl_3 s(30,60,10,10,5,5,15);
 	//Cone_3 s(2,5,10,11,2,3);
@@ -112,7 +112,10 @@ int main() {
 
 	
 	Polyhedron P;
-	P = s.Draw();
+	std::ifstream off("C:\\PolyDepend\\spr_1.5M.off");
+	off>>P;
+	P.normalize_border();
+	//P = s.Draw();
 
 	std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
 
@@ -128,10 +131,9 @@ int main() {
 	Bridge Br(18,20);
 	//Br.Do(P);
 
-	Twist Tw(900,Center,X_ax,4000,-4000);
-	Twist Tw3(900,Center,Z_ax,4000,-4000);
-	Tw3.Do(P);
+	Twist Tw(90,Center,Z_ax,4000,-4000);
 	Tw.Do(P);
+	
 	
 	Taper Ta(1,Center,X_ax,20,-20);
 	//Ta.Do(P);

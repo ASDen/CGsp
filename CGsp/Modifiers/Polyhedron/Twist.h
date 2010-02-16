@@ -1,3 +1,5 @@
+#include <windows.h>
+
 class Twist : public Modifier
 {
 public:
@@ -139,8 +141,10 @@ public:
 			{
 				z_max -= z_c;
 				z_min -= z_c;
-
+				
 				TwAmount = TwAngle.val / (z_max - z_min) * CGAL_PI / 180;
+				//long int before = GetTickCount();
+				//for(int i=0;i<500;i++)
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
@@ -166,6 +170,10 @@ public:
 					
 					i->point() = Point_3 (x ,y ,z);
 				}
+				//std::cout<<"\nTwisted ";
+				//long int after = GetTickCount();
+				//std::cout<<"Execution Time : "<<(after-before)<<" ms.\n";
+
 				break;
 			}
 		}
