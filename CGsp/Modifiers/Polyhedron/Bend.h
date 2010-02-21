@@ -2,14 +2,44 @@ class Bend : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> BeAngle;
-	Point_3 Center;
+	Point_3* Center;
 	Axis RoAxis;
-	double Upper;
-	double Lower;
+	bool Limited;
+	AnimatablePropery<double,Interpolator> Upper;
+	AnimatablePropery<double,Interpolator> Lower;
 
-	Bend(double BAngle,Point_3 C, Axis RAxis, double max, double min) : BeAngle(BAngle),Center(C),RoAxis(RAxis),Upper(max),Lower(min)
+	Bend() : BeAngle(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
 	{
 		props.push_back(&BeAngle);
+	}
+
+	Bend(double BAngle) : BeAngle(BAngle),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&BeAngle);
+	}
+
+	Bend(double BAngle, Axis RAxis) : BeAngle(BAngle),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&BeAngle);
+	}
+
+	Bend(double BAngle, Point_3* C, Axis RAxis) : BeAngle(BAngle),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&BeAngle);
+	}
+
+	Bend(double BAngle, Point_3* C, Axis RAxis, bool Limit) : BeAngle(BAngle),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0),Lower(0)
+	{
+		props.push_back(&BeAngle);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Bend(double BAngle, Point_3* C, Axis RAxis, bool Limit, double max, double min) : BeAngle(BAngle),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min)
+	{
+		props.push_back(&BeAngle);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
 	}
 
 	void Do(Polyhedron &P)
@@ -27,9 +57,13 @@ public:
 		y_max = y_min = Begin->point().y();
 		z_max = z_min = Begin->point().z();
 
-		double x_c = Center.x();
-		double y_c = Center.y();
-		double z_c = Center.z();
+		if (Center == NULL)
+		{
+			Center = &calc_Center(P);
+		}
+		double x_c = Center->x();
+		double y_c = Center->y();
+		double z_c = Center->z();
 
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{
@@ -79,27 +113,33 @@ public:
 				x_max -= x_c;
 				x_min -= x_c;
 
-				if (x_max > Upper)
-					x_max = Upper;
-				if (x_min < Lower)
-					x_min = Lower;
+				if (!Limited)
+				{
+					Upper.val = x_max;
+					Lower.val = x_min;
+				}
 
-				double k = -BeAngle.val * CGAL_PI / 180 / (Upper - Lower);
+				if (x_max > Upper.val)
+					x_max = Upper.val;
+				if (x_min < Lower.val)
+					x_min = Lower.val;
+
+				double k = -BeAngle.val * CGAL_PI / 180 / (Upper.val - Lower.val);
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
 					y = p.y();
 
-					if (p.x() > Upper)
+					if (p.x() > Upper.val)
 					{
-						theta = k * Upper;
+						theta = k * Upper.val;
 						x = -sin(theta) * (p.z() - (1 / k)) + cos(theta) * (p.x() - x_max);
 						z = cos(theta) * (p.z() - (1 / k)) + 1 / k + sin(theta) * (p.x() - x_max);
 					}
 
-					else if (p.x() < Lower)
+					else if (p.x() < Lower.val)
 					{
-						theta = k * Lower;
+						theta = k * Lower.val;
 						x = -sin(theta) * (p.z() - (1 / k)) + cos(theta) * (p.x() - x_min);
 						z = cos(theta) * (p.z() - (1 / k)) + 1 / k + sin(theta) * (p.x() - x_min);
 					}
@@ -121,28 +161,34 @@ public:
 				y_max -= y_c;
 				y_min -= y_c;
 
-				if (y_max > Upper)
-					y_max = Upper;
-				if (y_min < Lower)
-					y_min = Lower;
+				if (!Limited)
+				{
+					Upper.val = y_max;
+					Lower.val = y_min;
+				}
 
-				double k = BeAngle.val * CGAL_PI / 180 / (Upper - Lower);
+				if (y_max > Upper.val)
+					y_max = Upper.val;
+				if (y_min < Lower.val)
+					y_min = Lower.val;
+
+				double k = BeAngle.val * CGAL_PI / 180 / (Upper.val - Lower.val);
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
 					z = p.z();
 
-					if (p.y() > Upper)
+					if (p.y() > Upper.val)
 					{
-						theta = k * Upper;
+						theta = k * Upper.val;
 					
 						x = cos(theta) * (p.x() - (1 / k)) + 1 / k + sin(theta) * (p.y() - y_max);
 						y = -sin(theta) * (p.x() - (1 / k)) + cos(theta) * (p.y() - y_max);
 					}
 
-					else if (p.y() < Lower)
+					else if (p.y() < Lower.val)
 					{
-						theta = k * Lower;
+						theta = k * Lower.val;
 					
 						x = cos(theta) * (p.x() - (1 / k)) + 1 / k + sin(theta) * (p.y() - y_min);
 						y = -sin(theta) * (p.x() - (1 / k)) + cos(theta) * (p.y() - y_min);
@@ -166,28 +212,34 @@ public:
 				z_max -= z_c;
 				z_min -= z_c;
 
-				if (z_max > Upper)
-					z_max = Upper;
-				if (z_min < Lower)
-					z_min = Lower;
+				if (!Limited)
+				{
+					Upper.val = z_max;
+					Lower.val = z_min;
+				}
 
-				double k = BeAngle.val * CGAL_PI / 180 / (Upper - Lower);
+				if (z_max > Upper.val)
+					z_max = Upper.val;
+				if (z_min < Lower.val)
+					z_min = Lower.val;
+
+				double k = BeAngle.val * CGAL_PI / 180 / (Upper.val - Lower.val);
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
 					y = p.y();
 
-					if (p.z() > Upper)
+					if (p.z() > Upper.val)
 					{
-						theta = k * Upper;
+						theta = k * Upper.val;
 
 						x = cos(theta) * (p.x() - (1 / k)) + 1 / k + sin(theta) * (p.z() - z_max);
 						z = -sin(theta) * (p.x() - (1 / k)) + cos(theta) * (p.z() - z_max);
 					}
 
-					else if (p.z() < Lower)
+					else if (p.z() < Lower.val)
 					{
-						theta = k * Lower;
+						theta = k * Lower.val;
 
 						x = cos(theta) * (p.x() - (1 / k)) + 1 / k + sin(theta) * (p.z() - z_min);
 						z = -sin(theta) * (p.x() - (1 / k)) + cos(theta) * (p.z() - z_min);

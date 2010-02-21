@@ -99,9 +99,26 @@ public:
 	int turn_number;
 	int Seg;
 	int side_Seg;
+	Point_3* Center;
 
 	//Set the default parameters in the Spring
 	Spring_3():radius1(25.0),radius2(10.0),height(0),turn_number(1),Seg(24),side_Seg(12)
+	{}
+
+	//Set the parameters with user defined values
+	Spring_3(double r1):radius1(r1),radius2(10),height(0),turn_number(1),Seg(24),side_Seg(12)
+	{}
+
+	//Set the parameters with user defined values
+	Spring_3(double r1,double r2):radius1(r1),radius2(r2),height(0),turn_number(1),Seg(24),side_Seg(12)
+	{}
+	
+	//Set the parameters with user defined values
+	Spring_3(double r1,double r2,double h):radius1(r1),radius2(r2),height(h),turn_number(1),Seg(24),side_Seg(12)
+	{}
+	
+	//Set the parameters with user defined values
+	Spring_3(double r1,double r2,double h,int S):radius1(r1),radius2(r2),height(h),turn_number(S),Seg(S),side_Seg(S)
 	{}
 
 	//Set the parameters with user defined values
@@ -111,8 +128,19 @@ public:
 	Polyhedron Draw()
 	{
 		Polyhedron P;
+
+		min(radius1,0);
+		min(radius2,0);
+		min(height,0);
+		maxmin(turn_number,0,200);
+		maxmin(Seg,0,200);
+		maxmin(side_Seg,0,200);
+
 		Build_Spring<HalfedgeDS> Spring(radius1,radius2,height,turn_number,Seg,side_Seg);
 		P.delegate( Spring );
+
+		Center = &Point_3(0, 0, height/2);
+
 		setMesh(P);
 		return P;
 	}

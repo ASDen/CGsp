@@ -9,9 +9,26 @@ public:
 	int height_Seg;
 	int cap_Seg;
 	int side_Seg;
+	Point_3* Center;
 
 	//Set the default parameters in the Cone
 	Cone_3():radius1(15.0),radius2(0),height(25.0),height_Seg(5),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Cone_3(double r):radius1(r),radius2(r),height(r),height_Seg(5),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Cone_3(double r,int x):radius1(r),radius2(r),height(r),height_Seg(x),cap_Seg(x),side_Seg(x)
+	{}
+	
+	//Set the parameters with user defined values
+	Cone_3(double r1,double r2,double h):radius1(r1),radius2(r2),height(h),height_Seg(5),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Cone_3(double r1,double r2,double h,int x):radius1(r1),radius2(r2),height(h),height_Seg(x),cap_Seg(x),side_Seg(x)
 	{}
 
 	//Set the parameters with user defined values
@@ -23,6 +40,14 @@ public:
 		Polyhedron P;
 		typedef Polyhedron::Point_3         Point;
 		typedef Polyhedron::Halfedge_handle Halfedge_handle;
+
+		min(radius1,0);
+		min(radius2,0);
+		min(height,0);
+		maxmin(height_Seg,0,200);
+		maxmin(cap_Seg,0,200);
+		maxmin(side_Seg,0,200);
+
 		//Starting the cone with tetrahedron, with radius1, radius2 and height
 		Halfedge_handle h = P.make_tetrahedron( Point( radius1, 0, 0 ),
 												Point( 0, 0, height ),
@@ -199,7 +224,10 @@ public:
 				//draw the cap segment between the last two side segments
 				P.split_facet( b, arr_capSU[0]->next()->next() );
 			}	
-		}	
+		}
+		Center = &Point_3(0, 0, height/2);
+
+		setMesh(P);
 		return P;
 	}
 };

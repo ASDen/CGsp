@@ -2,14 +2,44 @@ class Twist : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> TwAngle;
-	Point_3 Center;
-	Axis TwAxis;
-	double Upper;
-	double Lower;
+	Point_3* Center;
+	Axis RoAxis;
+	bool Limited;
+	AnimatablePropery<double,Interpolator> Upper;
+	AnimatablePropery<double,Interpolator> Lower;
 
-	Twist(double TAngle,Point_3 C, Axis TAxis, double max, double min) : TwAngle(TAngle),Center(C),TwAxis(TAxis),Upper(max),Lower(min)
+	Twist() : TwAngle(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
 	{
 		props.push_back(&TwAngle);
+	}
+
+	Twist(double TAngle) : TwAngle(TAngle),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&TwAngle);
+	}
+
+	Twist(double TAngle, Axis RAxis) : TwAngle(TAngle),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&TwAngle);
+	}
+
+	Twist(double TAngle, Point_3* C, Axis RAxis) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&TwAngle);
+	}
+
+	Twist(double TAngle, Point_3* C, Axis RAxis, bool Limit) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0.0),Lower(0.0)
+	{
+		props.push_back(&TwAngle);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Twist(double TAngle, Point_3* C, Axis RAxis, bool Limit, double max, double min) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min)
+	{
+		props.push_back(&TwAngle);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
 	}
 
 	void Do(Polyhedron &P)
@@ -26,14 +56,21 @@ public:
 		y_max = y_min = Begin->point().y();
 		z_max = z_min = Begin->point().z();
 
-		double x_c = Center.x();
-		double y_c = Center.y();
-		double z_c = Center.z();
+		if (Center == NULL)
+		{std::cout<<"PPP"<<std::endl;
+			Center = &calc_Center(P);
+		}
+		
+		double x_c = Center->x();
+		double y_c = Center->y();
+		double z_c = Center->z();
+
+		std::cout<<"PPP "<<x_c<<" "<<y_c<<" "<<z_c<<std::endl;
 
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{
 			Point_3 p = i->point();
-			switch (TwAxis)
+			switch (RoAxis)
 			{
 				double v;
 			case X_ax:
@@ -65,12 +102,18 @@ public:
 		t.pretranslate(-org);
 		ApplyTransformToPolyhedron(P,t);
 
-		switch (TwAxis)
+		switch (RoAxis)
 		{
 		case X_ax:
 			{
 				x_max -= x_c;
 				x_min -= x_c;
+
+				if (!Limited)
+				{
+					Upper.val = x_max;
+					Lower.val = x_min;
+				}
 
 				TwAmount = TwAngle.val / (x_max - x_min) * CGAL_PI / 180;
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
@@ -78,16 +121,16 @@ public:
 					Point_3 p = i->point();
 					x = p.x();
 
-					if (x > Upper)
+					if (x > Upper.val)
 					{
-						y = p.z() * sin(TwAmount * Upper) + p.y() * cos(TwAmount * Upper);
-						z = p.z() * cos(TwAmount * Upper) - p.y() * sin(TwAmount * Upper);
+						y = p.z() * sin(TwAmount * Upper.val) + p.y() * cos(TwAmount * Upper.val);
+						z = p.z() * cos(TwAmount * Upper.val) - p.y() * sin(TwAmount * Upper.val);
 					}
 
-					else if (x < Lower)
+					else if (x < Lower.val)
 					{
-						y = p.z() * sin(TwAmount * Lower) + p.y() * cos(TwAmount * Lower);
-						z = p.z() * cos(TwAmount * Lower) - p.y() * sin(TwAmount * Lower);
+						y = p.z() * sin(TwAmount * Lower.val) + p.y() * cos(TwAmount * Lower.val);
+						z = p.z() * cos(TwAmount * Lower.val) - p.y() * sin(TwAmount * Lower.val);
 					}
 
 					else
@@ -106,22 +149,28 @@ public:
 				y_max -= y_c;
 				y_min -= y_c;
 
+				if (!Limited)
+				{
+					Upper.val = y_max;
+					Lower.val = y_min;
+				}
+
 				TwAmount = TwAngle.val / (y_max - y_min) * CGAL_PI / 180;
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
 					y = p.y();
 
-					if (y > Upper)
+					if (y > Upper.val)
 					{
-						x = p.z() * sin(TwAmount * Upper) + p.x() * cos(TwAmount * Upper);
-						z = p.z() * cos(TwAmount * Upper) - p.x() * sin(TwAmount * Upper);
+						x = p.z() * sin(TwAmount * Upper.val) + p.x() * cos(TwAmount * Upper.val);
+						z = p.z() * cos(TwAmount * Upper.val) - p.x() * sin(TwAmount * Upper.val);
 					}
 
-					else if (y < Lower)
+					else if (y < Lower.val)
 					{
-						x = p.z() * sin(TwAmount * Lower) + p.x() * cos(TwAmount * Lower);
-						z = p.z() * cos(TwAmount * Lower) - p.x() * sin(TwAmount * Lower);
+						x = p.z() * sin(TwAmount * Lower.val) + p.x() * cos(TwAmount * Lower.val);
+						z = p.z() * cos(TwAmount * Lower.val) - p.x() * sin(TwAmount * Lower.val);
 					}
 
 					else
@@ -140,22 +189,28 @@ public:
 				z_max -= z_c;
 				z_min -= z_c;
 
+				if (!Limited)
+				{
+					Upper.val = z_max;
+					Lower.val = z_min;
+				}
+
 				TwAmount = TwAngle.val / (z_max - z_min) * CGAL_PI / 180;
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
 					z = p.z();
 
-					if (z > Upper)
+					if (z > Upper.val)
 					{
-						x = p.x() * cos(TwAmount * Upper) - p.y() * sin(TwAmount * Upper);
-						y = p.x() * sin(TwAmount * Upper) + p.y() * cos(TwAmount * Upper);
+						x = p.x() * cos(TwAmount * Upper.val) - p.y() * sin(TwAmount * Upper.val);
+						y = p.x() * sin(TwAmount * Upper.val) + p.y() * cos(TwAmount * Upper.val);
 					}
 
-					else if (z < Lower)
+					else if (z < Lower.val)
 					{
-						x = p.x() * cos(TwAmount * Lower) - p.y() * sin(TwAmount * Lower);
-						y = p.x() * sin(TwAmount * Lower) + p.y() * cos(TwAmount * Lower);
+						x = p.x() * cos(TwAmount * Lower.val) - p.y() * sin(TwAmount * Lower.val);
+						y = p.x() * sin(TwAmount * Lower.val) + p.y() * cos(TwAmount * Lower.val);
 					}
 
 					else

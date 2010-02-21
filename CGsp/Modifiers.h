@@ -13,8 +13,8 @@ public:
 		for(i=props.begin();i!=props.end();i++)
 		{
 			(*i)->SetAtFrame(Frame);
-			Do(P);
 		}
+		Do(P);
 	}
 
 	inline Aff3 Cgal2Eign_TM (Eigen::Transform3d& T)
@@ -87,6 +87,28 @@ public:
 		{
 			i->point() = i->point().transform(aff);
 		}
+	}
+
+	Point_3 calc_Center(Polyhedron P)
+	{
+		double x = 0, y = 0, z = 0;
+		int num;
+		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); i++)
+		{
+			Point_3 p = i->point();
+			num++;
+
+			x += p.x();
+			y += p.y();
+			z += p.z();
+		}
+		x /= num;
+		y /= num;
+		z /= num;
+
+		Point_3 Center = Point_3(x, y, z);
+
+		return Center;
 	}
 };
 

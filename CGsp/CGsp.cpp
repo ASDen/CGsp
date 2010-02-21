@@ -30,7 +30,7 @@ struct Normal_vector {
 };
 
 int main() {
-	std::ofstream of("C:\\123.off");
+	std::ofstream of("D:\\123.off");
 	//
 	Outline oA(15,1.0);
 	FrameCreater::FillFrames(0,4,0.1,0.1,&Outline::OutlineAmount,oA);
@@ -49,19 +49,6 @@ int main() {
 	std::cout<<oA.OutlineAmount.val<<" "<<oA.Fnum.val<<std::endl;
 	std::ostream_iterator< double > output( std::cout, " " );
 	std::copy( oA.OutlineAmount.FrameValues.begin(), oA.OutlineAmount.FrameValues.end(), output );
-	/*
-	char bufferF[3];
-	itoa (i,bufferF,10);
-	std::string strF(bufferF);
-	strF = std::string("D:\\") + strF + std::string(".off");
-	std::ofstream of(strF.c_str());
-
-	char bufferJ[3];
-	itoa (i,bufferJ,10);
-	std::string strJ(bufferJ);
-	strJ = std::string("D:\\") + strJ + std::string(".obj");
-	std::ofstream oof(strJ.c_str());
-	*/
 
 	/*
 	std::vector <Point_3> arr;
@@ -86,9 +73,9 @@ int main() {
 	arr.push_back(Point_3 (0,1.25,3));
 	arr.push_back(Point_3 (0,1.50,3));
 	arr.push_back(Point_3 (0,1.75,3));
-	*/
-
+	
 	Point_3 Center = Point_3(0,0,0);
+	*/
 
 	//Circle_2 s(4,20);
 	//Arc_2 s(6,270,true);
@@ -97,7 +84,7 @@ int main() {
 	//Rectangle_2 s(20,10);
 
 	//Box_3 s(2,4,8,5,20,5);
-	Box_3 s(200,400,800,80,80,80);;
+	Box_3 s(200,400,800,80,80,80);
 	//Capsule_3 s(30,200,10,10);
 	//ChamferCyl_3 s(30,60,10,10,5,5,15);
 	//Cone_3 s(2,5,10,11,2,3);
@@ -128,24 +115,25 @@ int main() {
 	Bridge Br(18,20);
 	//Br.Do(P);
 
-	Twist Tw(900,Center,X_ax,4000,-4000);
-	Twist Tw3(900,Center,Z_ax,4000,-4000);
+	Twist Tw(900,s.Center,X_ax,4000,-4000);
+	Twist Tw3(900,s.Center,Z_ax,4000,-4000);
 	Tw3.Do(P);
 	Tw.Do(P);
 	
-	Taper Ta(1,Center,X_ax,20,-20);
+	Taper Ta(1,s.Center,X_ax,20,-20);
 	//Ta.Do(P);
 
-	Bend Be(90,Center,Z_ax,3,-3);
+	Bend Be(90,s.Center,Z_ax,3,-3);
 	//Be.Do(P);
 
-	Skew S(30,Center,Y_ax,20,-20);
+	Skew S(30,s.Center,Y_ax,20,-20);
 	//S.Do(P);
 
-	Stretch St(-1,Center,Z_ax);
+	Stretch St(-1,s.Center,Z_ax);
 	//St.Do(P);
 	
 	////
+
 	//s.ApplyModifier(&Br);
 	//s.ApplyModifier(&Ta);
 

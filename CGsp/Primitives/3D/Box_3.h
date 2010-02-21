@@ -9,9 +9,26 @@ public:
     int length_Seg;
     int width_Seg;
     int height_Seg;
+	Point_3* Center;
 
     //Set the default parameters in the BOX
     Box_3():length(25.0),width(25.0),height(25.0),length_Seg(1),width_Seg(1),height_Seg(1)
+    {}
+
+	//Set the parameters with user defined values
+    Box_3(double l):length(l),width(l),height(l),length_Seg(1),width_Seg(1),height_Seg(1)
+    {}
+
+	//Set the parameters with user defined values
+    Box_3(double l,int x):length(l),width(l),height(l),length_Seg(x),width_Seg(x),height_Seg(x)
+    {}
+
+	//Set the parameters with user defined values
+    Box_3(double l,double w,double h):length(l),width(w),height(h),length_Seg(1),width_Seg(1),height_Seg(1)
+    {}
+
+    //Set the parameters with user defined values
+    Box_3(double l,double w,double h,int x):length(l),width(w),height(h),length_Seg(x),width_Seg(x),height_Seg(x)
     {}
 
     //Set the parameters with user defined values
@@ -23,6 +40,14 @@ public:
         Polyhedron P;
         typedef Polyhedron::Point_3         Point;
         typedef Polyhedron::Halfedge_handle Halfedge_handle;
+
+		min(length,0);
+		min(width,0);
+		min(height,0);
+		maxmin(length_Seg,0,200);
+		maxmin(width_Seg,0,200);
+		maxmin(height_Seg,0,200);
+
         Halfedge_handle a, b, c, d;
         //Starting the BOX with tetrahedron, with width, length and height
         Halfedge_handle h = P.make_tetrahedron( Point( width, 0, 0),
@@ -273,6 +298,7 @@ public:
                 }
             }
         }
+		Center = new Point_3(width/2, length/2, height/2);
 
 		setMesh(P);
         return P;

@@ -1,14 +1,46 @@
 class Skew : public Modifier
 {
 public:
-	double SkAmount;
-	Point_3 Center;
-	Axis SkAxis;
-	double Upper;
-	double Lower;
+	AnimatablePropery<double,Interpolator> SkAmount;
+	Point_3* Center;
+	Axis RoAxis;
+	bool Limited;
+	AnimatablePropery<double,Interpolator> Upper;
+	AnimatablePropery<double,Interpolator> Lower;
 
-	Skew(double SAmount,Point_3 C, Axis SAxis, double max, double min) : SkAmount(SAmount),Center(C),SkAxis(SAxis),Upper(max),Lower(min)
-	{}
+	Skew() : SkAmount(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&SkAmount);
+	}
+
+	Skew(double SAmount) : SkAmount(SAmount),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&SkAmount);
+	}
+
+	Skew(double SAmount, Axis RAxis) : SkAmount(SAmount),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&SkAmount);
+	}
+
+	Skew(double SAmount, Point_3* C, Axis RAxis) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&SkAmount);
+	}
+
+	Skew(double SAmount, Point_3* C, Axis RAxis, bool Limit) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0),Lower(0)
+	{
+		props.push_back(&SkAmount);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Skew(double SAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min)
+	{
+		props.push_back(&SkAmount);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
 
 	void Do(Polyhedron &P)
 	{
@@ -24,14 +56,18 @@ public:
 		y_max = y_min = Begin->point().y();
 		z_max = z_min = Begin->point().z();
 
-		double x_c = Center.x();
-		double y_c = Center.y();
-		double z_c = Center.z();
+		if (Center == NULL)
+		{
+			Center = &calc_Center(P);
+		}
+		double x_c = Center->x();
+		double y_c = Center->y();
+		double z_c = Center->z();
 		
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{
 			Point_3 p = i->point();
-			switch (SkAxis)
+			switch (RoAxis)
 			{
 				double v;
 			case X_ax:
@@ -69,17 +105,23 @@ public:
 		t.pretranslate(-org);
 		ApplyTransformToPolyhedron(P,t);
 
-		switch (SkAxis)
+		switch (RoAxis)
 		{
 		case X_ax:
 			{
 				x_max -= x_c;
 				x_min -= x_c;
 
-				if (x_max > Upper)
-					x_max = Upper;
-				if (x_min < Lower)
-					x_min = Lower;
+				if (!Limited)
+				{
+					Upper.val = x_max;
+					Lower.val = x_min;
+				}
+
+				if (x_max > Upper.val)
+					x_max = Upper.val;
+				if (x_min < Lower.val)
+					x_min = Lower.val;
 
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
@@ -87,23 +129,23 @@ public:
 					x = p.x();
 					y = p.y();
 
-					if (x > Upper)
+					if (x > Upper.val)
 					{
-						Scale = SkAmount * Upper / (Upper - Lower);
+						Scale = SkAmount.val * Upper.val / (Upper.val - Lower.val);
 
 						z = p.z() - Scale;
 					}
 
-					else if (x < Lower)
+					else if (x < Lower.val)
 					{
-						Scale = SkAmount * Lower / (Upper - Lower);
+						Scale = SkAmount.val * Lower.val / (Upper.val - Lower.val);
 
 						z = p.z() - Scale;
 					}
 
 					else
 					{
-						Scale = SkAmount * p.x() / (Upper - Lower);
+						Scale = SkAmount.val * p.x() / (Upper.val - Lower.val);
 
 						z = p.z() - Scale;
 					}
@@ -118,10 +160,16 @@ public:
 				y_max -= y_c;
 				y_min -= y_c;
 
-				if (y_max > Upper)
-					y_max = Upper;
-				if (y_min < Lower)
-					y_min = Lower;
+				if (!Limited)
+				{
+					Upper.val = y_max;
+					Lower.val = y_min;
+				}
+
+				if (y_max > Upper.val)
+					y_max = Upper.val;
+				if (y_min < Lower.val)
+					y_min = Lower.val;
 
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
@@ -129,23 +177,23 @@ public:
 					y = p.y();
 					z = p.z();
 
-					if (y > Upper)
+					if (y > Upper.val)
 					{
-						Scale = SkAmount * Upper / (Upper - Lower);
+						Scale = SkAmount.val * Upper.val / (Upper.val - Lower.val);
 
 						x = p.x() + Scale;
 					}
 
-					else if (y < Lower)
+					else if (y < Lower.val)
 					{
-						Scale = SkAmount * Lower / (Upper - Lower);
+						Scale = SkAmount.val * Lower.val / (Upper.val - Lower.val);
 
 						x = p.x() + Scale;
 					}
 
 					else
 					{
-						Scale = SkAmount * p.y() / (Upper - Lower);
+						Scale = SkAmount.val * p.y() / (Upper.val - Lower.val);
 
 						x = p.x() + Scale;
 					}
@@ -160,10 +208,16 @@ public:
 				z_max -= z_c;
 				z_min -= z_c;
 
-				if (z_max > Upper)
-					z_max = Upper;
-				if (z_min < Lower)
-					z_min = Lower;
+				if (!Limited)
+				{
+					Upper.val = z_max;
+					Lower.val = z_min;
+				}
+
+				if (z_max > Upper.val)
+					z_max = Upper.val;
+				if (z_min < Lower.val)
+					z_min = Lower.val;
 
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
@@ -171,23 +225,23 @@ public:
 					y = p.y();
 					z = p.z();
 
-					if (z > Upper)
+					if (z > Upper.val)
 					{
-						Scale = SkAmount * Upper / (Upper - Lower);
+						Scale = SkAmount.val * Upper.val / (Upper.val - Lower.val);
 
 						x = p.x() + Scale;
 					}
 
-					else if (z < Lower)
+					else if (z < Lower.val)
 					{
-						Scale = SkAmount * Lower / (Upper - Lower);
+						Scale = SkAmount.val * Lower.val / (Upper.val - Lower.val);
 
 						x = p.x() + Scale;
 					}
 
 					else
 					{
-						Scale = SkAmount * p.z() / (Upper - Lower);
+						Scale = SkAmount.val * p.z() / (Upper.val - Lower.val);
 
 						x = p.x() + Scale;
 					}

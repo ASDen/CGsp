@@ -29,7 +29,7 @@ public:
 	}
 	void DrawPolyhedron() const
 	{
-		::glColor3f(0.0f,1.0f,0.0f); // change the color of facets
+		::glColor3f(1.0f,0.0f,0.0f); // change the color of facets
 		Facet_iterator f;
 		for(f = P->ModifiedMesh.facets_begin();
 			f != P->ModifiedMesh.facets_end();

@@ -95,9 +95,14 @@ public:
 	//The basic parameters in the Sphere
 	double radius;
 	int Segs;
+	Point_3* Center;
 
 	//Set the default parameters in the Sphere
 	Sphere_3():radius(25.0),Segs(4)
+	{}
+
+	//Set the parameters with user defined values
+	Sphere_3(double r):radius(r),Segs(4)
 	{}
 
 	//Set the parameters with user defined values
@@ -107,8 +112,15 @@ public:
 	Polyhedron Draw()
 	{
 		Polyhedron P;
+
+		min(radius,0);
+		maxmin(Segs,0,200);
+
 		Build_sphere<HalfedgeDS> sphere(radius,Segs);
 		P.delegate( sphere );
+
+		Center = &Point_3(0, 0, 0);
+
 		setMesh(P);
 		return P;
 	}

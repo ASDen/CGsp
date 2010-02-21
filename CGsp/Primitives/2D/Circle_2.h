@@ -5,6 +5,7 @@ public:
 	//The basic parameters in the Circle
 	double radius;
 	int num;
+	Point_3 Center;
 
 	//Set the default parameters in the Circle
 	Circle_2():radius(25.0),num(6)
@@ -19,10 +20,15 @@ public:
 		Polyhedron P;
 		typedef Polyhedron::Point_3         Point;
 		typedef Polyhedron::Halfedge_handle Halfedge_handle;
+
+		min(radius, 0);
+		maxmin(num, 4 ,200);
+
 		//Starting the Circle with triangle, with width and length
 		Halfedge_handle h = P.make_triangle ( Point( radius, 0, 0),
 											  Point( 0, radius, 0),
 											  Point( 0, 0, 0) );
+
 		//editing on the triangle to convert it to Circle
 		//Put the basic three points in the right position
 		//First Point
@@ -48,6 +54,9 @@ public:
 
 			h->next()->vertex()->point()= Point ( x, y, 0 );
 		}
+		Center = Point_3(0, 0, 0);
+
+		setMesh(P);
 		return P;
 	}
 };

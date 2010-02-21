@@ -171,6 +171,8 @@ public:
 		Polyhedron P;
 		Build_lathe<HalfedgeDS> lathe(Arr_Points,Center,R_Axis,Seg,R_Angle);
 		P.delegate( lathe );
+		
+		setMesh(P);
 		return P;
 	}
 };

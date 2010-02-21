@@ -134,9 +134,26 @@ public:
 	int height_Seg;
 	int cap_Seg;
 	int side_Seg;
+	Point_3* Center;
 
 	//Set the default parameters in the Spindle
 	Spindle_3():radius(25.0),height(50),cap_height(5.0),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Spindle_3(double r):radius(r),height(2*r),cap_height(r),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Spindle_3(double r,int S):radius(r),height(2*r),cap_height(r),height_Seg(S),cap_Seg(S),side_Seg(S)
+	{}
+
+	//Set the parameters with user defined values
+	Spindle_3(double r,double h,double c_h):radius(r),height(h),cap_height(c_h),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Spindle_3(double r,double h,double c_h,int S):radius(r),height(h),cap_height(c_h),height_Seg(S),cap_Seg(S),side_Seg(S)
 	{}
 
 	//Set the parameters with user defined values
@@ -146,8 +163,20 @@ public:
 	Polyhedron Draw()
 	{
 		Polyhedron P;
+
+		min(radius,0);
+		min(cap_height,0);
+		min(height,0);
+		maxmin(height_Seg,0,200);
+		maxmin(cap_Seg,0,200);
+		maxmin(side_Seg,0,200);
+
 		Build_Spindle<HalfedgeDS> Spindle(radius,height,cap_height,height_Seg,cap_Seg,side_Seg);
 		P.delegate( Spindle );
+		
+		Center = &Point_3(0, 0, height/2);
+
+		setMesh(P);
 		return P;
 	}
 };
