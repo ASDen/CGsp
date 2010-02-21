@@ -5,13 +5,23 @@ public:
 	//The basic parameters in the Ellipse
 	double width;
 	double length;
+	int seg;
+	Point_3 Center;
 
 	//Set the default parameters in the Ellipse
-	Ellipse_2():width(35.0),length(25.0)
+	Ellipse_2():width(35.0),length(25.0),seg(28)
 	{}
 
 	//Set the parameters with user defined values
-	Ellipse_2(double w, double l):width(w),length(l)
+	Ellipse_2(double w):width(w),length(w),seg(28)
+	{}
+
+	//Set the parameters with user defined values
+	Ellipse_2(double w, int s):width(w),length(w),seg(s)
+	{}
+
+	//Set the parameters with user defined values
+	Ellipse_2(double w, double l, int s):width(w),length(l),seg(s)
 	{}
 
 	Polyhedron Draw()
@@ -19,6 +29,11 @@ public:
 		Polyhedron P;
 		typedef Polyhedron::Point_3         Point;
 		typedef Polyhedron::Halfedge_handle Halfedge_handle;
+
+		min(width, 0);
+		min(length, 0);
+		maxmin(seg,4,200);
+
 		//Starting the Ellipse with triangle, with width and length
 		Halfedge_handle h = P.make_triangle ( Point( width, 0, 0),
 											  Point( 0, length, 0),
@@ -62,6 +77,9 @@ public:
 				h->next()->vertex()->point()= Point ( x, y, 0 );
 			}
 		}
+		Center = Point_3(0, 0, 0);
+
+		setMesh(P);
 		return P;
 	}
 };

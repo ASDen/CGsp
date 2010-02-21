@@ -274,10 +274,6 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Primitives\3D\Cylinder_d.h"
-						>
-					</File>
-					<File
 						RelativePath=".\Primitives\3D\Lathe_3.h"
 						>
 					</File>
@@ -347,6 +343,10 @@
 					</File>
 					<File
 						RelativePath=".\Modifiers\Polyhedron\Melt.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Modifiers\Polyhedron\Morph.h"
 						>
 					</File>
 					<File

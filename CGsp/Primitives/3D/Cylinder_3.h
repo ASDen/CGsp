@@ -8,9 +8,26 @@ public:
 	int height_Seg;
 	int cap_Seg;
 	int side_Seg;
+	Point_3* Center;
 
 	//Set the default parameters in the Cylinder
 	Cylinder_3():radius(15.0),height(25.0),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Cylinder_3(double x):radius(x),height(x),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Cylinder_3(double r,double h):radius(r),height(h),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Cylinder_3(double r,int x):radius(r),height(r),height_Seg(x),cap_Seg(x),side_Seg(x)
+	{}
+
+	//Set the parameters with user defined values
+	Cylinder_3(double r,double h,int x):radius(r),height(h),height_Seg(x),cap_Seg(x),side_Seg(x)
 	{}
 
 	//Set the parameters with user defined values
@@ -21,6 +38,13 @@ public:
 	{
 		Polyhedron P;
 		typedef Polyhedron::Point_3         Point;
+
+		min(radius,0);
+		min(height,0);
+		maxmin(height_Seg,0,200);
+		maxmin(cap_Seg,0,200);
+		maxmin(side_Seg,0,200);
+
 		//Starting the cylinder with tetrahedron, with radius1, radius2 and height
 		Halfedge_handle h = P.make_tetrahedron( Point( radius, 0, 0 ),
 												Point( 0, 0, height ),
@@ -184,6 +208,9 @@ public:
 					P.split_facet( arr_capSD[0]->opposite(), arr_capSD[0]->opposite()->next()->next()->next() );
 			}
 		}
+		Center = &Point_3(0, 0, height/2);
+		
+		setMesh(P);
 		return P;
 	}
 };

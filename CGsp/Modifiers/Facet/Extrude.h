@@ -1,28 +1,31 @@
 class Extrude : public Modifier
 {
 public:
-	int Fnum;
-	double ExAmount;
+	AnimatablePropery<int,Interpolator> Fnum;
+	AnimatablePropery<double,Interpolator> ExAmount;
 	
 	Extrude(int FaceNum, double Amount) : Fnum(FaceNum),ExAmount(Amount)
-	{}
+	{
+		props.push_back(&Fnum);
+		props.push_back(&ExAmount);
+	}
 
 	void Do(Polyhedron &P)
 	{
-		if(Fnum < 0 || Fnum > P.size_of_facets ())
+		if(Fnum.val < 0 || Fnum.val > P.size_of_facets ())
 			return;
 
 		Plane_const_iterator px = P.planes_begin();
 		Facet_iterator iter = P.facets_begin();
 		Eigen::Transform3d t;
 
-		std::advance (iter,Fnum);
-		std::advance (px  ,Fnum);
+		std::advance (iter,Fnum.val);
+		std::advance (px  ,Fnum.val);
 		Halfedge_facet_circulator h = iter->facet_begin();
 		Point_3 o = h->vertex()->point(); //arbitary face vertex
 		
 		t.setIdentity();
-		t.translate(Eigen::Vector3d(0,0,ExAmount));
+		t.translate(Eigen::Vector3d(0,0,ExAmount.val));
 		Aff3 aff = CalcExecInFaceCoordSys(t,iter,px,o);
 
 		int size = CGAL::circulator_size (h);

@@ -7,9 +7,18 @@ public:
 	double length;
 	int width_Seg;
 	int length_Seg;
+	Point_3 Center;
 
 	//Set the default parameters in the plane
 	Plane_3():width(25.0),length(25.0),width_Seg(4),length_Seg(4)
+	{}
+
+	//Set the parameters with user defined values
+	Plane_3(double w):width(w),length(w),width_Seg(4),length_Seg(4)
+	{}
+
+	//Set the parameters with user defined values
+	Plane_3(double w,int x):width(w),length(w),width_Seg(x),length_Seg(x)
 	{}
 
 	//Set the parameters with user defined values
@@ -21,6 +30,12 @@ public:
 		Polyhedron P;
 		typedef Polyhedron::Point_3         Point;
 		typedef Polyhedron::Halfedge_handle Halfedge_handle;
+
+		min(width, 0);
+		min(length, 0);
+		maxmin(width_Seg, 0, 200);
+		maxmin(length_Seg, 0, 200);
+
 		//Starting the plane with triangle, with width and length
 		Halfedge_handle h1 = P.make_triangle ( Point( width, 0, 0),
 											  Point( 0, length, 0),
@@ -77,6 +92,9 @@ public:
 				P.split_facet ( h33, h3->next()->next());
 			}
 		}
+		Center = Point_3(width/2, length/2, 0);
+
+		setMesh(P);
 		return P;
 	}
 };

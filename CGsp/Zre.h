@@ -34,6 +34,7 @@
 
 #include "Modifiers\Polyhedron\Bend.h"
 #include "Modifiers\Polyhedron\Melt.h"
+#include "Modifiers\Polyhedron\Morph.h"
 #include "Modifiers\Polyhedron\Relax.h"
 #include "Modifiers\Polyhedron\Ripple.h"
 #include "Modifiers\Polyhedron\Skew.h"

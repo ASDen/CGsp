@@ -29,6 +29,20 @@ public:
 			(*i)->DoAtFrame(ModifiedMesh,Fnum);
 		}
 	}
+
+	void maxmin(int &value, int min, int max)
+	{
+		if (value < min)
+			value = min;
+		else if (value > max)
+			value = max;
+	}
+
+	void min(double &value, double min)
+	{
+		if (value < min)
+			value = min;
+	}
 };
 /////////////
 /////////////

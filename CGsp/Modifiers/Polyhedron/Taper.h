@@ -1,14 +1,46 @@
 class Taper : public Modifier
 {
 public:
-	double TaAmount;
-	Point_3 Center;
-	char TaAxis;
-	double Upper;
-	double Lower;
+	AnimatablePropery<double,Interpolator> TaAmount;
+	Point_3* Center;
+	Axis RoAxis;
+	bool Limited;
+	AnimatablePropery<double,Interpolator> Upper;
+	AnimatablePropery<double,Interpolator> Lower;
 
-	Taper(double TAmount,Point_3 C, char TAxis, double max, double min) : TaAmount(TAmount),Center(C),TaAxis(TAxis),Upper(max),Lower(min)
-	{}
+	Taper() : TaAmount(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&TaAmount);
+	}
+
+	Taper(double TAmount) : TaAmount(TAmount),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&TaAmount);
+	}
+
+	Taper(double TAmount, Axis RAxis) : TaAmount(TAmount),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&TaAmount);
+	}
+
+	Taper(double TAmount, Point_3* C, Axis RAxis) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
+	{
+		props.push_back(&TaAmount);
+	}
+
+	Taper(double TAmount, Point_3* C, Axis RAxis, bool Limit) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0.0),Lower(0.0)
+	{
+		props.push_back(&TaAmount);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Taper(double TAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min)
+	{
+		props.push_back(&TaAmount);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
 
 	void Do(Polyhedron &P)
 	{
@@ -24,14 +56,18 @@ public:
 		y_max = y_min = Begin->point().y();
 		z_max = z_min = Begin->point().z();
 
-		double x_c = Center.x();
-		double y_c = Center.y();
-		double z_c = Center.z();
+		if (Center == NULL)
+		{
+			Center = &calc_Center(P);
+		}
+		double x_c = Center->x();
+		double y_c = Center->y();
+		double z_c = Center->z();
 
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{
 			Point_3 p = i->point();
-			switch (TaAxis)
+			switch (RoAxis)
 			{
 				double v;
 			case X_ax:
@@ -63,29 +99,35 @@ public:
 		t.pretranslate(-org);
 		ApplyTransformToPolyhedron(P,t);
 
-		switch (TaAxis)
+		switch (RoAxis)
 		{
 		case X_ax:
 			{
 				x_max -= x_c;
 				x_min -= x_c;
 
+				if (!Limited)
+				{
+					Upper.val = x_max;
+					Lower.val = x_min;
+				}
+
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
 					x = p.x();
 					
-					if (x > Upper)
+					if (x > Upper.val)
 					{
-						Scale = TaAmount * Upper / (x_max - x_min);
+						Scale = TaAmount.val * Upper.val / (x_max - x_min);
 
 						y = p.y() + p.y() * Scale;
 						z = p.z() + p.z() * Scale;
 					}
 
-					else if (x < Lower)
+					else if (x < Lower.val)
 					{
-						Scale = TaAmount * Lower / (x_max - x_min);
+						Scale = TaAmount.val * Lower.val / (x_max - x_min);
 
 						y = p.y() + p.y() * Scale;
 						z = p.z() + p.z() * Scale;
@@ -93,7 +135,7 @@ public:
 
 					else
 					{
-						Scale = TaAmount * p.x() / (x_max - x_min);
+						Scale = TaAmount.val * p.x() / (x_max - x_min);
 
 						y = p.y() + p.y() * Scale;
 						z = p.z() + p.z() * Scale;
@@ -109,22 +151,28 @@ public:
 				y_max -= y_c;
 				y_min -= y_c;
 
+				if (!Limited)
+				{
+					Upper.val = y_max;
+					Lower.val = y_min;
+				}
+
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
 					y = p.y();
 					
-					if (y > Upper)
+					if (y > Upper.val)
 					{
-						Scale = TaAmount * Upper / (y_max - y_min);
+						Scale = TaAmount.val * Upper.val / (y_max - y_min);
 
 						x = p.x() + p.x() * Scale;
 						z = p.z() + p.z() * Scale;
 					}
 
-					else if (y < Lower)
+					else if (y < Lower.val)
 					{
-						Scale = TaAmount * Lower / (y_max - y_min);
+						Scale = TaAmount.val * Lower.val / (y_max - y_min);
 
 						x = p.x() + p.x() * Scale;
 						z = p.z() + p.z() * Scale;
@@ -132,7 +180,7 @@ public:
 
 					else
 					{
-						Scale = TaAmount * p.y() / (y_max - y_min);
+						Scale = TaAmount.val * p.y() / (y_max - y_min);
 
 						x = p.x() + p.x() * Scale;
 						z = p.z() + p.z() * Scale;
@@ -148,22 +196,28 @@ public:
 				z_max -= z_c;
 				z_min -= z_c;
 
+				if (!Limited)
+				{
+					Upper.val = z_max;
+					Lower.val = z_min;
+				}
+
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
 					z = p.z();
 					
-					if (z > Upper)
+					if (z > Upper.val)
 					{
-						Scale = TaAmount * Upper / (z_max - z_min);
+						Scale = TaAmount.val * Upper.val / (z_max - z_min);
 
 						x = p.x() + p.x() * Scale;
 						y = p.y() + p.y() * Scale;
 					}
 
-					else if (z < Lower)
+					else if (z < Lower.val)
 					{
-						Scale = TaAmount * Lower / (z_max - z_min);
+						Scale = TaAmount.val * Lower.val / (z_max - z_min);
 
 						x = p.x() + p.x() * Scale;
 						y = p.y() + p.y() * Scale;
@@ -171,7 +225,7 @@ public:
 
 					else
 					{
-						Scale = TaAmount * p.z() / (z_max - z_min);
+						Scale = TaAmount.val * p.z() / (z_max - z_min);
 
 						x = p.x() + p.x() * Scale;
 						y = p.y() + p.y() * Scale;

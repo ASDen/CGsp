@@ -5,6 +5,7 @@ public:
 	//The basic parameters in the Rectangle
 	double width;
 	double length;
+	Point_3 Center;
 
 	//Set the default parameters in the Rectangle
 	Rectangle_2():width(25.0),length(10.0)
@@ -27,6 +28,10 @@ public:
 		Halfedge_handle h2 = h1->next();
 		Halfedge_handle h3 = P.split_edge ( h2 );
 		h3->vertex()->point() = Point ( width, length, 0 );
+
+		Center = Point_3(width/2, length/2, 0);
+
+		setMesh(P);
 		return P;
 	}
 };

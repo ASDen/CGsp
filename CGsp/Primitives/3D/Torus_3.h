@@ -84,9 +84,18 @@ public:
 	double twist;
 	int Seg;
 	int side_Seg;
+	Point_3* Center;
 
 	//Set the default parameters in the Torus
 	Torus_3():radius1(25.0),radius2(10.0),rotation(0),twist(0),Seg(24),side_Seg(12)
+	{}
+
+	//Set the parameters with user defined values
+	Torus_3(double r):radius1(r),radius2(10.0),rotation(0),twist(0),Seg(24),side_Seg(12)
+	{}
+
+	//Set the parameters with user defined values
+	Torus_3(double r1,double r2):radius1(r1),radius2(r2),rotation(0),twist(0),Seg(24),side_Seg(12)
 	{}
 
 	//Set the parameters with user defined values
@@ -96,8 +105,19 @@ public:
 	Polyhedron Draw()
 	{
 		Polyhedron P;
+		
+		min(radius1,0);
+		min(radius2,0);
+		min(rotation,0);
+		min(twist,0);
+		maxmin(Seg,0,200);
+		maxmin(side_Seg,0,200);
+
 		Build_torus<HalfedgeDS> torus(radius1,radius2,rotation,twist,Seg,side_Seg);
 		P.delegate( torus );
+
+		Center = &Point_3(0, 0, 0);
+
 		setMesh(P);
 		return P;
 	}

@@ -8,9 +8,22 @@ public:
 	int width_Seg;
 	int depth_Seg;
 	int height_Seg;
+	Point_3* Center;
 
 	//Set the default parameters in the Pyramid
 	Pyramid_3():width(25.0),depth(25.0),height(25.0),width_Seg(1),depth_Seg(1),height_Seg(1)
+	{}
+
+	//Set the parameters with user defined values
+	Pyramid_3(double w):width(w),depth(w),height(w),width_Seg(1),depth_Seg(1),height_Seg(1)
+	{}
+
+	//Set the parameters with user defined values
+	Pyramid_3(double w,int x):width(w),depth(w),height(w),width_Seg(x),depth_Seg(x),height_Seg(x)
+	{}
+
+	//Set the parameters with user defined values
+	Pyramid_3(double w,double l,double h,int x):width(w),depth(l),height(h),width_Seg(x),depth_Seg(x),height_Seg(x)
 	{}
 
 	//Set the parameters with user defined values
@@ -22,6 +35,14 @@ public:
 		Polyhedron P;
 		typedef Polyhedron::Point_3         Point;
 		typedef Polyhedron::Halfedge_handle Halfedge_handle;
+
+		min(width,0);
+		min(depth,0);
+		min(height,0);
+		maxmin(width_Seg,0,200);
+		maxmin(depth_Seg,0,200);
+		maxmin(height_Seg,0,200);
+
 		//Starting the Pyramid with tetrahedron, with width, length and height
 		Halfedge_handle h1 = P.make_tetrahedron( Point( width, 0, 0),
 												Point( 0, 0, height),
@@ -157,6 +178,9 @@ public:
 				P.split_facet ( g->opposite(), g->opposite()->next()->next()->next());
 			}
 		}
+		Center = &Point_3(width/2, depth/2, 0);
+
+		setMesh(P);
 		return P;
 	}
 };

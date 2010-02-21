@@ -135,9 +135,26 @@ public:
 	int height_Seg;
 	int cap_Seg;
 	int side_Seg;
+	Point_3* Center;
 
 	//Set the default parameters in the Tube
 	Tube_3():radius1(25.0),radius2(20.0),height(50),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Tube_3(double r):radius1(r),radius2(20.0),height(50),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Tube_3(double r1,double r2):radius1(r1),radius2(r2),height(50),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+	
+	//Set the parameters with user defined values
+	Tube_3(double r1,double r2,double h):radius1(r1),radius2(r2),height(h),height_Seg(1),cap_Seg(1),side_Seg(24)
+	{}
+
+	//Set the parameters with user defined values
+	Tube_3(double r1,double r2,double h,int S):radius1(r1),radius2(r2),height(h),height_Seg(S),cap_Seg(S),side_Seg(S)
 	{}
 
 	//Set the parameters with user defined values
@@ -147,8 +164,20 @@ public:
 	Polyhedron Draw()
 	{
 		Polyhedron P;
+
+		min(radius1,0);
+		min(radius2,0);
+		min(height,0);
+		maxmin(height_Seg,0,200);
+		maxmin(cap_Seg,0,200);
+		maxmin(side_Seg,0,200);
+
 		Build_tube<HalfedgeDS> tube(radius1,radius2,height,height_Seg,cap_Seg,side_Seg);
-		P.delegate( tube );
+		P.delegate( tube );		
+		
+		Center = &Point_3(0, 0, height/2);
+
+		setMesh(P);
 		return P;
 	}
 };
