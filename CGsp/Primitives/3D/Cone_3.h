@@ -225,7 +225,7 @@ public:
 				P.split_facet( b, arr_capSU[0]->next()->next() );
 			}	
 		}
-		Center = &Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, height/2);
 
 		setMesh(P);
 		return P;

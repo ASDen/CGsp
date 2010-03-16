@@ -174,7 +174,7 @@ public:
 		Build_Spindle<HalfedgeDS> Spindle(radius,height,cap_height,height_Seg,cap_Seg,side_Seg);
 		P.delegate( Spindle );
 		
-		Center = &Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, height/2);
 
 		setMesh(P);
 		return P;

@@ -4,6 +4,12 @@ public:
 	AnimatablePropery<int,Interpolator> Fnum;
 	AnimatablePropery<double,Interpolator> OutlineAmount;
 
+	Outline(int FaceNum) : Fnum(FaceNum),OutlineAmount(1)
+	{
+		props.push_back(&Fnum);
+		props.push_back(&OutlineAmount);
+	}
+
 	Outline(int FaceNum ,double OAmount) : Fnum(FaceNum),OutlineAmount(OAmount)
 	{
 		props.push_back(&Fnum);
@@ -12,8 +18,8 @@ public:
 
 	void Do(Polyhedron &P)
 	{
-		Plane_const_iterator px=P.planes_begin();
-		Facet_iterator     iter=P.facets_begin ();
+		Plane_const_iterator px = P.planes_begin();
+		Facet_iterator     iter = P.facets_begin();
 		Eigen::Transform3d t;
 
 		std::advance (iter,Fnum.val);

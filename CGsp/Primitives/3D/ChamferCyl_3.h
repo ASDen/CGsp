@@ -215,7 +215,7 @@ public:
 		Build_ChamferCyl<HalfedgeDS> ChamferCyl(radius,height,fillet,height_Seg,fillet_Seg,cap_Seg,side_Seg);
 		P.delegate( ChamferCyl );
 
-		Center = &Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, height/2);
 
 		setMesh(P);
 		return P;

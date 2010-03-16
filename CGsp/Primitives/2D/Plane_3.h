@@ -7,7 +7,7 @@ public:
 	double length;
 	int width_Seg;
 	int length_Seg;
-	Point_3 Center;
+	Point_3* Center;
 
 	//Set the default parameters in the plane
 	Plane_3():width(25.0),length(25.0),width_Seg(4),length_Seg(4)
@@ -92,7 +92,7 @@ public:
 				P.split_facet ( h33, h3->next()->next());
 			}
 		}
-		Center = Point_3(width/2, length/2, 0);
+		Center = new Point_3(width/2, length/2, 0);
 
 		setMesh(P);
 		return P;

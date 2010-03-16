@@ -116,7 +116,7 @@ public:
 		Build_torus<HalfedgeDS> torus(radius1,radius2,rotation,twist,Seg,side_Seg);
 		P.delegate( torus );
 
-		Center = &Point_3(0, 0, 0);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

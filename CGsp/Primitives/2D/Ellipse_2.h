@@ -6,7 +6,7 @@ public:
 	double width;
 	double length;
 	int seg;
-	Point_3 Center;
+	Point_3* Center;
 
 	//Set the default parameters in the Ellipse
 	Ellipse_2():width(35.0),length(25.0),seg(28)
@@ -77,7 +77,7 @@ public:
 				h->next()->vertex()->point()= Point ( x, y, 0 );
 			}
 		}
-		Center = Point_3(0, 0, 0);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

@@ -8,48 +8,81 @@ public:
 	AnimatablePropery<double,Interpolator> Upper;
 	AnimatablePropery<double,Interpolator> Lower;
 
-	Taper() : TaAmount(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&TaAmount);
-	}
+	AnimatablePropery<double,Interpolator> X_Center;
+	AnimatablePropery<double,Interpolator> Y_Center;
+	AnimatablePropery<double,Interpolator> Z_Center;
 
-	Taper(double TAmount) : TaAmount(TAmount),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	Taper() : TaAmount(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&TaAmount);
-	}
-
-	Taper(double TAmount, Axis RAxis) : TaAmount(TAmount),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&TaAmount);
-	}
-
-	Taper(double TAmount, Point_3* C, Axis RAxis) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&TaAmount);
-	}
-
-	Taper(double TAmount, Point_3* C, Axis RAxis, bool Limit) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0.0),Lower(0.0)
-	{
-		props.push_back(&TaAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
 		props.push_back(&Upper);
 		props.push_back(&Lower);
 	}
 
-	Taper(double TAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min)
+	Taper(double TAmount) : TaAmount(TAmount),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&TaAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Taper(double TAmount, Axis RAxis) : TaAmount(TAmount),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	{
+		props.push_back(&TaAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Taper(double TAmount, Point_3* C, Axis RAxis) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&TaAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Taper(double TAmount, Point_3* C, Axis RAxis, bool Limit) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&TaAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Taper(double TAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : TaAmount(TAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&TaAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
 		props.push_back(&Upper);
 		props.push_back(&Lower);
 	}
 
 	void Do(Polyhedron &P)
 	{
+		if (TaAmount.val == 0)
+			return;
+
 		Eigen::Transform3d t;
 		Eigen::Vector3d org;
 
-		double Scale;
 		double x_max = 0, y_max = 0, z_max = 0, x_min = 0, y_min = 0, z_min = 0;
 		double x, y, z;
+		double Scale;
 
 		Vertex_iterator Begin = P.vertices_begin();
 		x_max = x_min = Begin->point().x();
@@ -59,10 +92,14 @@ public:
 		if (Center == NULL)
 		{
 			Center = &calc_Center(P);
+
+			X_Center = Center->x();
+			Y_Center = Center->y();
+			Z_Center = Center->z();
 		}
-		double x_c = Center->x();
-		double y_c = Center->y();
-		double z_c = Center->z();
+		double x_c = X_Center.val;
+		double y_c = Y_Center.val;
+		double z_c = Z_Center.val;
 
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{
@@ -71,26 +108,36 @@ public:
 			{
 				double v;
 			case X_ax:
-				v = p.x();
-				if (v > x_max)
-					x_max = v;
-				else if (v < x_min)
-					x_min = v;
-				break;
+				{
+					v = p.x();
+					if (v > x_max)
+						x_max = v;
+					else if (v < x_min)
+						x_min = v;
+					break;
+				}
 			case Y_ax:
-				v = p.y();
-				if (v > y_max)
-					y_max = v;
-				else if (v < y_min)
-					y_min = v;
-				break;
+				{
+					v = p.y();
+					if (v > y_max)
+						y_max = v;
+					else if (v < y_min)
+						y_min = v;
+					break;
+				}
 			case Z_ax:
-				v = p.z();
-				if (v > z_max)
-					z_max = v;
-				else if (v < z_min)
-					z_min = v;
-				break;
+				{
+					v = p.z();
+					if (v > z_max)
+						z_max = v;
+					else if (v < z_min)
+						z_min = v;
+					break;
+				}
+			default:
+				{
+					return;
+				}
 			}
 		}
 
@@ -234,6 +281,11 @@ public:
 					i->point() = Point_3 (x ,y ,z);
 				}
 				break;
+			}
+			
+		default:
+			{
+				return;
 			}
 		}
 

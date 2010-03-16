@@ -127,9 +127,22 @@ public:
 	double heigth;
 	int Segs;
 	int h_Segs;
+	Point_3* Center;
 
 	//Set the default parameters in the Capsule
 	Capsule_3 ():radius(15.0),heigth(25.0),Segs(4),h_Segs(1)
+	{}
+
+	//Set the parameters with user defined values
+	Capsule_3 (double r):radius(r),heigth(2*r),Segs(4),h_Segs(1)
+	{}
+	
+	//Set the parameters with user defined values
+	Capsule_3 (double r,int s):radius(r),heigth(2*r),Segs(s),h_Segs(s)
+	{}
+	
+	//Set the parameters with user defined values
+	Capsule_3 (double r,double h,int s):radius(r),heigth(h),Segs(s),h_Segs(s)
 	{}
 
 	//Set the parameters with user defined values
@@ -139,8 +152,18 @@ public:
 	Polyhedron Draw()
 	{
 		Polyhedron P;
+
+		min(radius,0);
+		min(heigth,0);
+		maxmin(h_Segs,0,200);
+		maxmin(Segs,0,200);
+
 		Build_capsule<HalfedgeDS> capsule(radius,heigth,Segs,h_Segs);
 		P.delegate( capsule );
+
+		Center = new Point_3(0, 0, heigth/2);
+
+		setMesh(P);
 		return P;
 	}
 };

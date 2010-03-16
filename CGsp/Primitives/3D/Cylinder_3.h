@@ -208,7 +208,7 @@ public:
 					P.split_facet( arr_capSD[0]->opposite(), arr_capSD[0]->opposite()->next()->next()->next() );
 			}
 		}
-		Center = &Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, height/2);
 		
 		setMesh(P);
 		return P;

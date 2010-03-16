@@ -8,42 +8,74 @@ public:
 	AnimatablePropery<double,Interpolator> Upper;
 	AnimatablePropery<double,Interpolator> Lower;
 
-	Skew() : SkAmount(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&SkAmount);
-	}
+	AnimatablePropery<double,Interpolator> X_Center;
+	AnimatablePropery<double,Interpolator> Y_Center;
+	AnimatablePropery<double,Interpolator> Z_Center;
 
-	Skew(double SAmount) : SkAmount(SAmount),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	Skew() : SkAmount(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&SkAmount);
-	}
-
-	Skew(double SAmount, Axis RAxis) : SkAmount(SAmount),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&SkAmount);
-	}
-
-	Skew(double SAmount, Point_3* C, Axis RAxis) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&SkAmount);
-	}
-
-	Skew(double SAmount, Point_3* C, Axis RAxis, bool Limit) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0),Lower(0)
-	{
-		props.push_back(&SkAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
 		props.push_back(&Upper);
 		props.push_back(&Lower);
 	}
 
-	Skew(double SAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min)
+	Skew(double SAmount) : SkAmount(SAmount),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&SkAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Skew(double SAmount, Axis RAxis) : SkAmount(SAmount),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	{
+		props.push_back(&SkAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Skew(double SAmount, Point_3* C, Axis RAxis) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&SkAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Skew(double SAmount, Point_3* C, Axis RAxis, bool Limit) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&SkAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Skew(double SAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : SkAmount(SAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&SkAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
 		props.push_back(&Upper);
 		props.push_back(&Lower);
 	}
 
 	void Do(Polyhedron &P)
 	{
+		if (SkAmount.val == 0)
+			return;
 		Eigen::Transform3d t;
 		Eigen::Vector3d org;
 
@@ -59,10 +91,14 @@ public:
 		if (Center == NULL)
 		{
 			Center = &calc_Center(P);
+
+			X_Center = Center->x();
+			Y_Center = Center->y();
+			Z_Center = Center->z();
 		}
-		double x_c = Center->x();
-		double y_c = Center->y();
-		double z_c = Center->z();
+		double x_c = X_Center.val;
+		double y_c = Y_Center.val;
+		double z_c = Z_Center.val;
 		
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{
@@ -96,6 +132,10 @@ public:
 					else if (v < z_min)
 						z_min = v;
 					break;
+				}
+			default:
+				{
+					return;
 				}
 			}
 		}
@@ -249,6 +289,11 @@ public:
 					i->point() = Point_3 (x ,y ,z);
 				}
 				break;
+			}
+
+		default:
+			{
+				return;
 			}
 				
 		}

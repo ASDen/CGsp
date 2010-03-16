@@ -7,7 +7,7 @@ public:
 	double to;
 	int seg;
 	bool pie_slice;
-	Point_3 Center;
+	Point_3* Center;
 
 	//Set the default parameters in the Arc
 	Arc_2():radius(25.0),to(90.0),seg(28),pie_slice(false)
@@ -70,7 +70,7 @@ public:
 		if (pie_slice)
 			h->next()->vertex()->point()= Point ( 0, 0, 0 );
 
-		Center = Point_3(0, 0, 0);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

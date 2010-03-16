@@ -139,7 +139,7 @@ public:
 		Build_Spring<HalfedgeDS> Spring(radius1,radius2,height,turn_number,Seg,side_Seg);
 		P.delegate( Spring );
 
-		Center = &Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, height/2);
 
 		setMesh(P);
 		return P;

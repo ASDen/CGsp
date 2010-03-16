@@ -4,6 +4,12 @@ public:
 	AnimatablePropery<int,Interpolator> Fnum;
 	AnimatablePropery<double,Interpolator> ExAmount;
 	
+	Extrude(int FaceNum) : Fnum(FaceNum),ExAmount(5)
+	{
+		props.push_back(&Fnum);
+		props.push_back(&ExAmount);
+	}
+
 	Extrude(int FaceNum, double Amount) : Fnum(FaceNum),ExAmount(Amount)
 	{
 		props.push_back(&Fnum);
@@ -12,7 +18,7 @@ public:
 
 	void Do(Polyhedron &P)
 	{
-		if(Fnum.val < 0 || Fnum.val > P.size_of_facets ())
+		if(Fnum.val < 0 || Fnum.val > P.size_of_facets())
 			return;
 
 		Plane_const_iterator px = P.planes_begin();

@@ -178,7 +178,7 @@ public:
 				P.split_facet ( g->opposite(), g->opposite()->next()->next()->next());
 			}
 		}
-		Center = &Point_3(width/2, depth/2, 0);
+		Center = new Point_3(width/2, depth/2, height/2);
 
 		setMesh(P);
 		return P;

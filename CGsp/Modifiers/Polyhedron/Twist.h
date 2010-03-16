@@ -1,5 +1,3 @@
-#include <windows.h>
-
 class Twist : public Modifier
 {
 public:
@@ -10,48 +8,81 @@ public:
 	AnimatablePropery<double,Interpolator> Upper;
 	AnimatablePropery<double,Interpolator> Lower;
 
-	Twist() : TwAngle(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&TwAngle);
-	}
+	AnimatablePropery<double,Interpolator> X_Center;
+	AnimatablePropery<double,Interpolator> Y_Center;
+	AnimatablePropery<double,Interpolator> Z_Center;
 
-	Twist(double TAngle) : TwAngle(TAngle),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0)
+	Twist() : TwAngle(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&TwAngle);
-	}
-
-	Twist(double TAngle, Axis RAxis) : TwAngle(TAngle),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&TwAngle);
-	}
-
-	Twist(double TAngle, Point_3* C, Axis RAxis) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0)
-	{
-		props.push_back(&TwAngle);
-	}
-
-	Twist(double TAngle, Point_3* C, Axis RAxis, bool Limit) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0.0),Lower(0.0)
-	{
-		props.push_back(&TwAngle);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
 		props.push_back(&Upper);
 		props.push_back(&Lower);
 	}
 
-	Twist(double TAngle, Point_3* C, Axis RAxis, bool Limit, double max, double min) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min)
+	Twist(double TAngle) : TwAngle(TAngle),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&TwAngle);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Twist(double TAngle, Axis RAxis) : TwAngle(TAngle),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	{
+		props.push_back(&TwAngle);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Twist(double TAngle, Point_3* C, Axis RAxis) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&TwAngle);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Twist(double TAngle, Point_3* C, Axis RAxis, bool Limit) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&TwAngle);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Twist(double TAngle, Point_3* C, Axis RAxis, bool Limit, double max, double min) : TwAngle(TAngle),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&TwAngle);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
 		props.push_back(&Upper);
 		props.push_back(&Lower);
 	}
 
 	void Do(Polyhedron &P)
 	{
+		if (TwAngle.val == 0)
+			return;
+
 		Eigen::Transform3d t;
 		Eigen::Vector3d org;
 
-		double TwAmount;
 		double x_max = 0, y_max = 0, z_max = 0, x_min = 0, y_min = 0, z_min = 0;
 		double x, y, z;
+		double TwAmount;
 
 		Vertex_iterator Begin = P.vertices_begin();
 		x_max = x_min = Begin->point().x();
@@ -59,15 +90,16 @@ public:
 		z_max = z_min = Begin->point().z();
 
 		if (Center == NULL)
-		{std::cout<<"PPP"<<std::endl;
+		{
 			Center = &calc_Center(P);
-		}
-		
-		double x_c = Center->x();
-		double y_c = Center->y();
-		double z_c = Center->z();
 
-		std::cout<<"PPP "<<x_c<<" "<<y_c<<" "<<z_c<<std::endl;
+			X_Center = Center->x();
+			Y_Center = Center->y();
+			Z_Center = Center->z();
+		}
+		double x_c = X_Center.val;
+		double y_c = Y_Center.val;
+		double z_c = Z_Center.val;
 
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{
@@ -76,26 +108,36 @@ public:
 			{
 				double v;
 			case X_ax:
-				v = p.x();
-				if (v > x_max)
-					x_max = v;
-				else if (v < x_min)
-					x_min = v;
-				break;
+				{
+					v = p.x();
+					if (v > x_max)
+						x_max = v;
+					else if (v < x_min)
+						x_min = v;
+					break;
+				}
 			case Y_ax:
-				v = p.y();
-				if (v > y_max)
-					y_max = v;
-				else if (v < y_min)
-					y_min = v;
-				break;
+				{
+					v = p.y();
+					if (v > y_max)
+						y_max = v;
+					else if (v < y_min)
+						y_min = v;
+					break;
+				}
 			case Z_ax:
-				v = p.z();
-				if (v > z_max)
-					z_max = v;
-				else if (v < z_min)
-					z_min = v;
-				break;
+				{
+					v = p.z();
+					if (v > z_max)
+						z_max = v;
+					else if (v < z_min)
+						z_min = v;
+					break;
+				}
+			default:
+				{
+					return;
+				}
 			}
 		}
 
@@ -196,9 +238,8 @@ public:
 					Upper.val = z_max;
 					Lower.val = z_min;
 				}
+
 				TwAmount = TwAngle.val / (z_max - z_min) * CGAL_PI / 180;
-				//long int before = GetTickCount();
-				//for(int i=0;i<500;i++)
 				for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i) 
 				{
 					Point_3 p = i->point();
@@ -224,11 +265,13 @@ public:
 					
 					i->point() = Point_3 (x ,y ,z);
 				}
-				//std::cout<<"\nTwisted ";
-				//long int after = GetTickCount();
-				//std::cout<<"Execution Time : "<<(after-before)<<" ms.\n";
 
 				break;
+			}
+
+		default:
+			{
+				return;
 			}
 		}
 

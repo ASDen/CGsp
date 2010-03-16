@@ -4,7 +4,14 @@ public:
 	AnimatablePropery<int,Interpolator> Fnum;
 	AnimatablePropery<double,Interpolator> ExAmount;
 	AnimatablePropery<double,Interpolator> OutlineAmount;
-	
+
+	Bevel(int FaceNum) : Fnum(FaceNum),ExAmount(5),OutlineAmount(1)
+	{
+		props.push_back(&Fnum);
+		props.push_back(&ExAmount);
+		props.push_back(&OutlineAmount);
+	}
+
 	Bevel(int FaceNum, double EAmount, double OAmount) : Fnum(FaceNum),ExAmount(EAmount),OutlineAmount(OAmount)
 	{
 		props.push_back(&Fnum);

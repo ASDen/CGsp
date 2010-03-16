@@ -92,7 +92,7 @@ public:
 	Point_3 calc_Center(Polyhedron P)
 	{
 		double x = 0, y = 0, z = 0;
-		int num;
+		int num = 0;
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); i++)
 		{
 			Point_3 p = i->point();
@@ -116,6 +116,11 @@ typedef enum
 {
 	X_ax,Y_ax,Z_ax
 }Axis;
+
+typedef enum
+{
+	BRadial,BLinear
+}BulgeType;
 
 //typedef enum
 //{

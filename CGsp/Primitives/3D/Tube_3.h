@@ -175,7 +175,7 @@ public:
 		Build_tube<HalfedgeDS> tube(radius1,radius2,height,height_Seg,cap_Seg,side_Seg);
 		P.delegate( tube );		
 		
-		Center = &Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, height/2);
 
 		setMesh(P);
 		return P;

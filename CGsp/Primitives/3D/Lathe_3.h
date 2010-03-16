@@ -4,12 +4,12 @@ class Lathe_3 : public Primitives
 	class Build_lathe : public CGAL::Modifier_base<HDS> {
 	public:
 		std::vector<Point_3> Arr;
-		Point_3 C;
+		Point_3* C;
 		Axis R_A;
 		int S;
 		double R_an;
 		
-		Build_lathe(std::vector<Point_3> Array,Point_3 Center,Axis R_Axis,int Seg,double R_Angle):Arr(Array),C(Center),R_A(R_Axis),S(Seg),R_an(R_Angle)
+		Build_lathe(std::vector<Point_3> Array,Point_3* Center,Axis R_Axis,int Seg,double R_Angle):Arr(Array),C(Center),R_A(R_Axis),S(Seg),R_an(R_Angle)
 		{}
 
 		void operator()( HDS& hds)
@@ -52,7 +52,7 @@ class Lathe_3 : public Primitives
 						Point p = Arr[e];
 
 						//get the radius of each circle
-						double rad = sqrt (pow ( (p.y() - C.y()) ,2 ) + pow ( (p.z() - C.z()) ,2 ));
+						double rad = sqrt (pow ( (p.y() - C->y()) ,2 ) + pow ( (p.z() - C->z()) ,2 ));
 						double x_t = p.x();
 
 						if (p.y() == 0 && p.z()== 0)
@@ -81,7 +81,7 @@ class Lathe_3 : public Primitives
 						Point p = Arr[e];
 
 						//get the radius of each circle
-						double rad = sqrt (pow ( (p.x() - C.x()) ,2 ) + pow ( (p.z() - C.z()) ,2 ));
+						double rad = sqrt (pow ( (p.x() - C->x()) ,2 ) + pow ( (p.z() - C->z()) ,2 ));
 						double y_t = p.y();
 
 						if (p.x() == 0 && p.z()== 0)
@@ -110,7 +110,7 @@ class Lathe_3 : public Primitives
 						Point p = Arr[e];
 
 						//get the radius of each circle
-						double rad = sqrt (pow ( (p.x() - C.x()) ,2 ) + pow ( (p.y() - C.y()) ,2 ));
+						double rad = sqrt (pow ( (p.x() - C->x()) ,2 ) + pow ( (p.y() - C->y()) ,2 ));
 						double z_t = p.z();
 
 						if (p.y() == 0 && p.x()== 0)
@@ -157,13 +157,13 @@ class Lathe_3 : public Primitives
 public:
 	//The basic parameters in the Lathe Modifier
 	std::vector<Point_3> Arr_Points;
-	Point_3 Center;
+	Point_3* Center;
 	Axis R_Axis;
 	int Seg;
 	double R_Angle;
 
 	//Set the parameters with user defined values
-	Lathe_3(std::vector<Point_3> arr,Point_3 C,Axis R_A,int S,double R_an):Arr_Points(arr),Center(C),R_Axis(R_A),Seg(S),R_Angle(R_an)
+	Lathe_3(std::vector<Point_3> arr,Point_3* C,Axis R_A,int S,double R_an):Arr_Points(arr),Center(C),R_Axis(R_A),Seg(S),R_Angle(R_an)
 	{}
 	
 	Polyhedron Draw()

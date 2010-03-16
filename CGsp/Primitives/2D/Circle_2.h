@@ -5,7 +5,7 @@ public:
 	//The basic parameters in the Circle
 	double radius;
 	int num;
-	Point_3 Center;
+	Point_3* Center;
 
 	//Set the default parameters in the Circle
 	Circle_2():radius(25.0),num(6)
@@ -54,7 +54,7 @@ public:
 
 			h->next()->vertex()->point()= Point ( x, y, 0 );
 		}
-		Center = Point_3(0, 0, 0);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

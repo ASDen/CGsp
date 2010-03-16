@@ -119,7 +119,7 @@ public:
 		Build_sphere<HalfedgeDS> sphere(radius,Segs);
 		P.delegate( sphere );
 
-		Center = &Point_3(0, 0, 0);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

@@ -30,25 +30,7 @@ struct Normal_vector {
 };
 
 int main() {
-	std::ofstream of("D:\\123.off");
-	//
-	Outline oA(15,1.0);
-	FrameCreater::FillFrames(0,4,0.1,0.1,&Outline::OutlineAmount,oA);
-	FrameCreater::FillFrames(5,7,0.4,0.4,&Outline::OutlineAmount,oA);
-	FrameCreater::FillFrames(8,12,0.7,0.7,&Outline::OutlineAmount,oA);
-
-	//FrameCreater::FillFrames(0,5,2,2,&Outline::Fnum,oA);
-	//FrameCreater::FillFrames(6,7,5,5,&Outline::Fnum,oA);
-	//
-	//Box_3 ms(2,4,8,4,4,4);
-	//Polyhedron mP= ms.Draw();
-
-
-	//oA.DoAtFrame(mP,8);
-
-	std::cout<<oA.OutlineAmount.val<<" "<<oA.Fnum.val<<std::endl;
-	std::ostream_iterator< double > output( std::cout, " " );
-	std::copy( oA.OutlineAmount.FrameValues.begin(), oA.OutlineAmount.FrameValues.end(), output );
+	std::ofstream of("E:\\123.off");
 
 	/*
 	std::vector <Point_3> arr;
@@ -73,82 +55,88 @@ int main() {
 	arr.push_back(Point_3 (0,1.25,3));
 	arr.push_back(Point_3 (0,1.50,3));
 	arr.push_back(Point_3 (0,1.75,3));
-	
-	Point_3 Center = Point_3(0,0,0);
 	*/
+	
+	Point_3* Center = new Point_3(2,2,4);
 
+	//Arc_2 s(30,270,30,true);
 	//Circle_2 s(4,20);
-	//Arc_2 s(6,270,true);
-	//Ellipse_2 s(6,4);
+	//Ellipse_2 s(6,4,30);
 	//Plane_3 s(2,3,1,3);
 	//Rectangle_2 s(20,10);
 
-	//Box_3 s(2,4,8,5,20,5);
-	//Box_3 s(200,400,800,80,80,80);;
+	//Box_3 s(4,4,8,20,20,20);
 	//Capsule_3 s(30,200,10,10);
 	//ChamferCyl_3 s(30,60,10,10,5,5,15);
 	//Cone_3 s(2,5,10,11,2,3);
 	//Cylinder_3 s(3,20,20,9,30);
 	//Lathe_3 s(arr,Center,Z_ax,20,360);
-	//Pyramid_3 s(100,200,200,5,50,5);
-	//Sphere_3 s(20,50);
+	//Pyramid_3 s(100,200,200,25,25,25);
+	Sphere_3 s(20,50);
 	//Spindle_3 s(10,30,20,10,5,15);
 	//Spring_3 s(20,2.5,200,10,10,40);
 	//Torus_3 s(20,5,0,0,10,20);
 	//Tube_3 s(4,3,5,4,5,20);
 
-	
 	Polyhedron P;
-	std::ifstream off("C:\\PolyDepend\\spr_1.5M.off");
-	off>>P;
-	P.normalize_border();
-	//P = s.Draw();
+	P = s.Draw();
 
-	std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
 
-	Bevel B(18,1.25,1.25);
-	//B.Do(P);
-
-	Extrude E(18,1.25);
-	//E.Do(P);
-	
-	Outline O(5,2.25);
-	//O.Do(P);
+	Bevel Be(18,1.25,1.25);
+	//Be.Do(P);
 
 	Bridge Br(18,20);
 	//Br.Do(P);
 
-<<<<<<< HEAD:CGsp/CGsp.cpp
-	Twist Tw(90,Center,Z_ax,4000,-4000);
-	Tw.Do(P);
+	Extrude Ex(18,1.25);
+	//Ex.Do(P);
 	
-	
-	Taper Ta(1,Center,X_ax,20,-20);
-=======
-	Twist Tw(900,s.Center,X_ax,4000,-4000);
-	Twist Tw3(900,s.Center,Z_ax,4000,-4000);
-	Tw3.Do(P);
-	Tw.Do(P);
-	
-	Taper Ta(1,s.Center,X_ax,20,-20);
->>>>>>> 6753210f220197626cc27d20380a44ff6de8cef2:CGsp/CGsp.cpp
-	//Ta.Do(P);
+	Outline Ou(5,2.25);
+	//Ou.Do(P);
 
-	Bend Be(90,s.Center,Z_ax,3,-3);
-	//Be.Do(P);
 
-	Skew S(30,s.Center,Y_ax,20,-20);
-	//S.Do(P);
+	Bend Ben(90,s.Center,Z_ax,false,3,-3);
+	//Ben.Do(P);
 
-	Stretch St(-1,s.Center,Z_ax);
+	Bulge Bu(36,s.Center,Z_ax,BRadial,false,5,-5);
+	//Bu.Do(P);
+
+	Cylindrical_Wave CylWa(3,5,4,Center,Y_ax);
+	//CylWa.Do(P);
+
+	Linear_Wave LiWaX(3,4,0,s.Center,Z_ax,X_ax);
+	//LiWaX.Do(P);
+	Linear_Wave LiWaY(2,4,0,s.Center,Z_ax,Y_ax);
+	//LiWaY.Do(P);
+
+	//Polyhedron E;
+	//E = s1.Draw();
+	//Morph Mor(E,50);
+	//Mor.Do(P);
+
+	Noise No(4,10,0,s.Center,Z_ax);
+	No.Do(P);
+
+	Skew Sk(30,s.Center,Z_ax,false,20,-20);
+	//Sk.Do(P);
+
+	Smooth Sm(1);
+	//Sm.Do(P);
+
+	Spherify Sph(100);
+	//Sph.Do(P);
+
+	Squeeze Sq(-10,s.Center,Z_ax,false,10,-10);
+	//Sq.Do(P);
+
+	Stretch St(2,s.Center,Z_ax,false,15,-15);
 	//St.Do(P);
 	
-	////
+	Taper Ta(3,s.Center,X_ax,false,20,-20);
+	//Ta.Do(P);
 
-	//s.ApplyModifier(&Br);
-	//s.ApplyModifier(&Ta);
-
-	////
+	Twist Tw(90,s.Center,Z_ax,true,4,-4);
+	//Tw.Do(P);
 
 	// Write polyhedron in Object File Format (OFF).
 	CGAL::set_ascii_mode( of );
@@ -192,6 +180,6 @@ int main() {
 		oof << std::endl;
 	}
 	*/
-	
+
 	return 0;
 }
