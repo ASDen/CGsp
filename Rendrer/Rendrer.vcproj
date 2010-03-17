@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib OpenThreads.lib osg.lib osgUtil.lib osgViewer.lib osgWidget.lib osgGA.lib gsl.lib"
+				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib osgGAd.lib gsl.lib user32.lib gdi32.lib Winmm.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -205,11 +205,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\BaseEventHandler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseManager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\glutViewer.h"
 				>
 			</File>
 			<File
 				RelativePath=".\osgData.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RdInc.h"
 				>
 			</File>
 			<File
@@ -220,6 +232,22 @@
 				RelativePath=".\targetver.h"
 				>
 			</File>
+			<Filter
+				Name="KeyFrame"
+				>
+				<File
+					RelativePath=".\KeyFrame\KeyFrameEventHandler.h"
+					>
+				</File>
+				<File
+					RelativePath=".\KeyFrame\KeyFrameManager.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Physics"
+				>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

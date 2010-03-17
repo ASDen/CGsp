@@ -1,8 +1,7 @@
 // Rendrer.cpp : Defines the entry point for the console application.
 
 #include "stdafx.h"
-#include "osgData.h"
-#include "glutViewer.h"
+#include "RdInc.h"
 
 
 int main( int argc, char **argv )
@@ -17,11 +16,13 @@ int main( int argc, char **argv )
 	//Pyramid_3* s = new Pyramid_3(100,200,200,25,25,25);
 	//Sphere_3* s = new Sphere_3(20,50);
 	Spindle_3* s = new Spindle_3(40,70,20,25,25,25);
+	Spindle_3* s2 = new Spindle_3(40,70,20,25,25,25);
 	//Spring_3* s = new Spring_3(20,2.5,200,10,10,40);
 	//Torus_3* s = new Torus_3(20,5,0,0,10,20);
 	//Tube_3* s = new Tube_3(4,3,5,4,5,20);
 	
 	s->Draw();
+	s2->Draw();
 
 
 	Bevel Be(18,1.25,1.25);
@@ -65,16 +66,26 @@ int main( int argc, char **argv )
 	FrameCreater::FillFrames(0,100,0.0,100.0,&Stretch::StAmount,St);
 
 	s->ApplyModifier(&St);
+	s2->ApplyModifier(&St);
+
 
 	PolyhedronNode* c = new PolyhedronNode(s,osg::Vec3(5,5,5));
+	PolyhedronNode* c2 = new PolyhedronNode(s,osg::Vec3(-10,5,5));
 	c->WireFrame = false;
 
 
 	osgPolyManager* pman = new osgPolyManager;
 	pman->AddPolyhedron(c);
+	pman->AddPolyhedron(c2);
 
-	glutInit(&argc, argv);
-	gView(pman);
+
+	//glutInit(&argc, argv);
+	//gView(pman);
+	KeyFrameManager kfm;
+	kfm.InitOsg();
+	kfm.setPolyManager(pman);
+	kfm.DisplayLoop();
+
 	
 	return 0;
 }
