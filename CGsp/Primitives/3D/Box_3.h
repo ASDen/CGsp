@@ -50,22 +50,23 @@ public:
 
         Halfedge_handle a, b, c, d;
         //Starting the BOX with tetrahedron, with width, length and height
-        Halfedge_handle h = P.make_tetrahedron( Point( width, 0, 0),
-                                                Point( 0, 0, height),
-                                                Point( 0, 0, 0),
-                                                Point( 0, length, 0));
+        Halfedge_handle h = P.make_tetrahedron( Point(  width/2, -length/2, -height/2),
+                                                Point( -width/2, -length/2,  height/2),
+                                                Point( -width/2, -length/2, -height/2),
+                                                Point( -width/2,  length/2, -height/2)
+												);
         //editing on the tetrahedron to convert it to BOX
         Halfedge_handle g = h->next()->opposite()->next();            
         P.split_edge( h->next());
         P.split_edge( g->next());
         P.split_edge( g);                                             
-        h->next()->vertex()->point()     = Point( width, 0, height);
-        g->next()->vertex()->point()     = Point( 0, length, height);
-        g->opposite()->vertex()->point() = Point( width, length, 0);           
+        h->next()->vertex()->point()     = Point(  width/2, -length/2, height/2);
+        g->next()->vertex()->point()     = Point( -width/2,  length/2, height/2);
+        g->opposite()->vertex()->point() = Point(  width/2,  length/2, -height/2);           
         Halfedge_handle f = P.split_facet( g->next(),           
             g->next()->next()->next());
         Halfedge_handle e = P.split_edge( f);
-        e->vertex()->point() = Point( width, length, height);
+        e->vertex()->point() = Point( width/2, length/2, height/2);
         P.split_facet( e, f->next()->next());
         Halfedge_handle o = e->opposite()->next();
         Halfedge_handle q = h->next()->next()->next();

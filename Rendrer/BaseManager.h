@@ -2,7 +2,9 @@
 class BaseManager
 {
 public:
-	//Viewing..
+	//Data..
+	osgPolyManager* Man;
+	//Viewing Actors..
 	osg::ref_ptr<osgViewer::Viewer> viewer;
 	osg::ref_ptr<osg::GraphicsContext> gc;
 	osg::ref_ptr<osg::Camera> camera;
@@ -52,23 +54,34 @@ public:
 		rate = 20 ;
 	}
 
+	void setPolyManager(osgPolyManager* m)
+	{
+		Man=m;
+		viewer->setSceneData(Man->root);
+	}
+
 	void DisplayLoop()
 	{
 		viewer->realize();
 		while (!viewer->done())
 		{
+			viewer->advance(USE_REFERENCE_TIME);
+			viewer->eventTraversal();
+			//do we need to update scene ?
 			Telp+=viewer->elapsedTime()-T0;
 			T0=viewer->elapsedTime();
 			if(Telp>=1/rate)
 			{
-				Telp-=1/rate;
 				//Telp = 0;
+				//Telp-=1/rate;
+				Telp = fmod(Telp,1/rate);
 				UpdateScene();
+				viewer->updateTraversal();
+				
 				fnum++;
 				
 			}
-
-			if (viewer.valid()) viewer->frame();
+			viewer->renderingTraversals();
 		}
 	}
 

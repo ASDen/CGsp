@@ -1,11 +1,13 @@
 typedef Polyhedron::Edge_iterator	Edge_iterator;
 typedef Primitives* pPrimitive;
+typedef NxActor* pNxActor;
 
 class PolyhedronNode : public osg::Drawable
 {
 public:
 
 	pPrimitive P;
+	pNxActor Actor;
 	osg::Vec3 Position;
 	bool WireFrame;
 	bool AntialisedLines;
@@ -44,6 +46,7 @@ public:
 			{
 				const Point_3& p = he->vertex()->point();
 				::glVertex3d(CGAL::to_double(p.x()),CGAL::to_double(p.y()),CGAL::to_double(p.z()));
+				//std::cout<<p.x()<<" "<<p.y()<<" "<<p.z()<<std::endl;
 			}
 			::glEnd();
 
@@ -86,8 +89,11 @@ public:
 		root=new osg::Group();
 	}
 
+	template <class Manager>
 	void AddPolyhedron(PolyhedronNode* Pn)
 	{
+		typedef typename Manager::UpdateCallback UC;
+
 		Pn->setUseDisplayList( false );
 		Pn->setUseVertexBufferObjects( true ); 
 		PolyBag.push_back(Pn);
@@ -96,6 +102,7 @@ public:
 		root->addChild(pat);
 		osg::Geode* g = new osg::Geode();
 		g->addDrawable(Pn);
+		pat->setUpdateCallback(new UC(Pn));
 		pat->addChild(g);
 	}
 

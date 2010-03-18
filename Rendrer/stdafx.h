@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
+//CGsp
 #include "../CGsp/stdafx.h"
 
 typedef CGAL::Simple_cartesian<double>                 Kernel;
@@ -23,15 +24,18 @@ typedef Polyhedron::Vertex_iterator                    Vertex_iterator;
 typedef Polyhedron::Halfedge_around_facet_circulator   Halfedge_facet_circulator;
 typedef Polyhedron::Halfedge_handle                    Halfedge_handle;
 typedef Polyhedron::Plane_const_iterator			   Plane_const_iterator;
-typedef  Polyhedron::Facet							   Facet;
+typedef Polyhedron::Facet							   Facet;
 typedef Kernel::Aff_transformation_3                   Aff3;
 
 #include "../CGsp/Zre.h"
 
+//CGAL
+#define NOMINMAX // for conflicts with NxMath
 #include <CGAL/gl.h>
 #include <CGAL/compute_normal.h>
 #include <CGAL/bounding_box.h>
 
+//OSG
 #include <osg/Geode>
 #include <osg/PositionAttitudeTransform>
 #include <osg/Config>
@@ -39,6 +43,7 @@ typedef Kernel::Aff_transformation_3                   Aff3;
 #include <osgViewer/ViewerEventHandlers>
 #include <osgGA/TrackballManipulator>
 
+//GLUT
 #ifdef WIN32
 #include <windows.h>
 #endif
@@ -48,5 +53,13 @@ typedef Kernel::Aff_transformation_3                   Aff3;
 #else
 #  include <GL/glut.h>
 #endif
+
+//PhysX
+#include "NxPhysics.h"
+#include "Cooking.h"
+#include "UserAllocator.h"
+#include "ErrorStream.h"
+#include "Utilities.h"
+#include "SamplesVRDSettings.h"
 
 // TODO: reference additional headers your program requires here

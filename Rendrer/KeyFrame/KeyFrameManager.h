@@ -2,25 +2,19 @@
 class KeyFrameManager : public BaseManager
 {
 public:
-	osgPolyManager* Man;
+	typedef KeyFrameUpdateCallBack UpdateCallback;
 
 	void InitOsg(int width=640,int height=480)
 	{
 		BaseManager::InitOsg();
-		viewer->addEventHandler
-			(new KeyFrameEventHandler(this));
-	}
-
-	void setPolyManager(osgPolyManager* m)
-	{
-		Man=m;
-		viewer->setSceneData(Man->root);
+		viewer->addEventHandler(new KeyFrameEventHandler(this));
 	}
 
 	void UpdateScene()
 	{
 		//update scence
-		Man->UpdateFrame(fnum);
+		//Man->UpdateFrame(fnum);
+		KeyFrameUpdateCallBack::fnum = fnum ;
 		std::cout<<"Frame #"<<fnum<<std::endl;
 	}
 };

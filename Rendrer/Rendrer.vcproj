@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib osgGAd.lib gsl.lib user32.lib gdi32.lib Winmm.lib"
+				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib osgGAd.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib user32.lib gdi32.lib Winmm.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -135,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib OpenThreads.lib osg.lib osgUtil.lib osgViewer.lib osgWidget.lib osgGA.lib gsl.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib OpenThreads.lib osg.lib osgUtil.lib osgViewer.lib osgWidget.lib osgGA.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -198,6 +198,34 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<Filter
+				Name="Physics"
+				>
+				<Filter
+					Name="Helpers"
+					>
+					<File
+						RelativePath=".\Physics\Helpers\cooking.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -210,6 +238,10 @@
 			</File>
 			<File
 				RelativePath=".\BaseManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseUpdate.h"
 				>
 			</File>
 			<File
@@ -243,10 +275,38 @@
 					RelativePath=".\KeyFrame\KeyFrameManager.h"
 					>
 				</File>
+				<File
+					RelativePath=".\KeyFrame\KeyFrameUpdate.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Physics"
 				>
+				<File
+					RelativePath=".\Physics\PhysicsEventHandler.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Physics\PhysicsManager.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Physics\PhysicsUpdate.h"
+					>
+				</File>
+				<Filter
+					Name="Primitives"
+					>
+					<File
+						RelativePath=".\Physics\Primitives\XBox.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XPlane.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
