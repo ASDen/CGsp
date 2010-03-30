@@ -1,11 +1,13 @@
+#pragma once
 
-class PhysicsManager : public BaseManager
+class CGSP_CC PhysicsManager : public BaseManager
 {
 public:
 	typedef PhysicsUpdateCallBack UpdateCallback;
 
 	NxPhysicsSDK*     gPhysicsSDK;
 	NxScene*          gScene;
+	UserAllocator*	  gAllocator;
 	NxVec3            gDefaultGravity;
 	ErrorStream       gErrorStream;
 	bool              gHardwareSimulation;
@@ -17,7 +19,8 @@ public:
 		// Initialize PhysicsSDK
 		NxPhysicsSDKDesc desc;
 		NxSDKCreateError errorCode = NXCE_NO_ERROR;
-		gPhysicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, &gErrorStream, desc, &errorCode);
+		gAllocator = new UserAllocator;
+		gPhysicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, gAllocator, &gErrorStream, desc, &errorCode);
 		if(gPhysicsSDK == NULL) 
 		{
 			//printf("\nSDK create error (%d - %s).\nUnable to initialize the PhysX SDK.\n\n", errorCode, getNxSDKCreateError(errorCode));
@@ -41,10 +44,10 @@ public:
 			}
 		}
 		// Set the physics parameters
-		gPhysicsSDK->setParameter(NX_SKIN_WIDTH, 0.005f);
+		gPhysicsSDK->setParameter(NX_SKIN_WIDTH, 0.01f);
 
 		// Set the debug visualization parameters
-		//gPhysicsSDK->setParameter(NX_VISUALIZATION_SCALE, 1);
+		gPhysicsSDK->setParameter(NX_VISUALIZATION_SCALE, 1);
 		//gPhysicsSDK->setParameter(NX_VISUALIZE_CLOTH_MESH, 1);
 		//gPhysicsSDK->setParameter(NX_VISUALIZE_CLOTH_VALIDBOUNDS, 1);
 

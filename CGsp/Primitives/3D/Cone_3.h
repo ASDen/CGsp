@@ -49,16 +49,16 @@ public:
 		maxmin(side_Seg,0,200);
 
 		//Starting the cone with tetrahedron, with radius1, radius2 and height
-		Halfedge_handle h = P.make_tetrahedron( Point( radius1, 0, 0 ),
-												Point( 0, 0, height ),
-												Point( 0, 0, 0 ),
-												Point( 0, radius1, 0 ) );
+		Halfedge_handle h = P.make_tetrahedron( Point( radius1, 0	   ,-height/2 ),
+												Point( 0	  , 0	   , height/2 ),
+												Point( 0	  , 0	   ,-height/2 ),
+												Point( 0	  , radius1,-height/2 ) );
 		//editing on the tetrahedron to convert it to 3_facet Cone
 		Halfedge_handle g = h->next()->opposite()->next();
 		P.split_edge( h->next());
 		P.split_edge( g->next());                    
-		h->next()->vertex()->point()     = Point( radius1, 0, height );
-		g->next()->vertex()->point()     = Point( 0, radius1, height );
+		h->next()->vertex()->point()     = Point( radius1, 0	  , height/2 );
+		g->next()->vertex()->point()     = Point( 0		 , radius1, height/2 );
 		Halfedge_handle f = P.split_facet( g->next(), g->next()->next()->next() );
 
 		//Arrays will be used later in storing some halfedges
@@ -72,24 +72,24 @@ public:
 		double y1 = radius1 * sin ( 0.0 );
 		double x2 = radius2 * cos ( 0.0 );
 		double y2 = radius2 * sin ( 0.0 );
-		h->vertex()->point()= Point ( x1, y1, 0 );
-		f->vertex()->point()= Point ( x2, y2, height );
+		h->vertex()->point()= Point ( x1, y1,-height/2 );
+		f->vertex()->point()= Point ( x2, y2, height/2 );
 		arr_sideS[0] = h->next();	//store it in the array
 		//Second Point
 		x1 = radius1 * cos ( 2 * ( side_Seg-1 ) * ( CGAL_PI/side_Seg ) );
 		y1 = radius1 * sin ( 2 * ( side_Seg-1 ) * ( CGAL_PI/side_Seg ) );
 		x2 = radius2 * cos ( 2 * ( side_Seg-1 ) * ( CGAL_PI/side_Seg ) );
 		y2 = radius2 * sin ( 2 * ( side_Seg-1 ) * ( CGAL_PI/side_Seg ) );
-		h->opposite()->vertex()->point()		= Point ( x1, y1, 0 );
-		f->opposite()->next()->vertex()->point()= Point ( x2, y2, height );
+		h->opposite()->vertex()->point()		= Point ( x1, y1,-height/2 );
+		f->opposite()->next()->vertex()->point()= Point ( x2, y2, height/2 );
 		arr_sideS[1] = h->next()->next()->next()->opposite();
 		//Third Point
 		x1 = radius1 * cos ( 2 * ( side_Seg-2 ) * ( CGAL_PI/side_Seg ) );
 		y1 = radius1 * sin ( 2 * ( side_Seg-2 ) * ( CGAL_PI/side_Seg ) );
 		x2 = radius2 * cos ( 2 * ( side_Seg-2 ) * ( CGAL_PI/side_Seg ) );
 		y2 = radius2 * sin ( 2 * ( side_Seg-2 ) * ( CGAL_PI/side_Seg ) );
-		h->opposite()->next()->vertex()->point()= Point ( x1, y1, 0 );
-		f->opposite()->vertex()->point()		= Point ( x2, y2, height );
+		h->opposite()->next()->vertex()->point()= Point ( x1, y1,-height/2 );
+		f->opposite()->vertex()->point()		= Point ( x2, y2, height/2 );
 		arr_sideS[2] = g->next();
 
 		//If there are cap segments, they will be added
@@ -100,8 +100,8 @@ public:
 			//put point in the center of the three facetcone 
 			Halfedge_handle gg = P.split_edge( g );
 			Halfedge_handle ff = P.split_edge( f );
-			gg->vertex()->point() = Point ( 0, 0, 0 );
-			ff->vertex()->point() = Point ( 0, 0, height );
+			gg->vertex()->point() = Point ( 0, 0,-height/2 );
+			ff->vertex()->point() = Point ( 0, 0, height/2 );
 			P.split_facet( gg->opposite()	, gg->opposite()->next()->next()->next()->next() );
 			P.split_facet( f				, f->next()->next()->next() );
 			//draw the cap segments
@@ -128,8 +128,8 @@ public:
 				Halfedge_handle gg = P.split_edge( g );
 
 				Halfedge_handle e = P.split_edge( f );
-				g->opposite()->vertex()->point()= Point ( x1, y1, 0 );
-				e->vertex()->point()			= Point ( x2, y2, height );
+				g->opposite()->vertex()->point()= Point ( x1, y1,-height/2 );
+				e->vertex()->point()			= Point ( x2, y2, height/2 );
 				
 				P.split_facet( e, f->next()->next() );
 				arr_sideS[i-1] = f->next()->next()->next();
@@ -160,14 +160,14 @@ public:
 				//now the use of the array
 				P.split_edge( arr_sideS[0] );
 				double n = ( i - 1 )*( height / height_Seg );
-				arr_sideS[0]->opposite()->vertex()->point() = Point ( rad, 0, n);
+				arr_sideS[0]->opposite()->vertex()->point() = Point ( rad, 0, n - height/2);
 				//loop on side segments and draw the height segment between all side segments
 				for ( int j = 1 ; j < side_Seg ; j++ )
 				{
 					x1 = rad * cos ( 2 * ( side_Seg - j ) * ( CGAL_PI/side_Seg ) );//equation to determine the point of position of point
 					y1 = rad * sin ( 2 * ( side_Seg - j ) * ( CGAL_PI/side_Seg ) );
 					P.split_edge( arr_sideS[j] );
-					arr_sideS[j]->opposite()->vertex()->point() = Point ( x1, y1, n);
+					arr_sideS[j]->opposite()->vertex()->point() = Point ( x1, y1, n - height/2);
 					P.split_facet( arr_sideS[j]->opposite(), arr_sideS[j]->opposite()->next()->next()->next() );
 				}
 				//draw the height segment between the last two side segments
@@ -186,14 +186,14 @@ public:
 				//draw the first point
 				x1 = n1 * cos ( 0.0 );
 				y1 = n1 * sin ( 0.0 );
-				arr_capSD[0]->opposite()->vertex()->point() = Point ( x1, y1, 0);
+				arr_capSD[0]->opposite()->vertex()->point() = Point ( x1, y1,-height/2);
 				//loop on the points
 				for ( int j = 1 ; j < side_Seg ; j++)
 				{
 					P.split_edge( arr_capSD[j] );
 					x1 = n1 * cos ( 2 * ( side_Seg - j ) * ( CGAL_PI/side_Seg ) );
 					y1 = n1 * sin ( 2 * ( side_Seg - j ) * ( CGAL_PI/side_Seg ) );
-					arr_capSD[j]->opposite()->vertex()->point() = Point ( x1, y1, 0);
+					arr_capSD[j]->opposite()->vertex()->point() = Point ( x1, y1,-height/2);
 					if( i == 2 )//if it is in the second one it will be in a triangle, so need just two next()
 						P.split_facet( arr_capSD[j]->opposite(), arr_capSD[j]->opposite()->next()->next() );
 					else//else it wwill need 3 next()
@@ -211,21 +211,21 @@ public:
 				Halfedge_handle b = P.split_edge( arr_capSU[0] );
 				x2 = n2 * cos ( 0.0 );
 				y2 = n2 * sin ( 0.0 );
-				arr_capSU[0]->opposite()->vertex()->point() = Point ( x2, y2, height);
+				arr_capSU[0]->opposite()->vertex()->point() = Point ( x2, y2, height/2);
 				//loop on the points
 				for ( int j = 1 ; j < side_Seg ; j++)
 				{
 					Halfedge_handle a = P.split_edge( arr_capSU[j] );
 					x2 = n2 * cos ( 2 * ( side_Seg - j ) * ( CGAL_PI/side_Seg ) );
 					y2 = n2 * sin ( 2 * ( side_Seg - j ) * ( CGAL_PI/side_Seg ) );
-					arr_capSU[j]->opposite()->vertex()->point() = Point ( x2, y2, height);
+					arr_capSU[j]->opposite()->vertex()->point() = Point ( x2, y2, height/2);
 					P.split_facet( a, arr_capSU[j]->next()->next() );
 				}
 				//draw the cap segment between the last two side segments
 				P.split_facet( b, arr_capSU[0]->next()->next() );
 			}	
 		}
-		Center = new Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

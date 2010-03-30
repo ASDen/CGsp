@@ -39,7 +39,7 @@ class Spring_3 : public Primitives
 					double x_t = rad * cos(2 * s * CGAL_PI / side);
 					double y_t = rad * sin(2 * s * CGAL_PI / side);
 					//get the Z point
-					double z_t = r2 * sin(2 * e * CGAL_PI / segm) + s * h / (side * turn);
+					double z_t = r2 * sin(2 * e * CGAL_PI / segm) + s * h / (side * turn) - h/2;
 					B.add_vertex( Point( x_t, y_t, z_t) );
 				}
 			}
@@ -99,7 +99,6 @@ public:
 	int turn_number;
 	int Seg;
 	int side_Seg;
-	Point_3* Center;
 
 	//Set the default parameters in the Spring
 	Spring_3():radius1(25.0),radius2(10.0),height(0),turn_number(1),Seg(24),side_Seg(12)
@@ -139,7 +138,7 @@ public:
 		Build_Spring<HalfedgeDS> Spring(radius1,radius2,height,turn_number,Seg,side_Seg);
 		P.delegate( Spring );
 
-		Center = new Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

@@ -1,5 +1,5 @@
 
-class KeyFrameEventHandler : public BaseEventHandler
+class CGSP_CC KeyFrameEventHandler : public BaseEventHandler
 {
 public:
 
@@ -26,5 +26,7 @@ public:
 		}
 		return false;
 	}
+
+	void shoot(const osgGA::GUIEventAdapter& ea, osgViewer::Viewer* viewer);
 
 };

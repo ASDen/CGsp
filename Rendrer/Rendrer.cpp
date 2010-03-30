@@ -1,29 +1,37 @@
 // Rendrer.cpp : Defines the entry point for the console application.
-
 #include "stdafx.h"
 #include "RdInc.h"
 
 
 int main( int argc, char **argv )
 {
-
-	Box_3* s = new Box_3(4,4,4,1,1,1);
-	//Capsule_3* s = new Capsule_3(30,200,10,10);
-	//ChamferCyl_3* s = new ChamferCyl_3(30,60,10,10,5,5,15);
-	//Cone_3* s = new Cone_3(2,5,10,11,2,3);
-	//Cylinder_3* s = new Cylinder_3(3,20,20,9,30);
+	Box_3* s = new Box_3(4,8,4,1,1,1);
+	//Capsule_3* s4 = new Capsule_3(5,21,13,15);
+	ChamferCyl_3* s4 = new ChamferCyl_3(6,12,2,20,12,10,10);
+	//Cone_3* s4 = new Cone_3(2,5,10,15,15,15);
+	//Cylinder_3* s4 = new Cylinder_3(6,10,2,2,15);
 	//Lathe_3* s = new Lathe_3(arr,Center,Z_ax,20,360);
-	//Pyramid_3* s = new Pyramid_3(100,200,200,25,25,25);
-	//Sphere_3* s = new Sphere_3(20,50);
-	//Spindle_3* s = new Spindle_3(40,70,20,25,25,25);
+	//Pyramid_3* s4 = new Pyramid_3(16,16,16,1,1,1);
+	Sphere_3* s3 = new Sphere_3(2,60);
+	//Spindle_3* s4 = new Spindle_3(4,5,2,8,8,8);
 	Plane_3* s2 = new Plane_3(100);
 	//Spring_3* s = new Spring_3(20,2.5,200,10,10,40);
 	//Torus_3* s = new Torus_3(20,5,0,0,10,20);
-	//Tube_3* s = new Tube_3(4,3,5,4,5,20);
+	//Tube_3* s4 = new Tube_3(4,3,5,4,5,20);
 	
 	s->Draw();
 	s2->Draw();
+	s3->Draw();
+	s4->Draw();
+	//s5->Draw();
 
+	Bevel m(18,1.25,1.25);
+	/*Eigen::Transform3d T;
+	Eigen::Vector3d Original(0,0,s4->height/2);
+	T.setIdentity();
+	T.pretranslate (-Original);
+	m.ApplyTransformToPolyhedron(s4->Mesh,T);
+	s4->setMesh(s4->Mesh);*/
 
 	Bevel Be(18,1.25,1.25);
 
@@ -61,6 +69,7 @@ int main( int argc, char **argv )
 	Twist Tw(90,s->Center,Z_ax,true,4,-4);
 
 	PhysicsManager pxm;
+	osgPolyManager* pman = new osgPolyManager;
 	pxm.InitOsg();
 
 	//FrameCreater::FillFrames(0,100,0.0,100.0,&Stretch::StAmount,St);
@@ -69,25 +78,50 @@ int main( int argc, char **argv )
 	//s2->ApplyModifier(&St);
 
 
-	
-	PolyhedronNode* c = new PolyhedronNode(s,osg::Vec3(50,52,20));
-	c->Actor = XBox::Construct(pxm.gScene,c);
-	c->WireFrame = true;
 	PolyhedronNode* c2 = new PolyhedronNode(s2,osg::Vec3(0,0,0));
 	c2->Actor = XPlane::Construct(pxm.gScene,c2);
 	c2->WireFrame = true;
-	PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(50,50,40));
+
+	/*PolyhedronNode* c = new PolyhedronNode(s,osg::Vec3(50,50,20));
+	c->Actor = XBox::Construct(pxm.gScene,c);
+	c->WireFrame = true;*/
+
+	for(int i=0;i<10;i++)
+	{
+	PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(50,50,i*6));
 	c1->Actor = XBox::Construct(pxm.gScene,c1);
 	c1->WireFrame = true;
-	
-
-
-	osgPolyManager* pman = new osgPolyManager;
-	
-	pman->AddPolyhedron<PhysicsManager>(c);
-	pman->AddPolyhedron<PhysicsManager>(c2);
+	c1->AntialisedLines = true;
 	pman->AddPolyhedron<PhysicsManager>(c1);
+	}
+	PolyhedronNode* cx = new PolyhedronNode(s4,osg::Vec3(50,20,20));
+	cx->Actor = XConvex::Construct(pxm.gScene,pxm.gPhysicsSDK,cx);
+	cx->WireFrame = true;
+	cx->AntialisedLines = true;
+	pman->AddPolyhedron<PhysicsManager>(cx);
+
+	/*PolyhedronNode* cxy = new PolyhedronNode(s4,osg::Vec3(50,20,40));
+	cxy->Actor = XConvex::Construct(pxm.gScene,pxm.gPhysicsSDK,cxy);
+	pman->AddPolyhedron<PhysicsManager>(cxy);*/
 	
+	
+	/*PolyhedronNode* c3 = new PolyhedronNode(s5,osg::Vec3(50,50,100));
+	c3->Actor = XCapsule::Construct(pxm.gScene,c3,s5->height,s5->radius);
+	c3->WireFrame = false;
+	c3->AntialisedLines = true;
+	pman->AddPolyhedron<PhysicsManager>(c3);*/
+	
+
+
+	
+	
+	//pman->AddPolyhedron<PhysicsManager>(c);
+	pman->AddPolyhedron<PhysicsManager>(c2);
+	//pman->AddPolyhedron<PhysicsManager>(c1);
+	//pman->AddPolyhedron<PhysicsManager>(c3);
+	
+	//LightNode* ln=new LightNode();
+	//pman->addlight(ln);
 
 	pxm.setPolyManager(pman);
 	pxm.DisplayLoop();

@@ -1,5 +1,5 @@
 
-class XPlane 
+class CGSP_CC XPlane 
 {
 public:
 

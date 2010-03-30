@@ -1,5 +1,5 @@
 
-class KeyFrameUpdateCallBack : public BaseUpdateCallBack
+class CGSP_CC KeyFrameUpdateCallBack : public BaseUpdateCallBack
 {
 public:
 

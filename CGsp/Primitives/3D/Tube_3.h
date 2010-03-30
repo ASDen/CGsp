@@ -40,7 +40,7 @@ class Tube_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = r2;
-				double z_t = e * h / segm;
+				double z_t = e * h / segm - h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -55,7 +55,7 @@ class Tube_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = r2 - e * ( r2 - r1) / cap;
-				double z_t = h;
+				double z_t = h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -70,7 +70,7 @@ class Tube_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = r1;
-				double z_t = (segm - e) * h / segm;
+				double z_t = (segm - e) * h / segm - h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -85,7 +85,7 @@ class Tube_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = r1 + e * ( r2 - r1) / cap;
-				double z_t = 0;
+				double z_t = -h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -135,7 +135,6 @@ public:
 	int height_Seg;
 	int cap_Seg;
 	int side_Seg;
-	Point_3* Center;
 
 	//Set the default parameters in the Tube
 	Tube_3():radius1(25.0),radius2(20.0),height(50),height_Seg(1),cap_Seg(1),side_Seg(24)
@@ -175,7 +174,7 @@ public:
 		Build_tube<HalfedgeDS> tube(radius1,radius2,height,height_Seg,cap_Seg,side_Seg);
 		P.delegate( tube );		
 		
-		Center = new Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

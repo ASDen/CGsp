@@ -2,7 +2,8 @@
 
 #include "stdafx.h"
 
-typedef CGAL::Simple_cartesian<float>                 Kernel;
+//typedef CGAL::Simple_cartesian<float>                 Kernel;
+typedef CGAL::Exact_predicates_inexact_constructions_kernel Kernel;
 typedef Kernel::Point_3                                Point_3;
 typedef Kernel::Vector_3                               Vector_3;
 typedef CGAL::Polyhedron_traits_with_normals_3<Kernel> Traits;
@@ -30,16 +31,15 @@ struct Normal_vector {
 };
 
 int main() {
-	std::ofstream of("E:\\123.off");
+	std::ofstream of("C:\\123.off");
 
-	/*
-	std::vector <Point_3> arr;
-	arr.push_back(Point_3 (0,2,3));
-	arr.push_back(Point_3 (0,2,4));
-	arr.push_back(Point_3 (0,2,5));
-	arr.push_back(Point_3 (0,2,6));
-	arr.push_back(Point_3 (0,2,7));
-	arr.push_back(Point_3 (0,2,8));
+	/*std::vector <Point_3> arr;
+	arr.push_back(Point_3 (2,0,2));
+	arr.push_back(Point_3 (6,0,3));
+	arr.push_back(Point_3 (8,0,4));
+	arr.push_back(Point_3 (3,0,5));
+	arr.push_back(Point_3 (5,0,6));
+	arr.push_back(Point_3 (8,0,7));
 
 	arr.push_back(Point_3 (0,1.75,8));
 	arr.push_back(Point_3 (0,1.50,8));
@@ -54,32 +54,33 @@ int main() {
 
 	arr.push_back(Point_3 (0,1.25,3));
 	arr.push_back(Point_3 (0,1.50,3));
-	arr.push_back(Point_3 (0,1.75,3));
-	*/
+	arr.push_back(Point_3 (0,1.75,3));*/
+
 	
-	Point_3* Center = new Point_3(2,2,4);
+	Point_3* Center = new Point_3(0,0,0);
 
 	//Arc_2 s(30,270,30,true);
 	//Circle_2 s(4,20);
 	//Ellipse_2 s(6,4,30);
-	//Plane_3 s(2,3,1,3);
+	//Plane_3 s(30,30,10,10);
 	//Rectangle_2 s(20,10);
 
-	//Box_3 s(4,4,8,20,20,20);
+	//Box_3 s(20,20,30,20,20,20);
 	//Capsule_3 s(30,200,10,10);
-	//ChamferCyl_3 s(30,60,10,10,5,5,15);
-	//Cone_3 s(2,5,10,11,2,3);
+	//ChamferCyl_3 s(60,100,30,10,5,5,15);
+	Cone_3 s(2,5,10,3,3,3);
 	//Cylinder_3 s(3,20,20,9,30);
 	//Lathe_3 s(arr,Center,Z_ax,20,360);
-	//Pyramid_3 s(100,200,200,25,25,25);
-	Sphere_3 s(20,50);
+	//Pyramid_3 s(100,200,200,10,10,10);
+	//Sphere_3 s(20,50);
 	//Spindle_3 s(10,30,20,10,5,15);
 	//Spring_3 s(20,2.5,200,10,10,40);
-	//Torus_3 s(20,5,0,0,10,20);
-	//Tube_3 s(4,3,5,4,5,20);
+	//Torus_3 s(20,5,0,0,30,40);
+	//Tube_3 s(14,13,15,20,20,10);
 
 	Polyhedron P;
-	P = s.Draw();
+	s.Draw();
+	CGAL::convex_hull_3(s.Mesh.points_begin(),s.Mesh.points_end(),P);
 
 
 	Bevel Be(18,1.25,1.25);
@@ -98,15 +99,15 @@ int main() {
 	Bend Ben(90,s.Center,Z_ax,false,3,-3);
 	//Ben.Do(P);
 
-	Bulge Bu(36,s.Center,Z_ax,BRadial,false,5,-5);
+	Bulge Bu(40,s.Center,Z_ax,BRadial,false,45,-45);
 	//Bu.Do(P);
 
-	Cylindrical_Wave CylWa(3,5,4,Center,Y_ax);
+	Cylindrical_Wave CylWa(2,8,12,s.Center,Z_ax);
 	//CylWa.Do(P);
 
-	Linear_Wave LiWaX(3,4,0,s.Center,Z_ax,X_ax);
+	Linear_Wave LiWaX(1,10,0,s.Center,Z_ax,X_ax);
 	//LiWaX.Do(P);
-	Linear_Wave LiWaY(2,4,0,s.Center,Z_ax,Y_ax);
+	Linear_Wave LiWaY(2,10,0,s.Center,Z_ax,Y_ax);
 	//LiWaY.Do(P);
 
 	//Polyhedron E;
@@ -114,8 +115,8 @@ int main() {
 	//Morph Mor(E,50);
 	//Mor.Do(P);
 
-	Noise No(4,10,0,s.Center,Z_ax);
-	No.Do(P);
+	Noise No(5,0.3,0,s.Center,Z_ax);
+	//No.Do(P);
 
 	Skew Sk(30,s.Center,Z_ax,false,20,-20);
 	//Sk.Do(P);
@@ -123,19 +124,19 @@ int main() {
 	Smooth Sm(1);
 	//Sm.Do(P);
 
-	Spherify Sph(100);
+	Spherify Sph(50);
 	//Sph.Do(P);
 
-	Squeeze Sq(-10,s.Center,Z_ax,false,10,-10);
+	Squeeze Sq(-40,s.Center,Z_ax,false,10,0);
 	//Sq.Do(P);
 
-	Stretch St(2,s.Center,Z_ax,false,15,-15);
+	Stretch St(-20,s.Center,Z_ax,true,50,-50);
 	//St.Do(P);
 	
 	Taper Ta(3,s.Center,X_ax,false,20,-20);
 	//Ta.Do(P);
 
-	Twist Tw(90,s.Center,Z_ax,true,4,-4);
+	Twist Tw(120,s.Center,Z_ax,true,50,-50);
 	//Tw.Do(P);
 
 	// Write polyhedron in Object File Format (OFF).

@@ -201,11 +201,55 @@
 			<Filter
 				Name="Physics"
 				>
+				<File
+					RelativePath=".\Physics\PhysicsEventHandler.cpp"
+					>
+				</File>
 				<Filter
 					Name="Helpers"
 					>
 					<File
 						RelativePath=".\Physics\Helpers\cooking.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Physics\Helpers\Stream.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\Physics\Helpers\UserAllocator.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -303,7 +347,19 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Physics\Primitives\XCapsule.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XConvex.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Physics\Primitives\XPlane.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XSphere.h"
 						>
 					</File>
 				</Filter>

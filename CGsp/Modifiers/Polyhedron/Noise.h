@@ -152,7 +152,7 @@ public:
 		Eigen::Vector3d org;
 
 		double x, y, z;
-		double delta1, delta2, delta3, Scale, Scale1, Scale2, Scale3;
+		double Scale;
 
 		Vertex_iterator Begin = P.vertices_begin();
 		if (Center == NULL)

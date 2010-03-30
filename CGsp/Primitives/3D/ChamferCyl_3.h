@@ -49,7 +49,7 @@ class ChamferCyl_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = e * (r - f) / cap;
-				double z_t = 0;
+				double z_t = -h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -64,7 +64,7 @@ class ChamferCyl_3 : public Primitives
 			{
 				double i = fill - e;
 				double rad = r - f + f * cos(1.5 * CGAL_PI + e * CGAL_PI / fill / 2.0);
-				double z_t = f - f * sin(i * CGAL_PI / fill / 2.0);
+				double z_t = f - f * sin(i * CGAL_PI / fill / 2.0) - h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -79,7 +79,7 @@ class ChamferCyl_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = r;
-				double z_t = f + e * (h - 2 * f) / segm;
+				double z_t = f + e * (h - 2 * f) / segm - h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -93,8 +93,8 @@ class ChamferCyl_3 : public Primitives
 			for (e = 0; e < fill; e++)
 			{
 				//get the radius of each circle
-				double rad = r - f + f * cos(e * CGAL_PI / fill / 2.0);
-				double z_t = h - f + f * sin(e * CGAL_PI / fill / 2.0);
+				double rad = r	 - f + f * cos(e * CGAL_PI / fill / 2.0);
+				double z_t = h/2 - f + f * sin(e * CGAL_PI / fill / 2.0);
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -109,7 +109,7 @@ class ChamferCyl_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = e * (r - f) / cap;
-				double z_t = h;
+				double z_t = h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -121,8 +121,8 @@ class ChamferCyl_3 : public Primitives
 			}
 
 			//add the upper and lower points of the Sphere
-			B.add_vertex( Point( 0, 0, h) );
-			B.add_vertex( Point( 0, 0, 0) );
+			B.add_vertex( Point( 0, 0, h/2) );
+			B.add_vertex( Point( 0, 0,-h/2) );
 
 			//adding vertices to faces
 			//loop on height segments
@@ -174,7 +174,6 @@ public:
 	int fillet_Seg;
 	int cap_Seg;
 	int side_Seg;
-	Point_3* Center;
 
 	//Set the default parameters in the ChamferCyl
 	ChamferCyl_3():radius(25.0),height(50),fillet(5.0),height_Seg(1),fillet_Seg(1),cap_Seg(1),side_Seg(24)
@@ -215,7 +214,7 @@ public:
 		Build_ChamferCyl<HalfedgeDS> ChamferCyl(radius,height,fillet,height_Seg,fillet_Seg,cap_Seg,side_Seg);
 		P.delegate( ChamferCyl );
 
-		Center = new Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

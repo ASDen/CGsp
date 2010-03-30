@@ -1,5 +1,6 @@
+#pragma once
 
-class PhysicsEventHandler : public BaseEventHandler
+class CGSP_CC PhysicsEventHandler : public BaseEventHandler
 {
 public:
 
@@ -18,13 +19,15 @@ public:
 			{
 				switch (gea.getKey())
 				{
-				case 'r':
-					Manager->fnum = 0;
+				case 's':
+					shoot(gea,viewer);
 					break;
 				}
 			}
 		}
 		return false;
 	}
+
+	void shoot(const osgGA::GUIEventAdapter& ea, osgViewer::Viewer* viewer);
 
 };

@@ -84,7 +84,6 @@ public:
 	double twist;
 	int Seg;
 	int side_Seg;
-	Point_3* Center;
 
 	//Set the default parameters in the Torus
 	Torus_3():radius1(25.0),radius2(10.0),rotation(0),twist(0),Seg(24),side_Seg(12)

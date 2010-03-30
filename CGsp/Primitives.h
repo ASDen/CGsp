@@ -7,6 +7,8 @@ public:
 	Polyhedron Mesh;
 	Polyhedron ModifiedMesh;
 
+	Point_3* Center;
+
 	virtual Polyhedron Draw()=0;
 
 	inline void setMesh(Polyhedron& P)
@@ -42,6 +44,50 @@ public:
 	{
 		if (value < min)
 			value = min;
+	}
+	
+	Point_3* get_ModifiedMeshCenter()
+	{
+		double x = 0, y = 0, z = 0;
+		int num = 0;
+		for (Vertex_iterator i = ModifiedMesh.vertices_begin(); i != ModifiedMesh.vertices_end(); i++)
+		{
+			Point_3 p = i->point();
+			num++;
+
+			x += p.x();
+			y += p.y();
+			z += p.z();
+		}
+		x /= num;
+		y /= num;
+		z /= num;
+
+		Point_3* Center = new Point_3(x, y, z);
+
+		return Center;
+	}
+
+	Point_3* get_MeshCenter()
+	{
+		double x = 0, y = 0, z = 0;
+		int num = 0;
+		for (Vertex_iterator i = Mesh.vertices_begin(); i != Mesh.vertices_end(); i++)
+		{
+			Point_3 p = i->point();
+			num++;
+
+			x += p.x();
+			y += p.y();
+			z += p.z();
+		}
+		x /= num;
+		y /= num;
+		z /= num;
+
+		Point_3* Center = new Point_3(x, y, z);
+
+		return Center;
 	}
 };
 /////////////

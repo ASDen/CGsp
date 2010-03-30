@@ -1,9 +1,10 @@
+#pragma once
 
-class BaseManager
+class CGSP_CC BaseManager
 {
 public:
 	//Data..
-	osgPolyManager* Man;
+	osgPolyManager* PolyMan;
 	//Viewing Actors..
 	osg::ref_ptr<osgViewer::Viewer> viewer;
 	osg::ref_ptr<osg::GraphicsContext> gc;
@@ -56,8 +57,8 @@ public:
 
 	void setPolyManager(osgPolyManager* m)
 	{
-		Man=m;
-		viewer->setSceneData(Man->root);
+		PolyMan=m;
+		viewer->setSceneData(PolyMan->root);
 	}
 
 	void DisplayLoop()

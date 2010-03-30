@@ -40,7 +40,7 @@ class Spindle_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = e * r / cap;
-				double z_t = e * c_h / cap;
+				double z_t = e * c_h / cap - h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -55,7 +55,7 @@ class Spindle_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad = r;
-				double z_t = c_h + e * (h - 2 * c_h) / segm;
+				double z_t = c_h + e * (h - 2 * c_h) / segm - h/2;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -70,7 +70,7 @@ class Spindle_3 : public Primitives
 			{
 				//get the radius of each circle
 				double rad =  e * r / cap;
-				double z_t = h - e * c_h / cap;
+				double z_t = h/2 - e * c_h / cap;
 
 				//loop on the side segments and add each point
 				for (int s = 0; s < numberOfSeparators; s++)
@@ -82,8 +82,8 @@ class Spindle_3 : public Primitives
 			}
 
 			//add the upper and lower points of the Sphere
-			B.add_vertex( Point( 0, 0, h) );
-			B.add_vertex( Point( 0, 0, 0) );
+			B.add_vertex( Point( 0, 0, h/2) );
+			B.add_vertex( Point( 0, 0,-h/2) );
 
 			//adding vertices to faces
 			//loop on height segments
@@ -134,7 +134,6 @@ public:
 	int height_Seg;
 	int cap_Seg;
 	int side_Seg;
-	Point_3* Center;
 
 	//Set the default parameters in the Spindle
 	Spindle_3():radius(25.0),height(50),cap_height(5.0),height_Seg(1),cap_Seg(1),side_Seg(24)
@@ -174,7 +173,7 @@ public:
 		Build_Spindle<HalfedgeDS> Spindle(radius,height,cap_height,height_Seg,cap_Seg,side_Seg);
 		P.delegate( Spindle );
 		
-		Center = new Point_3(0, 0, height/2);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

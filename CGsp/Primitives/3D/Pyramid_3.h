@@ -8,7 +8,6 @@ public:
 	int width_Seg;
 	int depth_Seg;
 	int height_Seg;
-	Point_3* Center;
 
 	//Set the default parameters in the Pyramid
 	Pyramid_3():width(25.0),depth(25.0),height(25.0),width_Seg(1),depth_Seg(1),height_Seg(1)
@@ -43,24 +42,24 @@ public:
 		maxmin(depth_Seg,0,200);
 		maxmin(height_Seg,0,200);
 
-		//Starting the Pyramid with tetrahedron, with width, length and height
-		Halfedge_handle h1 = P.make_tetrahedron( Point( width, 0, 0),
-												Point( 0, 0, height),
-												Point( 0, 0, 0),
-												Point( 0, depth, 0));
+		//Starting the Pyramid with tetrahedron, with width, depth and height
+        Halfedge_handle h1 = P.make_tetrahedron( Point(  width/2, -depth/2, -height/2),
+                                                 Point( -width/2, -depth/2,  height/2),
+                                                 Point( -width/2, -depth/2, -height/2),
+                                                 Point( -width/2,  depth/2, -height/2) );
 		//editing on the tetrahedron to convert it to 4-facet Pyramid
 		Halfedge_handle g1 = h1->next()->opposite()->next();             
 		P.split_edge( g1 );                                              
-		g1->opposite()->vertex()->point() = Point( width, depth, 0);            
+		g1->opposite()->vertex()->point() = Point( width/2, depth/2,-height/2);            
 		Halfedge_handle f = P.split_facet( g1->next(), g1->next()->next()->next());
-		h1->next()->vertex()->point() = Point ( width/2, depth/2, height ); 
+		h1->next()->vertex()->point() = Point ( 0, 0, height/2 ); 
 		f = f->opposite();
 		Halfedge_handle s = h1->next();
 		Halfedge_handle g2 = h1->opposite()->next();
 		Halfedge_handle h2 = g1->opposite()->next();
 
 		Halfedge_handle a = P.split_edge( h1 );
-		a->vertex()->point() = Point ( width/2, depth/2, 0 );
+		a->vertex()->point() = Point ( 0, 0,-height/2 );
 		Halfedge_handle b = h1;
 		h1 = P.split_facet( s->next(), s->next()->next()->next() );
 		Halfedge_handle c = P.split_facet( b->opposite(), a->opposite()->next() );
@@ -84,9 +83,9 @@ public:
 			{
 				//determine the two points, in front and back of the width segments and put them in the right position
 				Halfedge_handle hh = P.split_edge( h1 );
-				hh->vertex()->point() = Point ( n*i, 0, 0 );
+				hh->vertex()->point() = Point ( n*i - width/2,-depth/2,-height/2 );
 				Halfedge_handle gg = P.split_edge( g1 );
-				gg->vertex()->point() = Point ( n*i, depth, 0 );
+				gg->vertex()->point() = Point ( n*i - width/2, depth/2,-height/2 );
 				//connect the points to draw width segments, and store half edges in the array
 				arr_wF[i-1] = P.split_facet( hh, h1->next());
 				P.split_facet( h1->opposite(), hh->opposite()->next());
@@ -105,9 +104,9 @@ public:
 			{
 				//determine the two points, in left and right of the depth segments and put them in the right position
 				Halfedge_handle hh = P.split_edge( h2 );
-				hh->vertex()->point() = Point ( width, n*i, 0 );
+				hh->vertex()->point() = Point ( width/2, n*i - depth/2,-height/2 );
 				Halfedge_handle gg = P.split_edge( g2 );
-				gg->vertex()->point() = Point ( 0, n*i, 0 );
+				gg->vertex()->point() = Point (-width/2, n*i - depth/2,-height/2 );
 				//connect the points to draw depth segments, and store half edges in the array
 				arr_dR[i-1] = P.split_facet( hh, h2->next());
 				P.split_facet( h2->opposite(), hh->opposite()->next());
@@ -129,9 +128,9 @@ public:
 				P.split_edge ( g );
 				double wid = ( w * ( width_Seg / 2.0 ) / height_Seg ) * i;
 				double dep = ( ( depth / 2 ) / height_Seg ) * i;
-				h->opposite()->vertex()->point() = Point ( wid, dep, n );
+				h->opposite()->vertex()->point() = Point ( wid - width/2, dep - depth/2, n - height/2 );
 				dep = depth - ( ( depth / 2 ) / height_Seg ) * i ;
-				g->opposite()->vertex()->point() = Point ( wid, dep, n );
+				g->opposite()->vertex()->point() = Point ( wid - width/2, dep - depth/2, n - height/2 );
 				//loop on width segments and draw the height segments
 				for ( int j = 1 ; j < width_Seg ; j++ )
 				{
@@ -140,10 +139,10 @@ public:
 					Halfedge_handle b = P.split_edge ( arr_wB[j-1] );
 					wid = ( j * w ) + ( w * ( ( width_Seg / 2.0 ) - j ) / height_Seg ) *i;
 					dep = ( ( depth / 2 ) / height_Seg ) * ( i );
-					a->vertex()->point() = Point ( wid, dep, n );
+					a->vertex()->point() = Point ( wid - width/2, dep - depth/2, n - height/2 );
 					P.split_facet ( a, a->next()->next());
 					dep = depth - ( ( depth / 2 ) / height_Seg ) * ( i );
-					b->vertex()->point() = Point ( wid, dep, n );
+					b->vertex()->point() = Point ( wid - width/2, dep - depth/2, n - height/2 );
 					P.split_facet ( arr_wB[j-1]->opposite(), b->opposite()->next()->next());
 				}
 				//To attach the last two points in the two faces
@@ -151,10 +150,10 @@ public:
 				Halfedge_handle b = P.split_edge ( f );
 				wid = ( width_Seg * w ) + ( w * ( ( width_Seg / 2.0 ) - width_Seg ) / height_Seg ) *i;
 				dep = ( ( depth / 2 ) / height_Seg ) * ( i );
-				a->vertex()->point() = Point ( wid, dep, n );
+				a->vertex()->point() = Point ( wid - width/2, dep - depth/2, n - height/2 );
 				P.split_facet ( a, a->next()->next());
 				dep = depth - ( ( depth / 2 ) / height_Seg ) * ( i );
-				b->vertex()->point() = Point ( wid, dep, n );
+				b->vertex()->point() = Point ( wid - width/2, dep - depth/2, n - height/2 );
 				P.split_facet ( f->opposite(), b->opposite()->next()->next());
 				
 				double d = depth / depth_Seg;
@@ -167,10 +166,10 @@ public:
 					Halfedge_handle b = P.split_edge ( arr_dR[j-1] );
 					wid = ( ( width / 2 ) / height_Seg ) * ( i );
 					dep = ( j * d ) + ( d * ( ( depth_Seg / 2.0 ) - j ) / height_Seg ) *i;
-					a->vertex()->point() = Point ( wid, dep, n );
+					a->vertex()->point() = Point ( wid - width/2, dep - depth/2, n - height/2 );
 					P.split_facet ( arr_dL[j-1]->opposite(), a->opposite()->next()->next());
 					wid = width - ( ( width / 2 ) / height_Seg ) * ( i );
-					b->vertex()->point() = Point ( wid, dep, n );
+					b->vertex()->point() = Point ( wid - width/2, dep - depth/2, n - height/2 );
 					P.split_facet ( b, b->next()->next() );
 				}
 				//To attach the last two points in the two faces
@@ -178,7 +177,7 @@ public:
 				P.split_facet ( g->opposite(), g->opposite()->next()->next()->next());
 			}
 		}
-		Center = new Point_3(width/2, depth/2, height/2);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
 		return P;

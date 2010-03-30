@@ -1,8 +1,10 @@
+#pragma once
+
 typedef Polyhedron::Edge_iterator	Edge_iterator;
 typedef Primitives* pPrimitive;
 typedef NxActor* pNxActor;
 
-class PolyhedronNode : public osg::Drawable
+class CGSP_CC PolyhedronNode : public osg::Drawable
 {
 public:
 
@@ -31,7 +33,7 @@ public:
 	}
 	void DrawPolyhedron() const
 	{
-		::glColor3f(1.0f,0.0f,0.0f); // change the color of facets
+		::glColor3f(0.0f,0.0f,1.0f); // change the color of facets
 		Facet_iterator f;
 		for(f = P->ModifiedMesh.facets_begin();
 			f != P->ModifiedMesh.facets_end();
@@ -77,16 +79,49 @@ public:
 	}
 }; 
 
-class osgPolyManager
+class CGSP_CC LightNode 
+{
+	
+public:
+	osg::Light* myLight ;
+	osg::LightSource* lightS;
+	osg::StateSet* rootStateSet;
+
+	LightNode()
+	{
+		myLight = new osg::Light;
+		myLight->setLightNum(0);
+		myLight->setPosition(osg::Vec4(50.0,30.0,25.0,1.0f));
+		myLight->setAmbient(osg::Vec4(0.0f,0.0f,1.0f,1.0f));
+		myLight->setDiffuse(osg::Vec4(0.0f,0.0f,1.0f,1.0f));
+		myLight->setSpecular(osg::Vec4(0.0f,0.0f,0.0f,1.0f));
+		myLight->setSpotCutoff(20.0f);
+		myLight->setSpotExponent(5.0f);
+		myLight->setDirection(osg::Vec3(1.0f,1.0f,-0.5f));
+		myLight->setConstantAttenuation(0.5f);
+		lightS = new osg::LightSource; 
+		rootStateSet=new osg::StateSet;
+		lightS->setLight(myLight);
+		lightS->setLocalStateSetModes(osg::StateAttribute::ON); 
+		lightS->setStateSetModes(*rootStateSet,osg::StateAttribute::ON);
+
+	}
+	~LightNode(){};
+};
+
+class CGSP_CC osgPolyManager
 {
 public:
 	std::vector<PolyhedronNode*> PolyBag;
 	osg::ref_ptr<osg::Group> root;
+	osg::Group* lightGroup;
 	//osg::Group* root;
 
 	osgPolyManager()
 	{
 		root=new osg::Group();
+		lightGroup = new osg::Group;
+		root->addChild(lightGroup);
 	}
 
 	template <class Manager>
@@ -104,6 +139,19 @@ public:
 		g->addDrawable(Pn);
 		pat->setUpdateCallback(new UC(Pn));
 		pat->addChild(g);
+	}
+
+	void addlight(LightNode* lightSrc)
+	{
+		//osg::LightSource* lightS1 = new osg::LightSource; 
+		//osg::StateSet* rootStateSet=new osg::StateSet;
+		
+		//lightS1->setLight(light1);
+		//lightS1->setLocalStateSetModes(osg::StateAttribute::ON); 
+
+		//lightS1->setStateSetModes(*rootStateSet,osg::StateAttribute::ON);
+		lightGroup->addChild(lightSrc->lightS);
+
 	}
 
 	void UpdateFrame(int Fnum)

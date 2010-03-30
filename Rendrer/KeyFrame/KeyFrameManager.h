@@ -1,5 +1,5 @@
 
-class KeyFrameManager : public BaseManager
+class CGSP_CC KeyFrameManager : public BaseManager
 {
 public:
 	typedef KeyFrameUpdateCallBack UpdateCallback;

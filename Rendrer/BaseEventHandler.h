@@ -1,5 +1,6 @@
+#pragma once
 
-class BaseEventHandler : public osgGA::GUIEventHandler
+class CGSP_CC BaseEventHandler : public osgGA::GUIEventHandler
 {
 public:
 	BaseManager* Manager;

@@ -9,7 +9,6 @@ public:
     int length_Seg;
     int width_Seg;
     int height_Seg;
-	Point_3* Center;
 
     //Set the default parameters in the BOX
     Box_3():length(25.0),width(25.0),height(25.0),length_Seg(1),width_Seg(1),height_Seg(1)
@@ -53,8 +52,8 @@ public:
         Halfedge_handle h = P.make_tetrahedron( Point(  width/2, -length/2, -height/2),
                                                 Point( -width/2, -length/2,  height/2),
                                                 Point( -width/2, -length/2, -height/2),
-                                                Point( -width/2,  length/2, -height/2)
-												);
+                                                Point( -width/2,  length/2, -height/2) );
+
         //editing on the tetrahedron to convert it to BOX
         Halfedge_handle g = h->next()->opposite()->next();            
         P.split_edge( h->next());
@@ -82,11 +81,11 @@ public:
         //Segments in any of the three faces must be more than 1 Segment
         if (width_Seg>1 || length_Seg>1 || height_Seg>1)
         {
-            double w=width/width_Seg, l=length/length_Seg, ht=height/height_Seg;
+            double w = width / width_Seg, l = length / length_Seg, ht = height / height_Seg;
             //Every time we must reset them to not ovelap
-            Halfedge_handle a=h ,b=g->opposite() ,c=a->next()->next()->opposite(), d=e;
+            Halfedge_handle a = h ,b = g->opposite() ,c = a->next()->next()->opposite(), d = e;
             //Loop on the segments of the width
-            for (int i=2 ; i<=width_Seg ; i++)
+            for (int i = 2 ; i <= width_Seg ; i++)
             {
                 //Calculating the distance which the point will be put on
                 double n = (i-1)*w;
@@ -96,10 +95,10 @@ public:
                 Halfedge_handle cc = P.split_edge(c);
                 Halfedge_handle dd = P.split_edge(d);
                 //Moving points according to the distance n, so they will be divided normally
-                aa->vertex()->point() = Point(n,0,0);
-                bb->vertex()->point() = Point(n,length,0);
-                cc->vertex()->point() = Point(n,0,height);
-                dd->vertex()->point() = Point(n,length,height);
+                aa->vertex()->point() = Point(n - width/2, -length/2, -height/2);
+                bb->vertex()->point() = Point(n - width/2,  length/2, -height/2);
+                cc->vertex()->point() = Point(n - width/2, -length/2,  height/2);
+                dd->vertex()->point() = Point(n - width/2,  length/2,  height/2);
                 //Connect between Points
                 arr_wD[i-2] = P.split_facet( a->opposite(), aa->opposite()->next()->next() );
                 arr_wB[i-2] = P.split_facet( b->opposite(), bb->opposite()->next()->next() );
@@ -107,25 +106,25 @@ public:
                 arr_wU[i-2] = P.split_facet( d->opposite(), dd->opposite()->next()->next() );
             }
             //Every time we must reset them to not ovelap
-            a=o->opposite();
-            b=a->next()->next()->opposite();
-            c=f->opposite();
-            d=f->next()->next();
+            a = o->opposite();
+            b = a->next()->next()->opposite();
+            c = f->opposite();
+            d = f->next()->next();
             //Loop on the segments of the length
-            for (int i=2 ; i<=length_Seg ; i++)
+            for (int i = 2 ; i <= length_Seg ; i++)
             {
                 //Calculating the distance which the point will be put on
-                double n = (i-1)*l;
+                double n = (i - 1) * l;
                 //Put the points
                 Halfedge_handle aa = P.split_edge(a);
                 Halfedge_handle bb = P.split_edge(b);
                 Halfedge_handle cc = P.split_edge(c);
                 Halfedge_handle dd = P.split_edge(d);
                 //Moving points according to the distance n, so they will be divided normally
-                bb->vertex()->point() = Point(0,n,0);
-                aa->vertex()->point() = Point(0,n,height);
-                dd->vertex()->point() = Point(width,n,0);
-                cc->vertex()->point() = Point(width,n,height);
+                bb->vertex()->point() = Point(-width/2, n - length/2, -height/2);
+                aa->vertex()->point() = Point(-width/2, n - length/2,  height/2);
+                dd->vertex()->point() = Point( width/2, n - length/2, -height/2);
+                cc->vertex()->point() = Point( width/2, n - length/2,  height/2);
                 //Connect between Points
                 arr_lL[i-2] = P.split_facet( b->opposite(), bb->opposite()->next()->next() );
                 arr_lR[i-2] = P.split_facet( c->opposite(), cc->opposite()->next()->next() );
@@ -138,7 +137,7 @@ public:
                         Halfedge_handle x = arr_wU[ j-1 ]->opposite();
                         Halfedge_handle xx = P.split_edge( x );
                         wid = j * w;
-                        xx->vertex()->point() = Point ( wid, n, height );
+                        xx->vertex()->point() = Point ( wid - width/2, n - length/2, height/2 );
                         P.split_facet ( xx, x->next()->next() );
                     }
                     //connect between the last two points
@@ -149,7 +148,7 @@ public:
                         Halfedge_handle x = arr_wD[ j-1 ];
                         Halfedge_handle xx = P.split_edge( x );
                         wid = j * w;
-                        xx->vertex()->point() = Point ( wid, n, 0 );
+                        xx->vertex()->point() = Point ( wid - width/2, n - length/2, -height/2 );
                         P.split_facet ( x->opposite(), xx->opposite()->next()->next() );
                     }
                     //connect between the last two points
@@ -162,25 +161,25 @@ public:
                 }
             }
             //Every time we must reset them to not ovelap
-            a=q->opposite();
-            b=o->opposite()->next()->opposite();
-            c=h->next();
-            d=e->next()->opposite();
+            a = q->opposite();
+            b = o->opposite()->next()->opposite();
+            c = h->next();
+            d = e->next()->opposite();
             //Loop on the segments of the height
-            for (int i=2 ; i<=height_Seg ; i++)
+            for (int i = 2 ; i <= height_Seg ; i++)
             {
                 //Calculating the distance which the point will be put on
-                double n = (i-1)*ht;
+                double n = (i - 1) * ht;
                 //Put the points
                 Halfedge_handle aa = P.split_edge(a);
                 Halfedge_handle bb = P.split_edge(b);
                 Halfedge_handle cc = P.split_edge(c);
                 Halfedge_handle dd = P.split_edge(d);
                 //Moving points according to the distance n, so they will be divided normally
-                cc->vertex()->point() = Point(width,0,n);
-                bb->vertex()->point() = Point(0,length,n);
-                aa->vertex()->point() = Point(0,0,n);
-                dd->vertex()->point() = Point(width,length,n);
+                cc->vertex()->point() = Point( width/2, -length/2, n - height/2);
+                bb->vertex()->point() = Point(-width/2,  length/2, n - height/2);
+                aa->vertex()->point() = Point(-width/2, -length/2, n - height/2);
+                dd->vertex()->point() = Point( width/2,  length/2, n - height/2);
                 //if the width & length segments more than 2
                 if ( width_Seg >= 2 && length_Seg >= 2 )
                 {
@@ -191,7 +190,7 @@ public:
                         Halfedge_handle x = arr_wF[ j-1 ]->opposite();
                         Halfedge_handle xx = P.split_edge( x );
                         wid = j * w;
-                        xx->vertex()->point() = Point ( wid, 0, n );
+                        xx->vertex()->point() = Point ( wid - width/2, -length/2, n - height/2 );
                         P.split_facet ( xx, x->next()->next() );
                     }
                     //connect between the last two points
@@ -202,7 +201,7 @@ public:
                         Halfedge_handle x = arr_wB[ j-1 ];
                         Halfedge_handle xx = P.split_edge( x );
                         wid = j * w;
-                        xx->vertex()->point() = Point ( wid, length, n );
+                        xx->vertex()->point() = Point ( wid - width/2, length/2, n - height/2 );
                         P.split_facet ( x->opposite(), xx->opposite()->next()->next() );
                     }
                     //connect between the last two points
@@ -214,7 +213,7 @@ public:
                         Halfedge_handle x = arr_lL[ j-1 ];
                         Halfedge_handle xx = P.split_edge( x );
                         len = j * l;
-                        xx->vertex()->point() = Point ( 0, len, n );
+                        xx->vertex()->point() = Point ( -width/2, len - length/2, n - height/2 );
                         P.split_facet ( x->opposite(), xx->opposite()->next()->next() );
                     }
                     //connect between the last two points
@@ -225,7 +224,7 @@ public:
                         Halfedge_handle x = arr_lR[ j-1 ]->opposite();
                         Halfedge_handle xx = P.split_edge( x );
                         len = j * l;
-                        xx->vertex()->point() = Point ( width, len, n );
+                        xx->vertex()->point() = Point ( width/2, len - length/2, n - height/2 );
                         P.split_facet ( xx, x->next()->next() );
                     }
                     //connect between the last two points
@@ -240,7 +239,7 @@ public:
                         Halfedge_handle x = arr_wF[ j-1 ]->opposite();
                         Halfedge_handle xx = P.split_edge( x );
                         wid = j * w;
-                        xx->vertex()->point() = Point ( wid, 0, n );
+                        xx->vertex()->point() = Point ( wid - width/2, -length/2, n - height/2 );
                         P.split_facet ( xx, x->next()->next() );
                     }
                     //connect between the last two points
@@ -251,7 +250,7 @@ public:
                         Halfedge_handle x = arr_wB[ j-1 ];
                         Halfedge_handle xx = P.split_edge( x );
                         wid = j * w;
-                        xx->vertex()->point() = Point ( wid, length, n );
+                        xx->vertex()->point() = Point ( wid - width/2, length/2, n - height/2 );
                         P.split_facet ( x->opposite(), xx->opposite()->next()->next() );
                     }
                     //connect between the last two points
@@ -269,7 +268,7 @@ public:
                         Halfedge_handle x = arr_lL[ j-1 ];
                         Halfedge_handle xx = P.split_edge( x );
                         len = j * l;
-                        xx->vertex()->point() = Point ( 0, len, n );
+                        xx->vertex()->point() = Point ( -width/2, len - length/2, n - height/2 );
                         P.split_facet ( x->opposite(), xx->opposite()->next()->next() );
                     }
                     //connect between the last two points
@@ -280,7 +279,7 @@ public:
                         Halfedge_handle x = arr_lR[ j-1 ]->opposite();
                         Halfedge_handle xx = P.split_edge( x );
                         len = j * l;
-                        xx->vertex()->point() = Point ( width, len, n );
+                        xx->vertex()->point() = Point ( width/2, len - length/2, n - height/2 );
                         P.split_facet ( xx, x->next()->next() );
                     }
                     //connect between the last two points
@@ -299,7 +298,7 @@ public:
                 }
             }
         }
-		Center = new Point_3(width/2, length/2, height/2);
+		Center = new Point_3(0, 0, 0);
 
 		setMesh(P);
         return P;

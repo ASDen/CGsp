@@ -1,5 +1,6 @@
+#pragma once
 
-class BaseUpdateCallBack : public osg::NodeCallback
+class CGSP_CC BaseUpdateCallBack : public osg::NodeCallback
 {
 public:
 

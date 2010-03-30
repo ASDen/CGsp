@@ -95,7 +95,6 @@ public:
 	//The basic parameters in the Sphere
 	double radius;
 	int Segs;
-	Point_3* Center;
 
 	//Set the default parameters in the Sphere
 	Sphere_3():radius(25.0),Segs(4)
