@@ -398,6 +398,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Modifiers\Polyhedron\Triangulate.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Modifiers\Polyhedron\Twist.h"
 						>
 					</File>

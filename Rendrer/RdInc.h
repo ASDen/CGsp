@@ -17,6 +17,8 @@
 #include "Physics/Primitives/XConvex.h"
 #include "Physics/Primitives/XPlane.h"
 #include "Physics/Primitives/XSphere.h"
+#include "Physics/Primitives/XTorus.h"
+#include "Physics/Primitives/XTube.h"
 
 #include "Physics/PhysicsUpdate.h"
 #include "Physics/PhysicsEventHandler.h"

@@ -79,9 +79,12 @@ int main() {
 	//Tube_3 s(14,13,15,20,20,10);
 
 	Polyhedron P;
-	s.Draw();
-	CGAL::convex_hull_3(s.Mesh.points_begin(),s.Mesh.points_end(),P);
+	P=s.Draw();
+	//CGAL::convex_hull_3(s.Mesh.points_begin(),s.Mesh.points_end(),P);
 
+
+	Traingulate tr;
+	tr.Do(P);
 
 	Bevel Be(18,1.25,1.25);
 	//Be.Do(P);

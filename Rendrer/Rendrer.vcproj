@@ -40,7 +40,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm200"
+				AdditionalOptions="-Zm250"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
@@ -114,7 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm200"
+				AdditionalOptions="-Zm250"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
@@ -360,6 +360,14 @@
 					</File>
 					<File
 						RelativePath=".\Physics\Primitives\XSphere.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XTorus.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XTube.h"
 						>
 					</File>
 				</Filter>
