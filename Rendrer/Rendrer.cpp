@@ -88,9 +88,9 @@ int main( int argc, char **argv )
 
 	for(int i=0;i<10;i++)
 	{
-		for(int j=0;j<10;j++)
+		for(int j=0;j<10-i;j++)
 		{
-			PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(30+j*8,50,i*4));
+			PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3((30+0.5*8*i)+j*8,50,i*4));
 			c1->Actor = XBox::Construct(pxm.gScene,c1);
 			c1->WireFrame = true;
 			c1->AntialisedLines = true;
