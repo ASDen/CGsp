@@ -362,6 +362,14 @@
 						RelativePath=".\Physics\Primitives\XSphere.h"
 						>
 					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XTorus.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XTube.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 		</Filter>

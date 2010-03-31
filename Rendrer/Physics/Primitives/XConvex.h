@@ -99,8 +99,8 @@ public:
 		ActorDesc.globalPose.t  = NxVec3 
 			(
 			- Pn->Position.x(),
-			Pn->Position.z(),
-			Pn->Position.y()
+			  Pn->Position.z(),
+			  Pn->Position.y()
 			);
 		return scene->createActor(ActorDesc);
 	}
