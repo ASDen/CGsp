@@ -21,6 +21,18 @@
 #include <CGAL/IO/Nef_polyhedron_iostream_3.h>
 #include <CGAL/Subdivision_method_3.h>
 #include <CGAL/convex_hull_3.h>
+#include <CGAL/Surface_mesh_simplification/HalfedgeGraph_Polyhedron_3.h>
+#include <CGAL/Surface_mesh_simplification/edge_collapse.h>
+#include <CGAL/Surface_mesh_simplification/Policies/Edge_collapse/Count_stop_predicate.h>
+#include <CGAL/HalfedgeDS_decorator.h>
+#include <CGAL/assertions_behaviour.h>
+#include <CGAL/exceptions.h>
+#include <CGAL/Triangulation_vertex_base_with_info_2.h>
+#include <CGAL/Triangulation_face_base_with_info_2.h>
+#include <CGAL/Constrained_Delaunay_triangulation_2.h>
+#include <CGAL/Constrained_triangulation_plus_2.h>
+#include <CGAL/Triangulation_2_filtered_projection_traits_3.h>
+#include "CGAL/compute_normal.h"
 //Eigen
 #include <Eigen/Geometry>
 //GSL
@@ -32,6 +44,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <queue>
 
 
 

@@ -6,24 +6,24 @@
 int main( int argc, char **argv )
 {
 	Box_3* s = new Box_3(4,8,4,1,1,1);
-	//Capsule_3* s4 = new Capsule_3(5,21,13,15);
-	ChamferCyl_3* s4 = new ChamferCyl_3(6,12,2,20,12,10,10);
-	//Cone_3* s4 = new Cone_3(2,5,10,15,15,15);
+	Capsule_3* s4 = new Capsule_3(5,21,25,25);
+	//ChamferCyl_3* s4 = new ChamferCyl_3(6,12,2,20,15,15,15);
+	//Cone_3* s4 = new Cone_3(2,8,10,55,55,55);
 	//Cylinder_3* s4 = new Cylinder_3(6,10,2,2,15);
 	//Lathe_3* s = new Lathe_3(arr,Center,Z_ax,20,360);
 	//Pyramid_3* s4 = new Pyramid_3(16,16,16,1,1,1);
 	Sphere_3* s3 = new Sphere_3(2,60);
-	//Spindle_3* s4 = new Spindle_3(4,5,2,8,8,8);
+	Spindle_3* s5 = new Spindle_3(4,5,2,48,48,48);
 	Plane_3* s2 = new Plane_3(100);
 	//Spring_3* s = new Spring_3(20,2.5,200,10,10,40);
 	//Torus_3* s = new Torus_3(20,5,0,0,10,20);
-	//Tube_3* s4 = new Tube_3(4,3,5,4,5,20);
+	//Tube_3* s5 = new Tube_3(8,7,5,4,5,20);
 	
 	s->Draw();
 	s2->Draw();
 	s3->Draw();
 	s4->Draw();
-	//s5->Draw();
+	s5->Draw();
 
 	Bevel m(18,1.25,1.25);
 	/*Eigen::Transform3d T;
@@ -88,20 +88,24 @@ int main( int argc, char **argv )
 
 	for(int i=0;i<10;i++)
 	{
-	PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(50,50,i*6));
-	c1->Actor = XBox::Construct(pxm.gScene,c1);
-	c1->WireFrame = true;
-	c1->AntialisedLines = true;
-	pman->AddPolyhedron<PhysicsManager>(c1);
+		for(int j=0;j<10;j++)
+		{
+			PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(30+j*8,50,i*4));
+			c1->Actor = XBox::Construct(pxm.gScene,c1);
+			c1->WireFrame = true;
+			c1->AntialisedLines = true;
+			pman->AddPolyhedron<PhysicsManager>(c1);
+		}
 	}
 	PolyhedronNode* cx = new PolyhedronNode(s4,osg::Vec3(50,20,20));
-	cx->Actor = XConvex::Construct(pxm.gScene,pxm.gPhysicsSDK,cx);
-	cx->WireFrame = true;
+	cx->Actor = XConvex::Construct<ConvexHullReducer>(pxm.gScene,pxm.gPhysicsSDK,cx);
+	cx->WireFrame = false;
 	cx->AntialisedLines = true;
 	pman->AddPolyhedron<PhysicsManager>(cx);
 
-	/*PolyhedronNode* cxy = new PolyhedronNode(s4,osg::Vec3(50,20,40));
-	cxy->Actor = XConvex::Construct(pxm.gScene,pxm.gPhysicsSDK,cxy);
+	/*PolyhedronNode* cxy = new PolyhedronNode(s5,osg::Vec3(50,20,40));
+	cxy->Actor = XConvex::Construct<GeometrySimplifyReducer>(pxm.gScene,pxm.gPhysicsSDK,cxy);
+	cx->WireFrame = false;
 	pman->AddPolyhedron<PhysicsManager>(cxy);*/
 	
 	

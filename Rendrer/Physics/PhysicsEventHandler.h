@@ -4,7 +4,9 @@ class CGSP_CC PhysicsEventHandler : public BaseEventHandler
 {
 public:
 
-	PhysicsEventHandler(BaseManager* bm) : BaseEventHandler(bm)
+	float shootForce;
+
+	PhysicsEventHandler(BaseManager* bm) : BaseEventHandler(bm),shootForce(1000000.0)
 	{}
 
 	bool handle(const osgGA::GUIEventAdapter& gea, osgGA::GUIActionAdapter& adp)
@@ -21,6 +23,13 @@ public:
 				{
 				case 's':
 					shoot(gea,viewer);
+					break;
+				case 'a':
+					shootForce += 50000;
+					std::cout<<"Force Now :"<<shootForce<<std::endl;
+					break;
+				case 'd':
+					shootForce -= 50000;
 					break;
 				}
 			}

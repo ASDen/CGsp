@@ -100,7 +100,12 @@ public:
 		BaseManager::InitOsg();
 		viewer->addEventHandler(new PhysicsEventHandler(this));
 		InitNx();
-	} 
+	}
+
+	NxActor* AddActor(PolyhedronNode* Pn)
+	{
+		return gScene->createActor((Pn->ActorDesc));
+	}
 
 	void UpdateScene()
 	{

@@ -44,7 +44,7 @@ void PhysicsEventHandler::shoot(const osgGA::GUIEventAdapter& ea, osgViewer::Vie
 	pnd->WireFrame = false;
 
 	Manager->PolyMan->AddPolyhedron<PhysicsManager>(pnd);
-	NxVec3 _force(1000000.0*NxVec3(-dir.x(), dir.z(), dir.y()));
+	NxVec3 _force(shootForce*NxVec3(-dir.x(), dir.z(), dir.y()));
 	pnd->Actor->addForce(_force);
 
 }

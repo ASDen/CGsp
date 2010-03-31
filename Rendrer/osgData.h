@@ -3,6 +3,7 @@
 typedef Polyhedron::Edge_iterator	Edge_iterator;
 typedef Primitives* pPrimitive;
 typedef NxActor* pNxActor;
+typedef NxActorDesc* pNxActorDesc;
 
 class CGSP_CC PolyhedronNode : public osg::Drawable
 {
@@ -10,6 +11,7 @@ public:
 
 	pPrimitive P;
 	pNxActor Actor;
+	NxActorDesc ActorDesc;
 	osg::Vec3 Position;
 	bool WireFrame;
 	bool AntialisedLines;
