@@ -28,15 +28,13 @@ public:
 			BoxDesc[i].dimensions = NxVec3( Length, Height, Width );
 			BoxDesc[i].localPose.M.rotY(2 * i * CGAL_PI / Num);
 			BoxDesc[i].localPose.t = NxVec3(x, 0, z);
-
-			//std::cout<<BoxDesc.localPose.M;
 		
 			ActorDesc.shapes.pushBack(&BoxDesc[i]);
 		}
 
 		ActorDesc.body			= &BodyDesc;
 		ActorDesc.density		= 10.0f;
-		ActorDesc.globalPose.t  = NxVec3 //get center of the box
+		ActorDesc.globalPose.t  = NxVec3 //get center of the tube
 			(
 			-Pn->Position.x(),
 			 Pn->Position.z(),

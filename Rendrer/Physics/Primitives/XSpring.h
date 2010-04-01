@@ -1,4 +1,4 @@
-class CGSP_CC XTorus
+class CGSP_CC XSpring
 {
 public:
 
@@ -7,17 +7,17 @@ public:
 		NxBodyDesc BodyDesc;
 		BodyDesc.angularDamping	= 0.0f;
 
-		Torus_3* Obj = dynamic_cast<Torus_3*>(Pn->P);
+		Spring_3* Obj = dynamic_cast<Spring_3*>(Pn->P);
 
 		// Create descriptor for convex mesh
-		NxConvexMeshDesc* convexDesc = new NxConvexMeshDesc[Obj->side_Seg];
-		NxConvexShapeDesc* convexShapeDesc = new NxConvexShapeDesc[Obj->side_Seg];
+		NxConvexMeshDesc* convexDesc = new NxConvexMeshDesc[Obj->side_Seg * Obj->turn_number];
+		NxConvexShapeDesc* convexShapeDesc = new NxConvexShapeDesc[Obj->side_Seg * Obj->turn_number];
 		
 		NxActorDesc ActorDesc;
 
 		NxU32 vertCount = 6 * Obj->Seg;
 		
- 		for (int i = 0; i < Obj->side_Seg; i++)
+ 		for (int i = 0; i < Obj->side_Seg * Obj->turn_number; i++)
 		{
 			Facet_iterator face = Pn->P->Mesh.facets_begin();
 			for ( int j = 0; j < i; j++) 
@@ -37,7 +37,7 @@ public:
 					n++;
 				}
 			
-				for ( int j = 0; j < Obj->side_Seg; j++) 
+				for ( int j = 0; j < Obj->side_Seg * Obj->turn_number; j++) 
 				{
 					face++;
 				}
