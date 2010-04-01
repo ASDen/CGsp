@@ -1,6 +1,10 @@
 // Rendrer.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
+
+#define PHYSX_USE_VRD 1
+
 #include "RdInc.h"
+
 
 
 int main( int argc, char **argv )
@@ -9,7 +13,7 @@ int main( int argc, char **argv )
 	//Capsule_3* s4 = new Capsule_3(5,21,25,25);
 	//ChamferCyl_3* s4 = new ChamferCyl_3(6,12,2,20,15,15,15);
 	//Cone_3* s4 = new Cone_3(2,8,10,55,55,55);
-	//Cylinder_3* s4 = new Cylinder_3(6,10,2,2,15);
+	Cylinder_3* s4 = new Cylinder_3(6,10,2,2,15);
 	//Lathe_3* s = new Lathe_3(arr,Center,Z_ax,20,360);
 	//Pyramid_3* s4 = new Pyramid_3(16,16,16,1,1,1);
 	Sphere_3* s3 = new Sphere_3(2,60);
@@ -17,7 +21,7 @@ int main( int argc, char **argv )
 	Plane_3* s2 = new Plane_3(100);
 	//Spring_3* s = new Spring_3(20,2.5,200,10,10,40);
 	//Torus_3* s4 = new Torus_3(20,5,0,0,10,20);
-	Tube_3* s4 = new Tube_3(20,15,30,20,10,20);
+	Tube_3* s6 = new Tube_3(20,15,30,20,10,20);
 	
 	s->Draw();
 	s2->Draw();
@@ -97,11 +101,11 @@ int main( int argc, char **argv )
 			pman->AddPolyhedron<PhysicsManager>(c1);
 		}
 	}
-	/*PolyhedronNode* cx = new PolyhedronNode(s4,osg::Vec3(50,20,20));
+	PolyhedronNode* cx = new PolyhedronNode(s4,osg::Vec3(50,20,20));
 	cx->Actor = XConvex::Construct<ConvexHullReducer>(pxm.gScene,pxm.gPhysicsSDK,cx);
 	cx->WireFrame = false;
 	cx->AntialisedLines = true;
-	pman->AddPolyhedron<PhysicsManager>(cx);*/
+	pman->AddPolyhedron<PhysicsManager>(cx);
 
 	/*PolyhedronNode* cxy = new PolyhedronNode(s5,osg::Vec3(50,20,40));
 	cxy->Actor = XConvex::Construct<GeometrySimplifyReducer>(pxm.gScene,pxm.gPhysicsSDK,cxy);
@@ -110,7 +114,7 @@ int main( int argc, char **argv )
 	pman->AddPolyhedron<PhysicsManager>(cxy);*/
 	
 	
-	PolyhedronNode* c3 = new PolyhedronNode(s4,osg::Vec3(50,50,100));
+	PolyhedronNode* c3 = new PolyhedronNode(s6,osg::Vec3(50,50,100));
 	c3->Actor = XTube::Construct(pxm.gScene,c3,8);
 	c3->WireFrame = false;
 	c3->AntialisedLines = true;

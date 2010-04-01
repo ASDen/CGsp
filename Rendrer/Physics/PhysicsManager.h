@@ -27,6 +27,12 @@ public:
 			return false;
 		}
 
+#if PHYSX_USE_VRD
+		// The settings for the VRD host and port are found in SampleCommonCode/SamplesVRDSettings.h
+		if (gPhysicsSDK->getFoundationSDK().getRemoteDebugger() && !gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->isConnected())
+			gPhysicsSDK->getFoundationSDK().getRemoteDebugger()->connect(SAMPLES_VRD_HOST, SAMPLES_VRD_PORT, SAMPLES_VRD_EVENTMASK);
+#endif
+
 		NxHWVersion hwCheck = gPhysicsSDK->getHWVersion();
 		if (hwCheck == NX_HW_VERSION_NONE) 
 		{
