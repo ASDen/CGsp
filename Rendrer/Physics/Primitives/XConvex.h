@@ -8,6 +8,7 @@ public:
 		//Traingulate factets first
 		Traingulate tr;
 		tr.Do(*CxP);
+
 		//Simplify
 		int numE = 384; // resulting in 254 faces < 255
 		namespace SMS = CGAL::Surface_mesh_simplification;

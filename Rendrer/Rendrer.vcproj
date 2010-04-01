@@ -363,6 +363,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Physics\Primitives\XSpring.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Physics\Primitives\XTorus.h"
 						>
 					</File>
