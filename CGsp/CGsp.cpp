@@ -118,7 +118,7 @@ int main() {
 	//Morph Mor(E,50);
 	//Mor.Do(P);
 
-	Noise No(5,0.3,0,s.Center,Z_ax);
+	//Noise No(5,0.3,0,s.Center,Z_ax);
 	//No.Do(P);
 
 	Skew Sk(30,s.Center,Z_ax,false,20,-20);

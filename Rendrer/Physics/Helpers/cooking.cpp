@@ -20,7 +20,7 @@
 NxCookingInterface *gCooking=0;
 #endif
 
-bool hasCookingLibrary(void) // check to see if the cooking library is available or not!
+CGSP_CC bool hasCookingLibrary(void) // check to see if the cooking library is available or not!
 {
 	bool ret = true;
 
@@ -36,7 +36,7 @@ bool hasCookingLibrary(void) // check to see if the cooking library is available
 }
 
 
-bool CookConvexMesh(const NxConvexMeshDesc& desc, NxStream& stream)
+CGSP_CC bool CookConvexMesh(const NxConvexMeshDesc& desc, NxStream& stream)
 {
 #ifdef COOKING_INTERFACE
   hasCookingLibrary();
@@ -48,7 +48,7 @@ bool CookConvexMesh(const NxConvexMeshDesc& desc, NxStream& stream)
 }
 
 
-bool CookClothMesh(const NxClothMeshDesc& desc, NxStream& stream)
+CGSP_CC bool CookClothMesh(const NxClothMeshDesc& desc, NxStream& stream)
 {
 #ifdef COOKING_INTERFACE
   hasCookingLibrary();
@@ -59,7 +59,7 @@ bool CookClothMesh(const NxClothMeshDesc& desc, NxStream& stream)
 #endif
 }
 
-bool CookTriangleMesh(const NxTriangleMeshDesc& desc, NxStream& stream)
+CGSP_CC bool CookTriangleMesh(const NxTriangleMeshDesc& desc, NxStream& stream)
 {
 #ifdef COOKING_INTERFACE
   hasCookingLibrary();
@@ -70,7 +70,7 @@ bool CookTriangleMesh(const NxTriangleMeshDesc& desc, NxStream& stream)
 #endif
 }
 
-bool CookSoftBodyMesh(const NxSoftBodyMeshDesc& desc, NxStream& stream)
+CGSP_CC bool CookSoftBodyMesh(const NxSoftBodyMeshDesc& desc, NxStream& stream)
 {
 #ifdef COOKING_INTERFACE
 	hasCookingLibrary();
@@ -81,7 +81,7 @@ bool CookSoftBodyMesh(const NxSoftBodyMeshDesc& desc, NxStream& stream)
 #endif
 }
 
-bool InitCooking(NxUserAllocator* allocator, NxUserOutputStream* outputStream)
+CGSP_CC bool InitCooking(NxUserAllocator* allocator, NxUserOutputStream* outputStream)
 {
 #ifdef COOKING_INTERFACE
   hasCookingLibrary();
@@ -92,7 +92,7 @@ bool InitCooking(NxUserAllocator* allocator, NxUserOutputStream* outputStream)
 #endif
 }
 
-void CloseCooking()
+CGSP_CC void CloseCooking()
 {
 #ifdef COOKING_INTERFACE
 	if ( !gCooking ) return;
@@ -102,7 +102,7 @@ void CloseCooking()
 #endif
 }
 
-bool CreatePMap(NxPMap& pmap, const NxTriangleMesh& mesh, NxU32 density, NxUserOutputStream* outputStream)
+CGSP_CC bool CreatePMap(NxPMap& pmap, const NxTriangleMesh& mesh, NxU32 density, NxUserOutputStream* outputStream)
 {
 #ifdef COOKING_INTERFACE
   hasCookingLibrary();
@@ -113,7 +113,7 @@ bool CreatePMap(NxPMap& pmap, const NxTriangleMesh& mesh, NxU32 density, NxUserO
 #endif
 }
 
-bool ReleasePMap(NxPMap& pmap)
+CGSP_CC bool ReleasePMap(NxPMap& pmap)
 {
 #ifdef COOKING_INTERFACE
   hasCookingLibrary();

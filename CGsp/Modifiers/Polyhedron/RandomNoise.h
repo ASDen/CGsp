@@ -62,7 +62,7 @@ namespace detail
 	r0 = t - (int)t;\
 	r1 = r0 - 1.;
 
-static double randtable[] =
+double randtable[] =
 {
 	0.80874050111, 0.19330423902, 0.56358531449, 0.00125125889,
 	0.89596240120, 0.35029145177, 0.47987304300, 0.58500930815,
@@ -578,9 +578,9 @@ static double randtable[] =
 	0.21591845454, 0.24976348155, 0.84249397259, 0.94778283029,
 };
 
-static int rp = 0, erp = 0;;
+int rp = 0, erp = 0;;
 
-static unsigned int randinx()
+unsigned int randinx()
 {
     unsigned int result;
 
@@ -594,7 +594,7 @@ static unsigned int randinx()
 
 }
 
-static void normalize2( float v[ 2 ] )
+void normalize2( float v[ 2 ] )
 {
     float s;
 
@@ -603,7 +603,7 @@ static void normalize2( float v[ 2 ] )
     v[ 1 ] = v[ 1 ] / s;
 }
 
-static void normalize3( float v[ 3 ] )
+void normalize3( float v[ 3 ] )
 {
     float s;
 

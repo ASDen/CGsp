@@ -117,7 +117,7 @@
 				AdditionalOptions="-Zm250"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;CGSP_CC="
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
@@ -177,26 +177,6 @@
 			<File
 				RelativePath=".\Rendrer.cpp"
 				>
-			</File>
-			<File
-				RelativePath=".\stdafx.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 			</File>
 			<Filter
 				Name="Physics"
@@ -269,6 +249,22 @@
 						</FileConfiguration>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="KeyFrame"
+				>
+				<File
+					RelativePath=".\KeyFrame\KeyFrameUpdate.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+						/>
+					</FileConfiguration>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -375,6 +371,34 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Helpers"
+					>
+					<File
+						RelativePath=".\Physics\Helpers\cooking.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Helpers\ErrorStream.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Helpers\SamplesVRDSettings.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Helpers\Stream.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Helpers\UserAllocator.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Helpers\Utilities.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -386,6 +410,26 @@
 		<File
 			RelativePath=".\ReadMe.txt"
 			>
+		</File>
+		<File
+			RelativePath=".\stdafx.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
 		</File>
 	</Files>
 	<Globals>

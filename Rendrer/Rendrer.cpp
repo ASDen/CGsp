@@ -1,8 +1,5 @@
 // Rendrer.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
-
-#define PHYSX_USE_VRD 1
-
 #include "RdInc.h"
 
 

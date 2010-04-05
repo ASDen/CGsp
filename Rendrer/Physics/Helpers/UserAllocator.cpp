@@ -367,3 +367,18 @@ void UserAllocator::free(void* memory)
 
 	UnlockAlloc();
 }
+
+const char* getNxSDKCreateError(const NxSDKCreateError& errorCode) 
+{
+	switch(errorCode) 
+	{
+		case NXCE_NO_ERROR: return "NXCE_NO_ERROR";
+		case NXCE_PHYSX_NOT_FOUND: return "NXCE_PHYSX_NOT_FOUND";
+		case NXCE_WRONG_VERSION: return "NXCE_WRONG_VERSION";
+		case NXCE_DESCRIPTOR_INVALID: return "NXCE_DESCRIPTOR_INVALID";
+		case NXCE_CONNECTION_ERROR: return "NXCE_CONNECTION_ERROR";
+		case NXCE_RESET_ERROR: return "NXCE_RESET_ERROR";
+		case NXCE_IN_USE_ERROR: return "NXCE_IN_USE_ERROR";
+		default: return "Unknown error";
+	}
+};

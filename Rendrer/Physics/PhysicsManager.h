@@ -23,7 +23,7 @@ public:
 		gPhysicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, gAllocator, &gErrorStream, desc, &errorCode);
 		if(gPhysicsSDK == NULL) 
 		{
-			//printf("\nSDK create error (%d - %s).\nUnable to initialize the PhysX SDK.\n\n", errorCode, getNxSDKCreateError(errorCode));
+			printf("\nSDK create error (%d - %s).\nUnable to initialize the PhysX SDK.\n\n", errorCode, getNxSDKCreateError(errorCode));
 			return false;
 		}
 

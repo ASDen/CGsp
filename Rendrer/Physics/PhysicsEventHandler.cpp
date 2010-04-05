@@ -1,33 +1,9 @@
 #include "stdafx.h"
-//#include "../RdInc.h"
-#include "../osgData.h"
-////#include "glutViewer.h"
-#include "../BaseUpdate.h"
-#include "../BaseManager.h"
-#include "../BaseEventHandler.h"
-//
-////Physics
-//#include "../Physics/Primitives/XBox.h"
-//#include "../Physics/Primitives/XPlane.h"
-#include "../Physics/Primitives/XSphere.h"
-//
-#include "../Physics/PhysicsUpdate.h"
-#include "../Physics/PhysicsEventHandler.h"
-#include "../Physics/PhysicsManager.h"
+#include "../RdInc.h"
 
 void PhysicsEventHandler::shoot(const osgGA::GUIEventAdapter& ea, osgViewer::Viewer* viewer)
 {	
-	osg::Viewport* viewport = viewer->getCamera()->getViewport();
-	float mx = viewport->x() + (int)((float)viewport->width()*(ea.getXnormalized()*0.5f+0.5f));
-	float my = viewport->y() + (int)((float)viewport->height()*(ea.getYnormalized()*0.5f+0.5f));
-
-	osg::Matrix VPW = viewer->getCamera()->getViewMatrix() *
-		viewer->getCamera()->getProjectionMatrix() *
-		viewport->computeWindowMatrix();
-
-	VPW.invert(VPW);
-
-	osg::Vec3f point = osg::Vec3f(mx,my,0) * VPW;
+	osg::Vec3f point = getOsgMousePoint(ea,viewer);
 	osg::Vec3f eye, center, up(0,0,1);
 	double dist(1.0);
 
@@ -47,4 +23,25 @@ void PhysicsEventHandler::shoot(const osgGA::GUIEventAdapter& ea, osgViewer::Vie
 	NxVec3 _force(shootForce*NxVec3(-dir.x(), dir.z(), dir.y()));
 	pnd->Actor->addForce(_force);
 
+}
+
+void PhysicsEventHandler::pick(const osgGA::GUIEventAdapter& ea, osgViewer::Viewer* viewer)
+{
+	osg::Vec3f point = getOsgMousePoint(ea,viewer);
+	osg::Vec3f eye, center, up;
+	double dist(4.0);
+
+	viewer->getCamera()->getViewMatrixAsLookAt(eye, center, up, dist);
+	NxRay ray = convertToCameraDir(eye, point);
+
+	NxRaycastHit _hit;
+	NxVec3 gDir = ray.dir;
+	NxShape* _shape = dynamic_cast<PhysicsManager*>(Manager)->gScene->raycastClosestBounds(ray, NX_DYNAMIC_SHAPES, _hit);
+	if (_shape && _hit.shape)
+	{
+		NxActor* _selection = &_shape->getActor();
+		NxVec3 _force( shootForce * ray.dir);			
+		_selection->addForce(_force);
+		//_selection->addForceAtPos( _force, NxVec3(_hit.worldImpact));
+	}
 }

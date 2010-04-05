@@ -50,6 +50,7 @@ typedef Kernel::Aff_transformation_3						Aff3;
 
 //GLUT
 #ifdef WIN32
+#define NOMINMAX
 #include <windows.h>
 #endif
 
@@ -61,11 +62,11 @@ typedef Kernel::Aff_transformation_3						Aff3;
 
 //PhysX
 #include "NxPhysics.h"
-#include "Cooking.h"
-#include "UserAllocator.h"
-#include "Stream.h"
-#include "ErrorStream.h"
-#include "Utilities.h"
-#include "SamplesVRDSettings.h"
+#include "Physics/Helpers/Cooking.h"
+#include "Physics/Helpers/UserAllocator.h"
+#include "Physics/Helpers/Stream.h"
+#include "Physics/Helpers/ErrorStream.h"
+#include "Physics/Helpers/Utilities.h"
+#include "Physics/Helpers/SamplesVRDSettings.h"
 
 // TODO: reference additional headers your program requires here

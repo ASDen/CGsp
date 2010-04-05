@@ -1,5 +1,8 @@
 #pragma once
 #pragma message ("In Renderer Inlcudes ")
+
+#define PHYSX_USE_VRD 1
+
 #include "osgData.h"
 //#include "glutViewer.h"
 #include "BaseUpdate.h"
