@@ -16,12 +16,12 @@ void PhysicsEventHandler::shoot(const osgGA::GUIEventAdapter& ea, osgViewer::Vie
 	sph->Draw();
 
 	PolyhedronNode* pnd = new PolyhedronNode(sph,osg::Vec3f(eye.x()-2, eye.y()-2, eye.z()-2) );
-	pnd->Actor = XSphere::Construct(dynamic_cast<PhysicsManager*>(Manager)->gScene,pnd);
+	pnd->RigidActor = XSphere::Construct(dynamic_cast<PhysicsManager*>(Manager)->gScene,pnd);
 	pnd->WireFrame = false;
 
-	Manager->PolyMan->AddPolyhedron<PhysicsManager>(pnd);
+	Manager->PolyMan->AddPolyhedron<RigidBodyManager>(pnd);
 	NxVec3 _force(shootForce*NxVec3(-dir.x(), dir.z(), dir.y()));
-	pnd->Actor->addForce(_force);
+	pnd->RigidActor->addForce(_force);
 
 }
 

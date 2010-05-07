@@ -23,8 +23,12 @@
 #include "Physics/Primitives/XSpring.h"
 #include "Physics/Primitives/XTorus.h"
 #include "Physics/Primitives/XTube.h"
+#include "Physics/Primitives/XCloth.h"
 
-#include "Physics/PhysicsUpdate.h"
+#include "Physics/UpdateCallback/RigidBodyUpdate.h"
+#include "Physics/UpdateCallback/ClothUpdate.h"
 #include "Physics/PhysicsEventHandler.h"
 #include "Physics/PhysicsManager.h"
+#include "Physics/Managers/RigidBodyManager.h"
+#include "Physics/Managers/ClothManager.h"
 

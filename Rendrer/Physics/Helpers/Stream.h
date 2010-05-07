@@ -3,7 +3,7 @@
 
 #include "NxStream.h"
 
-class UserStream : public NxStream
+class CGSP_CC UserStream : public NxStream
 	{
 	public:
 								UserStream(const char* filename, bool load);
@@ -26,7 +26,7 @@ class UserStream : public NxStream
 				FILE*			fp;
 	};
 
-class MemoryWriteBuffer : public NxStream
+class CGSP_CC MemoryWriteBuffer : public NxStream
 	{
 	public:
 								MemoryWriteBuffer();
@@ -52,7 +52,7 @@ class MemoryWriteBuffer : public NxStream
 				NxU8*			data;
 	};
 
-class MemoryReadBuffer : public NxStream
+class CGSP_CC MemoryReadBuffer : public NxStream
 	{
 	public:
 								MemoryReadBuffer(const NxU8* data);

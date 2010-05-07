@@ -3,7 +3,7 @@
 class CGSP_CC PhysicsManager : public BaseManager
 {
 public:
-	typedef PhysicsUpdateCallBack UpdateCallback;
+	//typedef RigidBodyUpdateCallBack UpdateCallback;
 
 	NxPhysicsSDK*     gPhysicsSDK;
 	NxScene*          gScene;
@@ -50,12 +50,12 @@ public:
 			}
 		}
 		// Set the physics parameters
-		gPhysicsSDK->setParameter(NX_SKIN_WIDTH, 0.01f);
+		gPhysicsSDK->setParameter(NX_SKIN_WIDTH, 0.005f);
 
 		// Set the debug visualization parameters
 		gPhysicsSDK->setParameter(NX_VISUALIZATION_SCALE, 1);
-		//gPhysicsSDK->setParameter(NX_VISUALIZE_CLOTH_MESH, 1);
-		//gPhysicsSDK->setParameter(NX_VISUALIZE_CLOTH_VALIDBOUNDS, 1);
+		gPhysicsSDK->setParameter(NX_VISUALIZE_CLOTH_MESH, 1);
+		gPhysicsSDK->setParameter(NX_VISUALIZE_CLOTH_VALIDBOUNDS, 1);
 
 		// setup the scene
 		NxSceneDesc sceneDesc;
@@ -118,7 +118,7 @@ public:
 		//update scence
 		gScene->simulate(1/rate);
 		gScene->flushStream();
-		gScene->fetchResults(NX_RIGID_BODY_FINISHED, true);	
+		gScene->fetchResults(NX_ALL_FINISHED, true);
 		std::cout<<"Frame #"<<fnum<<std::endl;
 	}
 

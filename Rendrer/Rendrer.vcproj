@@ -40,7 +40,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="-Zm250"
+				AdditionalOptions="-Zm300"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;CGSP_CC="
 				MinimalRebuild="true"
@@ -191,7 +191,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm250"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CGSP_CC=__declspec(dllexport)"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;RRTTY_EXPORTS;CGSP_CC=__declspec(dllexport)"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -215,6 +215,84 @@
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="DllRelease|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm250"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				PreprocessorDefinitions="WIN32;NDEBUG;_USRDLL;_CONSOLE;RRTTY_EXPORTS;CGSP_CC=__declspec(dllexport)"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="2"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="opengl32.lib glu32.lib OpenThreads.lib osg.lib osgUtil.lib osgViewer.lib osgWidget.lib osgGA.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib"
+				OutputFile="$(OutDir)\$(ProjectName).dll"
+				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -283,6 +361,14 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="DllRelease|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<Filter
 				Name="Physics"
@@ -321,6 +407,14 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="DllRelease|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\Physics\Helpers\Stream.cpp"
@@ -343,6 +437,14 @@
 						</FileConfiguration>
 						<FileConfiguration
 							Name="DllDebug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="DllRelease|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -377,6 +479,14 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="DllRelease|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 				</Filter>
 			</Filter>
@@ -388,6 +498,14 @@
 					>
 					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="DllRelease|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -434,6 +552,10 @@
 				RelativePath=".\targetver.h"
 				>
 			</File>
+			<File
+				RelativePath=".\TestSit.h"
+				>
+			</File>
 			<Filter
 				Name="KeyFrame"
 				>
@@ -461,10 +583,6 @@
 					RelativePath=".\Physics\PhysicsManager.h"
 					>
 				</File>
-				<File
-					RelativePath=".\Physics\PhysicsUpdate.h"
-					>
-				</File>
 				<Filter
 					Name="Primitives"
 					>
@@ -474,6 +592,10 @@
 					</File>
 					<File
 						RelativePath=".\Physics\Primitives\XCapsule.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XCloth.h"
 						>
 					</File>
 					<File
@@ -526,6 +648,30 @@
 					</File>
 					<File
 						RelativePath=".\Physics\Helpers\Utilities.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="UpdateCallback"
+					>
+					<File
+						RelativePath=".\Physics\UpdateCallback\ClothUpdate.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\UpdateCallback\RigidBodyUpdate.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Managers"
+					>
+					<File
+						RelativePath=".\Physics\Managers\ClothManager.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Managers\RigidBodyManager.h"
 						>
 					</File>
 				</Filter>

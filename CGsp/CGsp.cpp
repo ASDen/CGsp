@@ -65,41 +65,47 @@ int main() {
 	//Plane_3 s(30,30,10,10);
 	//Rectangle_2 s(20,10);
 
-	//Box_3 s(20,20,30,20,20,20);
+	Box_3 s(20,20,20,15,15,15);
 	//Capsule_3 s(30,200,10,10);
 	//ChamferCyl_3 s(60,100,30,10,5,5,15);
 	//Cone_3 s(2,5,10,3,3,3);
 	//Cylinder_3 s(3,20,20,9,30);
 	//Lathe_3 s(arr,Center,Z_ax,20,360);
-	//Pyramid_3 s(100,200,200,10,10,10);
+	//Pyramid_3 s(100,200,200,4,4,4);
 	//Sphere_3 s(20,50);
 	//Spindle_3 s(10,30,20,10,5,15);
 	//Spring_3 s(20,2.5,200,10,10,40);
-	Torus_3 s(20,5,0,0,30,40);
+	//Torus_3 s(20,5,0,0,30,40);
 	//Tube_3 s(14,13,15,20,20,10);
 
 	Polyhedron P;
+	Traingulate trg;
 	P=s.Draw();
-	//CGAL::convex_hull_3(s.Mesh.points_begin(),s.Mesh.points_end(),P);
+	std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
+	/*Eigen::Transform3d T;
+	Eigen::Vector3d Original(0,0,10);
+	T.setIdentity();
+	T.pretranslate (-Original);
+	trg.ApplyTransformToPolyhedron(P,T);*/
 
 
 	Traingulate tr;
-	tr.Do(P);
+	//tr.Do(P);
 
-	Bevel Be(18,1.25,1.25);
+	Bevel Be(400,-4,1.25);
 	//Be.Do(P);
 
 	Bridge Br(18,20);
 	//Br.Do(P);
 
-	Extrude Ex(18,1.25);
+	Extrude Ex(45,15);
 	//Ex.Do(P);
 	
-	Outline Ou(5,2.25);
+	Outline Ou(45,1.5);
 	//Ou.Do(P);
 
 
-	Bend Ben(90,s.Center,Z_ax,false,3,-3);
+	Bend Ben(90,s.Center,Y_ax,false,20,-20);
 	//Ben.Do(P);
 
 	Bulge Bu(40,s.Center,Z_ax,BRadial,false,45,-45);
@@ -118,7 +124,7 @@ int main() {
 	//Morph Mor(E,50);
 	//Mor.Do(P);
 
-	//Noise No(5,0.3,0,s.Center,Z_ax);
+	Noise No(5,0.3,0,s.Center,Z_ax);
 	//No.Do(P);
 
 	Skew Sk(30,s.Center,Z_ax,false,20,-20);
@@ -130,8 +136,8 @@ int main() {
 	Spherify Sph(50);
 	//Sph.Do(P);
 
-	Squeeze Sq(-40,s.Center,Z_ax,false,10,0);
-	//Sq.Do(P);
+	Squeeze Sq(-30,s.Center,Z_ax,false,10,0);
+	Sq.Do(P);
 
 	Stretch St(-20,s.Center,Z_ax,true,50,-50);
 	//St.Do(P);
@@ -139,7 +145,7 @@ int main() {
 	Taper Ta(3,s.Center,X_ax,false,20,-20);
 	//Ta.Do(P);
 
-	Twist Tw(120,s.Center,Z_ax,true,50,-50);
+	Twist Tw(270,s.Center,Z_ax,true,-5,15);
 	//Tw.Do(P);
 
 	// Write polyhedron in Object File Format (OFF).

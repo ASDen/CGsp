@@ -37,7 +37,7 @@
 #include "Modifiers\Polyhedron\Cylindrical_Wave.h"
 #include "Modifiers\Polyhedron\Linear_Wave.h"
 #include "Modifiers\Polyhedron\Morph.h"
-//#include "Modifiers\Polyhedron\Noise.h"
+#include "Modifiers\Polyhedron\Noise.h"
 #include "Modifiers\Polyhedron\Skew.h"
 #include "Modifiers\Polyhedron\Slice.h"
 #include "Modifiers\Polyhedron\Smooth.h"

@@ -59,8 +59,7 @@ public:
 		*CxP = Pn->P->Mesh ;
 
 		ReductionClass::Reduce(CxP);
-		//ConvexHullDirectReduce
-
+		
 		NxU32 vertCount = CxP->size_of_facets()*3;
 		NxVec3 *verts=new NxVec3[vertCount];
 		int h=0;

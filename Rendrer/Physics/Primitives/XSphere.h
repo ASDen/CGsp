@@ -33,9 +33,9 @@ public:
 		ActorDesc.density		= 10.0f;
 		ActorDesc.globalPose.t  = NxVec3 //get center of the box
 			(
-			-1*(Pn->Position.x()+SphereDesc.radius)/*ms.center().x()*/,
-			Pn->Position.z()+SphereDesc.radius/*ms.center().z()*/,
-			Pn->Position.y()+SphereDesc.radius/*ms.center().y()*/
+			-1*(Pn->Position.x())/*+SphereDesc.radius)*//*ms.center().x()*/,
+			Pn->Position.z()/*+SphereDesc.radius*//*ms.center().z()*/,
+			Pn->Position.y()/*+SphereDesc.radius*//*ms.center().y()*/
 			);
 
 		return scene->createActor(ActorDesc);

@@ -71,9 +71,9 @@ public:
 		T.setIdentity();
 		T.pretranslate (-Original);
 		T.prerotate (Q.toRotationMatrix());
-		T.pretranslate (Eigen::Vector3d(0, 0, -Dist));
+		//T.pretranslate (Eigen::Vector3d(0, 0, -Dist));
 		T = E_Trans * T;
-		T.pretranslate (Eigen::Vector3d(0, 0, Dist));
+		//T.pretranslate (Eigen::Vector3d(0, 0, Dist));
 		T.prerotate (Q.conjugate().toRotationMatrix());
 		T.pretranslate (Original);
 

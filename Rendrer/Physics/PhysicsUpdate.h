@@ -22,7 +22,7 @@ public:
 		{
 			// apply the position + orientation to the graphic object
 			_mat->setPosition(osg::Vec3f(-m[12],m[14],m[13]));
-			_mat->setAttitude( osg::Quat(-_quat.x, _quat.z, _quat.y, _quat.w)/*.makeRotate(90)*/ );
+			_mat->setAttitude( osg::Quat(-_quat.x, _quat.z, _quat.y, _quat.w) );
 		}
 
 		traverse(node, nv);

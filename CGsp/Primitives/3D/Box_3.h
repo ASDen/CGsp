@@ -30,6 +30,10 @@ public:
     Box_3(double l,double w,double h,int x):length(l),width(w),height(h),length_Seg(x),width_Seg(x),height_Seg(x)
     {}
 
+	//Set the parameters with user defined values
+    Box_3(double l,double w,double h,int x,int y):length(l),width(w),height(h),length_Seg(x),width_Seg(y),height_Seg(y)
+    {}
+
     //Set the parameters with user defined values
     Box_3(double l,double w,double h,int x,int y,int z):length(l),width(w),height(h),length_Seg(x),width_Seg(y),height_Seg(z)
     {}

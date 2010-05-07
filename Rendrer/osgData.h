@@ -2,22 +2,26 @@
 
 typedef Polyhedron::Edge_iterator	Edge_iterator;
 typedef Primitives* pPrimitive;
-typedef NxActor* pNxActor;
 typedef NxActorDesc* pNxActorDesc;
 
 class CGSP_CC PolyhedronNode : public osg::Drawable
 {
 public:
 
+	union {
+		NxActor* RigidActor;
+		NxCloth* ClothActor;
+	};
+
 	pPrimitive P;
-	pNxActor Actor;
 	NxActorDesc ActorDesc;
 	osg::Vec3 Position;
+	osg::Vec3 PColor;
 	bool WireFrame;
 	bool AntialisedLines;
 
 	PolyhedronNode():WireFrame(true){}
-	PolyhedronNode(pPrimitive iP,osg::Vec3 Pos=osg::Vec3(0,0,0)):P(iP),Position(Pos) {}
+	PolyhedronNode(pPrimitive iP,osg::Vec3 Pos=osg::Vec3(0,0,0)):P(iP),Position(Pos),PColor(0.0f,0.0f,1.0f) {}
 	PolyhedronNode(const PolyhedronNode& poly,const osg::CopyOp& copyop=osg::CopyOp::SHALLOW_COPY):
 	osg::Drawable(poly,copyop) {}
 
@@ -25,6 +29,7 @@ public:
 	virtual void drawImplementation(osg::RenderInfo&) const
 	{
 		DrawPolyhedron();
+		const_cast<PolyhedronNode*>(this)->dirtyBound();
 	}
 	virtual osg::BoundingBox computeBound() const
 	{
@@ -35,7 +40,7 @@ public:
 	}
 	void DrawPolyhedron() const
 	{
-		::glColor3f(0.0f,0.0f,1.0f); // change the color of facets
+		::glColor3f(PColor.x(),PColor.y(),PColor.z()); // change the color of facets
 		Facet_iterator f;
 		for(f = P->ModifiedMesh.facets_begin();
 			f != P->ModifiedMesh.facets_end();
@@ -50,7 +55,6 @@ public:
 			{
 				const Point_3& p = he->vertex()->point();
 				::glVertex3d(CGAL::to_double(p.x()),CGAL::to_double(p.y()),CGAL::to_double(p.z()));
-				//std::cout<<p.x()<<" "<<p.y()<<" "<<p.z()<<std::endl;
 			}
 			::glEnd();
 
@@ -132,7 +136,7 @@ public:
 		typedef typename Manager::UpdateCallback UC;
 
 		Pn->setUseDisplayList( false );
-		Pn->setUseVertexBufferObjects( true ); 
+		//Pn->setUseVertexBufferObjects( false ); 
 		PolyBag.push_back(Pn);
 		osg::PositionAttitudeTransform* pat=new osg::PositionAttitudeTransform();
 		pat->setPosition(Pn->Position);
