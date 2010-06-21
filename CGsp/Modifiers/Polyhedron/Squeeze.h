@@ -1,4 +1,4 @@
-class Squeeze : public Modifier
+class CGSP_CC Squeeze : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> SqAmount;

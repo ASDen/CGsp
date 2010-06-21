@@ -1,4 +1,4 @@
-class Bridge : public Modifier
+class CGSP_CC Bridge : public Modifier
 {
 public:
 	int Face1;

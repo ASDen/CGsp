@@ -1,4 +1,4 @@
-class Bulge : public Modifier
+class CGSP_CC Bulge : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> BuAmount;

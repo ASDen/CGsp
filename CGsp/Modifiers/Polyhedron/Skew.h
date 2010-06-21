@@ -1,4 +1,4 @@
-class Skew : public Modifier
+class CGSP_CC Skew : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> SkAmount;

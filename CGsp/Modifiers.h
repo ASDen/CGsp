@@ -1,4 +1,4 @@
-class Modifier
+class CGSP_CC Modifier
 {
 public:
 	typedef std::vector<AnimatableProperyParent*> propsVector;

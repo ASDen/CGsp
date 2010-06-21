@@ -1,4 +1,4 @@
-class Extrude : public Modifier
+class CGSP_CC Extrude : public Modifier
 {
 public:
 	AnimatablePropery<int,Interpolator> Fnum;

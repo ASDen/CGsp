@@ -1,4 +1,4 @@
-class Cylindrical_Wave : public Modifier
+class CGSP_CC Cylindrical_Wave : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> Amplitude;

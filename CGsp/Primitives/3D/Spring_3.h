@@ -1,4 +1,4 @@
-class Spring_3 : public Primitives
+class CGSP_CC Spring_3 : public Primitives
 {
 	template <class HDS>
 	class Build_Spring : public CGAL::Modifier_base<HDS> {
@@ -109,7 +109,7 @@ public:
 	{}
 
 	//Set the parameters with user defined values
-	Spring_3(double r1,double r2):radius1(r1),radius2(r2),height(0),turn_number(1),Seg(24),side_Seg(12)
+	Spring_3(double r,int n):radius1(r),radius2(10),height(0),turn_number(1),Seg(n),side_Seg(n/2)
 	{}
 	
 	//Set the parameters with user defined values
@@ -117,7 +117,7 @@ public:
 	{}
 	
 	//Set the parameters with user defined values
-	Spring_3(double r1,double r2,double h,int S):radius1(r1),radius2(r2),height(h),turn_number(S),Seg(S),side_Seg(S)
+	Spring_3(double r1,double r2,double h,int S):radius1(r1),radius2(r2),height(h),turn_number(S),Seg(S),side_Seg(S/2)
 	{}
 
 	//Set the parameters with user defined values

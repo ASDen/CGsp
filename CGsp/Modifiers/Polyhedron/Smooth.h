@@ -1,4 +1,4 @@
-class Smooth : public Modifier
+class CGSP_CC Smooth : public Modifier
 {
 public:
 	AnimatablePropery<int,Interpolator> S_Deg;

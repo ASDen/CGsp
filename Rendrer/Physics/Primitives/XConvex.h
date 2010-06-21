@@ -1,6 +1,6 @@
 #define MAX_NX_CX_FACES 255
 
-class GeometrySimplifyReducer
+class CGSP_CC GeometrySimplifyReducer
 {
 public:
 	static void Reduce(Polyhedron *CxP)
@@ -21,7 +21,7 @@ public:
 	}
 };
 
-class ConvexHullReducer
+class CGSP_CC ConvexHullReducer
 {
 public:
 	static void Reduce(Polyhedron *CxP)

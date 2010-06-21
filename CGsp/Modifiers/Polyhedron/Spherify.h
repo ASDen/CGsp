@@ -1,4 +1,4 @@
-class Spherify : public Modifier
+class CGSP_CC Spherify : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> SphAmount;

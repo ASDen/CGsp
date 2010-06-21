@@ -23,7 +23,7 @@ typedef CGAL::Constrained_triangulation_plus_2<CDTbase>                CDT;
 
 typedef Polyhedron::HalfedgeDS HDS;
 
-class Traingulate : public Modifier
+class CGSP_CC Traingulate : public Modifier
 {
 	class Triangulate_modifier : public CGAL::Modifier_base<HDS> {
 		CDT* cdt;

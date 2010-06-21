@@ -1,6 +1,6 @@
 #define TEAR_MEMORY_FACTOR 2
 
-class XCloth
+class CGSP_CC XCloth
 {
 public:
     static NxCloth* Construct(NxScene* scene,NxPhysicsSDK* gPhysicsSDK,PolyhedronNode* Pn,bool app_press=false)

@@ -1,5 +1,5 @@
 //this could have also been implemented by delegation
-class Rectangle_2 : Primitives 
+class CGSP_CC Rectangle_2 : Primitives 
 {
 public:
 	//The basic parameters in the Rectangle

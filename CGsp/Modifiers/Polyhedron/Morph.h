@@ -1,4 +1,4 @@
-class Morph : public Modifier
+class CGSP_CC Morph : public Modifier
 {
 public:
 	Polyhedron End;

@@ -1,4 +1,4 @@
-class Torus_3 : public Primitives
+class CGSP_CC Torus_3 : public Primitives
 {
 	template <class HDS>
 	class Build_torus : public CGAL::Modifier_base<HDS> {

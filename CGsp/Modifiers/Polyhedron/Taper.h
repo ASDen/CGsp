@@ -1,4 +1,4 @@
-class Taper : public Modifier
+class CGSP_CC Taper : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> TaAmount;

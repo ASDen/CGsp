@@ -1,4 +1,4 @@
-class Stretch : public Modifier
+class CGSP_CC Stretch : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> StAmount;

@@ -1,4 +1,4 @@
-class Interpolator
+class CGSP_CC Interpolator
 {
 public:
 

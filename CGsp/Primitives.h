@@ -1,6 +1,6 @@
 typedef Modifier* pModifier;
 
-class Primitives
+class CGSP_CC Primitives
 {
 public:
 	std::vector<pModifier> ModStack;

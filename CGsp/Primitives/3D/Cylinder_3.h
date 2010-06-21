@@ -1,5 +1,5 @@
 //this could have also been implemented by delegation
-class Cylinder_3 : public Primitives 
+class CGSP_CC Cylinder_3 : public Primitives 
 {
 public:
 	//Basic parametes of the cylinder
@@ -15,10 +15,6 @@ public:
 
 	//Set the parameters with user defined values
 	Cylinder_3(double x):radius(x),height(x),height_Seg(1),cap_Seg(1),side_Seg(24)
-	{}
-
-	//Set the parameters with user defined values
-	Cylinder_3(double r,double h):radius(r),height(h),height_Seg(1),cap_Seg(1),side_Seg(24)
 	{}
 
 	//Set the parameters with user defined values

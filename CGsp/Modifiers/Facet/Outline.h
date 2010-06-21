@@ -1,4 +1,4 @@
-class Outline : public Modifier
+class CGSP_CC Outline : public Modifier
 {
 public:
 	AnimatablePropery<int,Interpolator> Fnum;

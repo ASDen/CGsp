@@ -1,5 +1,5 @@
 //this could have also been implemented by delegation
-class Arc_2 : Primitives 
+class CGSP_CC Arc_2 : Primitives 
 {
 public:
 	//The basic parameters in the Arc

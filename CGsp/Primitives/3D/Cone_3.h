@@ -1,5 +1,5 @@
 //this could have also been implemented by delegation
-class Cone_3 : public Primitives 
+class CGSP_CC Cone_3 : public Primitives 
 {
 public:
 	//Basic parametes of the CONE

@@ -1,4 +1,4 @@
-class Bend : public Modifier
+class CGSP_CC Bend : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> BeAngle;

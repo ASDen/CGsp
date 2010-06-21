@@ -1,4 +1,4 @@
-class Bevel : public Modifier
+class CGSP_CC Bevel : public Modifier
 {
 public:
 	AnimatablePropery<int,Interpolator> Fnum;

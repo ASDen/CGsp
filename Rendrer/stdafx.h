@@ -9,7 +9,10 @@
 
 #include <stdio.h>
 #include <tchar.h>
+//#include <stdint.h>
 
+//#define BOOST_ALL_NO_LIB
+//#define CGAL_NO_AUTOLINK
 //CGsp
 #include "../CGsp/stdafx.h"
 

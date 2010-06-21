@@ -1,4 +1,4 @@
-class Capsule_3 : public Primitives
+class CGSP_CC Capsule_3 : public Primitives
 {
 	template <class HDS>
 	class Build_capsule : public CGAL::Modifier_base<HDS> {

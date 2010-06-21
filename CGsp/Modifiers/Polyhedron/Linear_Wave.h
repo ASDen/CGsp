@@ -1,4 +1,4 @@
-class Linear_Wave : public Modifier
+class CGSP_CC Linear_Wave : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> Amplitude;

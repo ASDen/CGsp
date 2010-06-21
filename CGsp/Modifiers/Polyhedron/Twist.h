@@ -1,4 +1,4 @@
-class Twist : public Modifier
+class CGSP_CC Twist : public Modifier
 {
 public:
 	AnimatablePropery<double,Interpolator> TwAngle;
@@ -89,14 +89,14 @@ public:
 		y_max = y_min = Begin->point().y();
 		z_max = z_min = Begin->point().z();
 
-		if (Center == NULL)
+		/*if (Center == NULL)
 		{
 			Center = &calc_Center(P);
-
-			X_Center = Center->x();
-			Y_Center = Center->y();
-			Z_Center = Center->z();
 		}
+		X_Center = Center->x();
+		Y_Center = Center->y();
+		Z_Center = Center->z();*/
+		
 		double x_c = X_Center.val;
 		double y_c = Y_Center.val;
 		double z_c = Z_Center.val;

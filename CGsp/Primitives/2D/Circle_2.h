@@ -1,5 +1,5 @@
 //this could have also been implemented by delegation
-class Circle_2 : Primitives 
+class CGSP_CC Circle_2 : Primitives 
 {
 public:
 	//The basic parameters in the Circle

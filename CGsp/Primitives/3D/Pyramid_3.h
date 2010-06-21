@@ -1,4 +1,4 @@
-class Pyramid_3 : public Primitives 
+class CGSP_CC Pyramid_3 : public Primitives 
 {
 public:
 	//The basic parameters in the Pyramid
@@ -22,7 +22,15 @@ public:
 	{}
 
 	//Set the parameters with user defined values
+	Pyramid_3(double w,double l,double h):width(w),depth(l),height(h),width_Seg(1),depth_Seg(1),height_Seg(1)
+	{}
+
+	//Set the parameters with user defined values
 	Pyramid_3(double w,double l,double h,int x):width(w),depth(l),height(h),width_Seg(x),depth_Seg(x),height_Seg(x)
+	{}
+
+	//Set the parameters with user defined values
+	Pyramid_3(double w,double l,double h,int x,int y):width(w),depth(l),height(h),width_Seg(x),depth_Seg(y),height_Seg(1)
 	{}
 
 	//Set the parameters with user defined values

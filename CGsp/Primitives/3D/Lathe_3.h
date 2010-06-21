@@ -1,4 +1,4 @@
-class Lathe_3 : public Primitives
+class CGSP_CC Lathe_3 : public Primitives
 {
 	template <class HDS>
 	class Build_lathe : public CGAL::Modifier_base<HDS> {
