@@ -74,11 +74,17 @@ public:
 
 	void Do(Polyhedron &P)
 	{
-		if (SqAmount.val == 0)
-			return;
-
 		Eigen::Transform3d t;
 		Eigen::Vector3d org;
+
+		if (SqAmount.val == 0)
+		{
+			t.setIdentity();
+			t.pretranslate(org);
+			ApplyTransformToPolyhedron(P,t);
+			
+			return;
+		}
 
 		double x_max = 0, y_max = 0, z_max = 0, x_min = 0, y_min = 0, z_min = 0;
 		double x, y, z;
@@ -89,14 +95,14 @@ public:
 		y_max = y_min = Begin->point().y();
 		z_max = z_min = Begin->point().z();
 
-		if (Center == NULL)
+		/*if (Center == NULL)
 		{
 			Center = &calc_Center(P);
 
 			X_Center = Center->x();
 			Y_Center = Center->y();
 			Z_Center = Center->z();
-		}
+		}*/
 
 		double x_c = X_Center.val;
 		double y_c = Y_Center.val;

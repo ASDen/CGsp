@@ -101,6 +101,7 @@ public:
 		double y_c = Y_Center.val;
 		double z_c = Z_Center.val;
 
+		
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{
 			Point_3 p = i->point();

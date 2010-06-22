@@ -154,14 +154,14 @@ public:
 
 		Vertex_iterator Begin = P.vertices_begin();
 
-		if (Center == NULL)
+		/*if (Center == NULL)
 		{
 			Center = &calc_Center(P);
 
 			X_Center = Center->x();
 			Y_Center = Center->y();
 			Z_Center = Center->z();
-		}
+		}*/
 
 		double x_c = X_Center.val;
 		double y_c = Y_Center.val;
