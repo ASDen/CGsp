@@ -26,7 +26,7 @@ int main( int argc, char **argv )
 
 	Twist* t=new Twist(45);
 	//t->Center = new Point_3(2,2,2);
-	t->X_Center.FrameValues[0] = 2;
+	t->X_Center.FrameValues[0] = 5;
 	s->ApplyModifier(t);
 
 	FrameCreater::FillFrames(36,360.0,&Twist::TwAngle,*t);
