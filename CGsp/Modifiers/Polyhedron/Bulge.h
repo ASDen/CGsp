@@ -53,7 +53,7 @@ public:
 		props.push_back(&Lower);
 	}
 
-	Bulge(double BAmount, Point_3* C, Axis RAxis) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BRadial),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	Bulge(double BAmount, Point_3* C) : BuAmount(BAmount),Center(C),RoAxis(Z_ax),BuType(BRadial),Limited(false),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&BuAmount);
 		props.push_back(&X_Center);
@@ -63,7 +63,7 @@ public:
 		props.push_back(&Lower);
 	}
 
-	Bulge(double BAmount, Point_3* C, Axis RAxis, BulgeType BType) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BType),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	Bulge(double BAmount, Point_3* C, Axis RAxis) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BRadial),Limited(false),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&BuAmount);
 		props.push_back(&X_Center);
@@ -73,7 +73,7 @@ public:
 		props.push_back(&Lower);
 	}
 
-	Bulge(double BAmount, Point_3* C, Axis RAxis, bool Limit) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BRadial),Limited(Limit),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	Bulge(double BAmount, Point_3* C, Axis RAxis, BulgeType BType) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BType),Limited(false),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&BuAmount);
 		props.push_back(&X_Center);
@@ -83,7 +83,7 @@ public:
 		props.push_back(&Lower);
 	}
 
-	Bulge(double BAmount, Point_3* C, Axis RAxis, BulgeType BType, bool Limit) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BType),Limited(Limit),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	Bulge(double BAmount, Point_3* C, Axis RAxis, bool Limit) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BRadial),Limited(Limit),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&BuAmount);
 		props.push_back(&X_Center);
@@ -93,7 +93,17 @@ public:
 		props.push_back(&Lower);
 	}
 
-	Bulge(double BAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BRadial),Limited(Limit),Upper(max),Lower(min),X_Center(0),Y_Center(0),Z_Center(0)
+	Bulge(double BAmount, Point_3* C, Axis RAxis, BulgeType BType, bool Limit) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BType),Limited(Limit),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	{
+		props.push_back(&BuAmount);
+		props.push_back(&X_Center);
+		props.push_back(&Y_Center);
+		props.push_back(&Z_Center);
+		props.push_back(&Upper);
+		props.push_back(&Lower);
+	}
+
+	Bulge(double BAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : BuAmount(BAmount),Center(C),RoAxis(RAxis),BuType(BRadial),Limited(Limit),Upper(max),Lower(min),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&BuAmount);
 		props.push_back(&X_Center);
