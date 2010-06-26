@@ -47,3 +47,4 @@
 #include "Modifiers\Polyhedron\Taper.h"
 #include "Modifiers\Polyhedron\Triangulate.h"
 #include "Modifiers\Polyhedron\Twist.h"
+#include "Modifiers\Polyhedron\Propery.h"

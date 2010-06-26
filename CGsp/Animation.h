@@ -17,6 +17,8 @@ public:
 	Interp InterpTech;
 	int NumberOfFrames;
 
+	AnimatablePropery(){}
+
 	AnimatablePropery(Type nval):val(nval),NumberOfFrames(1)
 	{
 		FrameValues.push_back(val);
