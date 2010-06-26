@@ -3,6 +3,8 @@
 
 #define PHYSX_USE_VRD 1
 
+#include "KeyFrame/KeyFrameModifier.h"
+
 #include "osgData.h"
 //#include "glutViewer.h"
 #include "BaseUpdate.h"
@@ -13,6 +15,10 @@
 #include "KeyFrame/KeyFrameUpdate.h"
 #include "KeyFrame/KeyFrameEventHandler.h"
 #include "KeyFrame/KeyFrameManager.h"
+
+#include "KeyFrame/Modifiers/Translate.h"
+#include "KeyFrame/Modifiers/Scale.h"
+#include "KeyFrame/Modifiers/Rotate.h"
 
 //Physics
 #include "Physics/Primitives/XBox.h"

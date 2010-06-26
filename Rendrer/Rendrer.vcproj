@@ -265,8 +265,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm250"
-				Optimization="2"
+				Optimization="0"
 				EnableIntrinsicFunctions="true"
+				WholeProgramOptimization="false"
 				PreprocessorDefinitions="WIN32;NDEBUG;_USRDLL;_CONSOLE;RRTTY_EXPORTS;CGSP_CC=__declspec(dllexport)"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -292,6 +293,7 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="0"
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
@@ -568,9 +570,29 @@
 					>
 				</File>
 				<File
+					RelativePath=".\KeyFrame\KeyFrameModifier.h"
+					>
+				</File>
+				<File
 					RelativePath=".\KeyFrame\KeyFrameUpdate.h"
 					>
 				</File>
+				<Filter
+					Name="Modifiers"
+					>
+					<File
+						RelativePath=".\KeyFrame\Modifiers\Rotate.h"
+						>
+					</File>
+					<File
+						RelativePath=".\KeyFrame\Modifiers\Scale.h"
+						>
+					</File>
+					<File
+						RelativePath=".\KeyFrame\Modifiers\Translate.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Physics"

@@ -3,6 +3,7 @@
 typedef Polyhedron::Edge_iterator	Edge_iterator;
 typedef Primitives* pPrimitive;
 typedef NxActorDesc* pNxActorDesc;
+typedef KeyFrameModifier* pKeyFrameModifier;
 
 class CGSP_CC PolyhedronNode : public osg::Drawable
 {
@@ -12,6 +13,29 @@ public:
 		NxActor* RigidActor;
 		NxCloth* ClothActor;
 	};
+
+	std::vector<pKeyFrameModifier> ModStack;
+	osg::PositionAttitudeTransform* Pos;
+	osg::PositionAttitudeTransform* ModifiedPos;
+
+	void ApplyModifier(pKeyFrameModifier M)
+	{
+		ModStack.push_back(M);
+	}
+
+	void UpdateAtFrame(int Fnum)
+	{
+		const_cast<PolyhedronNode*>(this)->getParent(0)->getParent(0)->asTransform()->asPositionAttitudeTransform()->setPosition(ModifiedPos->getPosition());
+		const_cast<PolyhedronNode*>(this)->getParent(0)->getParent(0)->asTransform()->asPositionAttitudeTransform()->setAttitude(ModifiedPos->getAttitude());
+		const_cast<PolyhedronNode*>(this)->getParent(0)->getParent(0)->asTransform()->asPositionAttitudeTransform()->setScale(ModifiedPos->getScale());
+
+		std::vector<pKeyFrameModifier>::iterator i;
+		ModifiedPos=static_cast<osg::PositionAttitudeTransform*> (Pos->clone(osg::CopyOp::DEEP_COPY_ALL));;
+		for(i=ModStack.begin();i!=ModStack.end();i++)
+		{
+			(*i)->DoAtFrame(ModifiedPos,Fnum);
+		}
+	}
 
 	pPrimitive P;
 	NxActorDesc ActorDesc;
@@ -28,6 +52,12 @@ public:
 	META_Object(myPoly,PolyhedronNode)
 	virtual void drawImplementation(osg::RenderInfo&) const
 	{
+		//if(this->getNumParents()>0)
+		//if(RigidActor == NULL && ClothActor == NULL)
+		{
+		
+		}
+		
 		DrawPolyhedron();
 		const_cast<PolyhedronNode*>(this)->dirtyBound();
 	}
@@ -145,6 +175,11 @@ public:
 		g->addDrawable(Pn);
 		pat->setUpdateCallback(new UC(Pn));
 		pat->addChild(g);
+
+		Pn->Pos         = static_cast<osg::PositionAttitudeTransform*> (pat->clone(osg::CopyOp::DEEP_COPY_ALL));
+		Pn->ModifiedPos = static_cast<osg::PositionAttitudeTransform*> (pat->clone(osg::CopyOp::DEEP_COPY_ALL));
+		
+		//*(Pn->ModifiedPos) = *pat;
 	}
 
 	void addlight(LightNode* lightSrc)

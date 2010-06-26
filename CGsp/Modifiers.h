@@ -4,17 +4,37 @@ public:
 	typedef std::vector<AnimatableProperyParent*> propsVector;
 
 	propsVector props;
+	
+	bool extrensic;
+	int mxFrame;
 
 	virtual void Do(Polyhedron&) = 0;
 
-	void DoAtFrame(Polyhedron& P,int Frame)
+	Modifier()
 	{
+		extrensic = true;
+	}
+
+	virtual void DoAtFrame(Polyhedron& P,int Frame)
+	{
+		if( !extrensic && Frame > mxFrame )
+			return;
 		propsVector::iterator i;
 		for(i=props.begin();i!=props.end();i++)
 		{
 			(*i)->SetAtFrame(Frame);
 		}
 		Do(P);
+	}
+
+	void CalcmxF()
+	{
+		mxFrame = 0; 
+		propsVector::iterator i;
+		for(i=props.begin();i!=props.end();i++)
+		{
+			mxFrame = std::max( (*i)->NumberOfFrames , mxFrame );
+		}
 	}
 
 	inline Aff3 Cgal2Eign_TM (Eigen::Transform3d& T)

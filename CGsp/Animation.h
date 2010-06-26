@@ -3,6 +3,7 @@
 class CGSP_CC AnimatableProperyParent
 {
 public:
+	int NumberOfFrames;
 	virtual void SetAtFrame(int Frame)=0;
 };
 
@@ -15,10 +16,15 @@ public:
 	std::vector<Type> FrameValues;
 	std::map<int,Type> KeyFrames;
 	Interp InterpTech;
-	int NumberOfFrames;
 
-	AnimatablePropery(Type nval):val(nval),NumberOfFrames(1)
+	AnimatablePropery()
 	{
+		NumberOfFrames = 1;
+	}
+
+	AnimatablePropery(Type nval):val(nval)
+	{
+		NumberOfFrames = 1;
 		FrameValues.push_back(val);
 		KeyFrames[0] = val;
 	}

@@ -11,6 +11,7 @@ public:
 	virtual void operator()(osg::Node* node, osg::NodeVisitor* nv)
 	{
 		Pn->P->UpdateAtFrame(fnum);
+		Pn->UpdateAtFrame(fnum);
 		Pn->dirtyBound();
 		traverse(node, nv);
 	}
