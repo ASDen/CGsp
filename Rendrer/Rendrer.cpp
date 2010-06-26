@@ -39,7 +39,6 @@ int main( int argc, char **argv )
 	BoxPropsI* bp3=new BoxPropsI(&Box_3::height_Seg,s,4);
 	s->ApplyModifier(bp3);
 
-	FrameCreater::FillFrames(30,50,&BoxPropsI::PolyP,*bp3);
 	FrameCreater::FillFrames(60,6,&BoxPropsI::PolyP,*bp3);*/
 
 	Twist* t=new Twist(45);
@@ -62,7 +61,6 @@ int main( int argc, char **argv )
 	c2->ApplyModifier(sr);
 	FrameCreater::FillFrames(40,4.0,&Scale::sx,*sr);
 
-	
 	
 
 	//Box_Wall_Spring();
