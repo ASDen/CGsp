@@ -33,7 +33,7 @@ struct Normal_vector {
 int main() {
 	std::ofstream of("C:\\123.off");
 
-	/*std::vector <Point_3> arr;
+	std::vector <Point_3> arr;
 	arr.push_back(Point_3 (2,0,2));
 	arr.push_back(Point_3 (6,0,3));
 	arr.push_back(Point_3 (8,0,4));
@@ -54,7 +54,7 @@ int main() {
 
 	arr.push_back(Point_3 (0,1.25,3));
 	arr.push_back(Point_3 (0,1.50,3));
-	arr.push_back(Point_3 (0,1.75,3));*/
+	arr.push_back(Point_3 (0,1.75,3));
 
 	
 	Point_3* Center = new Point_3(0,0,0);
@@ -65,12 +65,12 @@ int main() {
 	//Plane_3 s(30,30,10,10);
 	//Rectangle_2 s(20,10);
 
-	Box_3 s(20,20,20,15,15,15);
+	//Box_3 s(20,20,20,15,15,15);
 	//Capsule_3 s(30,200,10,10);
 	//ChamferCyl_3 s(60,100,30,10,5,5,15);
 	//Cone_3 s(2,5,10,3,3,3);
 	//Cylinder_3 s(3,20,20,9,30);
-	//Lathe_3 s(arr,Center,Z_ax,20,360);
+	Lathe_3 s(arr,Center,Z_ax,20,360);
 	//Pyramid_3 s(100,200,200,4,4,4);
 	//Sphere_3 s(20,50);
 	//Spindle_3 s(10,30,20,10,5,15);

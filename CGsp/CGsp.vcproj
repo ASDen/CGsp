@@ -533,6 +533,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Modifiers\Polyhedron\Propery.h"
+						>
+					</File>
+					<File
 						RelativePath=".\Modifiers\Polyhedron\RandomNoise.h"
 						>
 					</File>

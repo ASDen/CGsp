@@ -269,3 +269,46 @@ void cloth_test()
     pman->AddPolyhedron<ClothManager>(c5);*/
 
 }
+
+void Lathe()
+{
+	std::vector <Point_3> arr;
+	arr.push_back(Point_3 (2,0,2));
+	arr.push_back(Point_3 (6,0,3));
+	arr.push_back(Point_3 (8,0,4));
+	arr.push_back(Point_3 (3,0,5));
+	arr.push_back(Point_3 (5,0,6));
+	arr.push_back(Point_3 (8,0,7));
+
+	arr.push_back(Point_3 (0,1.75,8));
+	arr.push_back(Point_3 (0,1.50,8));
+	arr.push_back(Point_3 (0,1.25,8));
+
+	arr.push_back(Point_3 (0,1,8));
+	arr.push_back(Point_3 (0,1,7));
+	arr.push_back(Point_3 (0,1,6));
+	arr.push_back(Point_3 (0,1,5));
+	arr.push_back(Point_3 (0,1,4));
+	arr.push_back(Point_3 (0,1,3));
+
+	arr.push_back(Point_3 (0,1.25,3));
+	arr.push_back(Point_3 (0,1.50,3));
+	arr.push_back(Point_3 (0,1.75,3));
+
+	
+	Point_3* Center = new Point_3(0,0,0);
+
+	Lathe_3* s = new Lathe_3(arr,Center,Z_ax,20,0);
+
+	s->Draw();
+
+	PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(0,0,0));
+    pman->AddPolyhedron<KeyFrameManager>(c1);
+
+	LathePropsD* bp=new LathePropsD(&Lathe_3::R_Angle,s,100);
+	s->ApplyModifier(bp);
+
+	FrameCreater::FillFrames(1,0.0,&LathePropsD::PolyP,*bp);
+	FrameCreater::FillFrames(100,360.0,&LathePropsD::PolyP,*bp);
+
+}
