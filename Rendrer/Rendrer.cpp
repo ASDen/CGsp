@@ -19,10 +19,7 @@ int main( int argc, char **argv )
 	kfm->InitOsg();
 	kfm->setPolyManager(pman);
 
-	Box_3* s = new Box_3(4,8,4,6,6,6);
-	s->Draw();
-	PolyhedronNode* c2 = new PolyhedronNode(s,osg::Vec3(0,0,0));
-    pman->AddPolyhedron<KeyFrameManager>(c2);
+	Lathe();
 
 	/*BoxPropsI* bp=new BoxPropsI(&Box_3::length_Seg,s,4);
 	s->ApplyModifier(bp);
@@ -71,6 +68,7 @@ int main( int argc, char **argv )
 
 	
 	kfm->DisplayLoop();	
+
 	
 	return 0;
 }

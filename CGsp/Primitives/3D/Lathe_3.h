@@ -14,6 +14,9 @@ class CGSP_CC Lathe_3 : public Primitives
 
 		void operator()( HDS& hds)
 		{
+			if (Arr.size() == 0)
+				return;
+
 			CGAL::Polyhedron_incremental_builder_3<HDS> B( hds, true);
 			typedef typename HDS::Vertex   Vertex;
 			typedef typename Vertex::Point Point;
@@ -30,6 +33,8 @@ class CGSP_CC Lathe_3 : public Primitives
 			{
 				R_an = 0;
 				numberOfSeparators = S;//number of side segments
+
+				return;
 			}
 			double R = R_an * CGAL_PI / 180.0;
 			double segmentRad = R / numberOfSeparators;//the angle of each circle
@@ -165,6 +170,8 @@ public:
 	//Set the parameters with user defined values
 	Lathe_3(std::vector<Point_3> arr,Point_3* C,Axis R_A,int S,double R_an):Arr_Points(arr),Center(C),R_Axis(R_A),Seg(S),R_Angle(R_an)
 	{}
+
+	Lathe_3(){}
 	
 	Polyhedron Draw()
 	{

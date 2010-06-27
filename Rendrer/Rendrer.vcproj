@@ -269,6 +269,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				WholeProgramOptimization="true"
+
 				PreprocessorDefinitions="WIN32;NDEBUG;_USRDLL;_CONSOLE;RRTTY_EXPORTS;CGSP_CC=__declspec(dllexport)"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -295,6 +296,7 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				LinkTimeCodeGeneration="1"
+
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
