@@ -38,25 +38,25 @@ int main( int argc, char **argv )
 
 	FrameCreater::FillFrames(60,6,&BoxPropsI::PolyP,*bp3);*/
 
-	Twist* t=new Twist(45);
-	//t->Center = new Point_3(2,2,2);
-	t->X_Center.FrameValues[0] = 5;
-	s->ApplyModifier(t);
+	//Twist* t=new Twist(45);
+	////t->Center = new Point_3(2,2,2);
+	//t->X_Center.FrameValues[0] = 5;
+	//s->ApplyModifier(t);
 
-	FrameCreater::FillFrames(36,360.0,&Twist::TwAngle,*t);
-	FrameCreater::FillFrames(72,0.0,&Twist::TwAngle,*t);
+	//FrameCreater::FillFrames(36,360.0,&Twist::TwAngle,*t);
+	//FrameCreater::FillFrames(72,0.0,&Twist::TwAngle,*t);
 
-	Translate* tr=new Translate(0);
-	c2->ApplyModifier(tr);
-	FrameCreater::FillFrames(40,30.0,&Translate::tx,*tr);
+	//Translate* tr=new Translate(0);
+	//c2->ApplyModifier(tr);
+	//FrameCreater::FillFrames(40,30.0,&Translate::tx,*tr);
 
-	Rotate* rr=new Rotate(0);
-	c2->ApplyModifier(rr);
-	FrameCreater::FillFrames(40,6.0,&Rotate::ax,*rr);
+	//Rotate* rr=new Rotate(0);
+	//c2->ApplyModifier(rr);
+	//FrameCreater::FillFrames(40,6.0,&Rotate::ax,*rr);
 
-	Scale* sr=new Scale(1);
-	c2->ApplyModifier(sr);
-	FrameCreater::FillFrames(40,4.0,&Scale::sx,*sr);
+	//Scale* sr=new Scale(1);
+	//c2->ApplyModifier(sr);
+	//FrameCreater::FillFrames(40,4.0,&Scale::sx,*sr);
 
 	
 
