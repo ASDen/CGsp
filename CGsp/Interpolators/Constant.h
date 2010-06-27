@@ -15,7 +15,7 @@ public:
 		sz=0;
 		for(std::map<int,Type>::iterator i=prop.KeyFrames.begin();i!=prop.KeyFrames.end();i++)
 		{
-			std::cout<<sz<<" "<<i->second<<std::endl;
+			//std::cout<<sz<<" "<<i->second<<std::endl;
 			x[sz]=i->first;
 			y[sz++]=i->second;
 			//std::fill(prop.FrameValues.begin()+i->first,prop.FrameValues.end(),i->second);
@@ -23,13 +23,18 @@ public:
 		//Interpolate
 		{
 			gsl_interp_accel *accel_ptr=gsl_interp_accel_alloc ();
-			gsl_spline *spline_ptr=gsl_spline_alloc (gsl_interp_linear, sz);
+			gsl_spline *spline_ptr;
+			if(sz<3)
+				spline_ptr=gsl_spline_alloc (gsl_interp_linear, sz);
+			else
+				spline_ptr=gsl_spline_alloc (gsl_interp_cspline, sz);
+			
 			gsl_spline_init (spline_ptr, x, y, sz);
 
 			for(int i=0;i< prop.NumberOfFrames ; i++)
 			{
 				prop.FrameValues[i]=(Type)gsl_spline_eval (spline_ptr, (double)i, accel_ptr);
-				std::cout<<i<<"  "<<prop.FrameValues[i]<<std::endl;
+				//std::cout<<i<<"  "<<prop.FrameValues[i]<<std::endl;
 			}
 
 			//free memory
