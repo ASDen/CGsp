@@ -19,7 +19,16 @@ int main( int argc, char **argv )
 	kfm->InitOsg();
 	kfm->setPolyManager(pman);
 
-	Lathe();
+	Box_3* s = new Box_3(4,8,4,2,2,2);
+    
+    s->Draw();
+    
+    PolyhedronNode* c2 = new PolyhedronNode(s,osg::Vec3(0,0,0));
+    c2->RigidActor = XBox::Construct(pxm->gScene,c1);
+    c2->WireFrame = true;
+    pman->AddPolyhedron<RigidBodyManager>(c2);
+
+	//Lathe();
 
 	/*BoxPropsI* bp=new BoxPropsI(&Box_3::length_Seg,s,4);
 	s->ApplyModifier(bp);

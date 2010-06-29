@@ -17,7 +17,7 @@ public:
 
 	virtual void DoAtFrame(Polyhedron& P,int Frame)
 	{
-		if( !extrensic && Frame > mxFrame )
+		if( !extrensic && ( Frame > mxFrame || mxFrame < 2 ) )
 			return;
 		propsVector::iterator i;
 		for(i=props.begin();i!=props.end();i++)

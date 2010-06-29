@@ -19,6 +19,7 @@
 #include "KeyFrame/Modifiers/Translate.h"
 #include "KeyFrame/Modifiers/Scale.h"
 #include "KeyFrame/Modifiers/Rotate.h"
+#include "KeyFrame/Modifiers/RotateAA.h"
 
 //Physics
 #include "Physics/Primitives/XBox.h"

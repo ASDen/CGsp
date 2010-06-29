@@ -265,10 +265,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm250"
-				Optimization="0"
+				Optimization="3"
 				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="0"
-				WholeProgramOptimization="false"
+				FavorSizeOrSpeed="1"
+				WholeProgramOptimization="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_USRDLL;_CONSOLE;RRTTY_EXPORTS;CGSP_CC=__declspec(dllexport)"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -294,7 +294,7 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				LinkTimeCodeGeneration="0"
+				LinkTimeCodeGeneration="1"
 				ImportLibrary="$(TargetDir)$(TargetName).lib"
 				TargetMachine="1"
 			/>
@@ -583,6 +583,10 @@
 					>
 					<File
 						RelativePath=".\KeyFrame\Modifiers\Rotate.h"
+						>
+					</File>
+					<File
+						RelativePath=".\KeyFrame\Modifiers\RotateAA.h"
 						>
 					</File>
 					<File
