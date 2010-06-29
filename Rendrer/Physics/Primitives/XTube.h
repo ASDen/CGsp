@@ -2,7 +2,7 @@ class CGSP_CC XTube
 {
 public:
 
-	static NxActor* Construct2(NxScene* scene,NxPhysicsSDK* gPhysicsSDK,PolyhedronNode* Pn,bool StaticObj=false)
+	static NxActor* Construct(NxScene* scene,NxPhysicsSDK* gPhysicsSDK,PolyhedronNode* Pn,bool StaticObj=false)
 	{
 		NxBodyDesc BodyDesc;
 		BodyDesc.angularDamping	= 0.0f;
@@ -76,7 +76,7 @@ public:
 		return scene->createActor(ActorDesc);
 	}
 
-	static NxActor* Construct(NxScene* scene,PolyhedronNode* Pn,int Num,bool StaticObj=false)
+	static NxActor* Construct2(NxScene* scene,PolyhedronNode* Pn,int Num = 20,bool StaticObj = false)
 	{
 		NxBodyDesc BodyDesc;
 		BodyDesc.angularDamping	= 0.0f;

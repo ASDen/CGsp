@@ -100,9 +100,6 @@ public:
 		double x_c = X_Center.val;
 		double y_c = Y_Center.val;
 		double z_c = Z_Center.val;
-		std::cout<<X_Center.val<<" "<<Y_Center.val<<" "<<Z_Center.val<<"\n";
-		std::cout<<x_c<<" "<<y_c<<" "<<z_c<<"\n";
-
 		
 		for (Vertex_iterator i = P.vertices_begin(); i != P.vertices_end(); ++i)
 		{

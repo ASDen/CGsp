@@ -16,18 +16,31 @@ int main( int argc, char **argv )
 	kfm  = new KeyFrameManager();
 	pman = new osgPolyManager();
 	pxm->InitOsg();
-	kfm->InitOsg();
-	kfm->setPolyManager(pman);
+	//kfm->InitOsg();
+	pxm->setPolyManager(pman);
 
-	Lathe();
+	cloth_test();
 
+	/*Box_3* s = new Box_3(6,6,6,15,15,15);
+	s->Draw();
+	PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(0,0,0));
+
+	pman->AddPolyhedron<KeyFrameManager>(c1);
+
+	Twist* t=new Twist(0);
+	s->ApplyModifier(t);
+
+	FrameCreater::FillFrames(0,50.0,&Twist::TwAngle,*t);
+	FrameCreater::FillFrames(60,6.0,&Twist::TwAngle,*t);
+	FrameCreater::FillFrames(1500,20000.0,&Twist::TwAngle,*t);*/
+	
 	/*BoxPropsI* bp=new BoxPropsI(&Box_3::length_Seg,s,4);
 	s->ApplyModifier(bp);
 
 	FrameCreater::FillFrames(30,50,&BoxPropsI::PolyP,*bp);
-	FrameCreater::FillFrames(60,6,&BoxPropsI::PolyP,*bp);
+	FrameCreater::FillFrames(60,6,&BoxPropsI::PolyP,*bp);*/
 
-	BoxPropsI* bp2=new BoxPropsI(&Box_3::width_Seg,s,4);
+	/*BoxPropsI* bp2=new BoxPropsI(&Box_3::width_Seg,s,4);
 	s->ApplyModifier(bp2);
 
 	FrameCreater::FillFrames(30,50,&BoxPropsI::PolyP,*bp2);
@@ -67,7 +80,7 @@ int main( int argc, char **argv )
 	//cloth_test();
 
 	
-	kfm->DisplayLoop();	
+	pxm->DisplayLoop();	
 
 	
 	return 0;

@@ -61,7 +61,7 @@ class CGSP_CC Lathe_3 : public Primitives
 						double x_t = p.x();
 
 						if (p.y() == 0 && p.z()== 0)
-							continue;
+							add_ang = 0;
 						else if (p.y() == 0)
 							add_ang = pow(sin(rad / p.z()),-1);
 						else
@@ -90,7 +90,7 @@ class CGSP_CC Lathe_3 : public Primitives
 						double y_t = p.y();
 
 						if (p.x() == 0 && p.z()== 0)
-							continue;
+							add_ang = 0;
 						else if (p.z() == 0)
 							add_ang = pow(sin(rad / p.x()),-1);
 						else
@@ -119,7 +119,7 @@ class CGSP_CC Lathe_3 : public Primitives
 						double z_t = p.z();
 
 						if (p.y() == 0 && p.x()== 0)
-							continue;
+							add_ang = 0;
 						else if (p.y() == 0)
 							add_ang = pow(cos(rad / p.x()),-1) * 2;
 						else

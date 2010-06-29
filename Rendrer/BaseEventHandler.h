@@ -19,6 +19,13 @@ public:
 			{
 				switch (gea.getKey())
 				{
+				case 'p':
+					Manager->isPaused=!Manager->isPaused;
+					if(Manager->isPaused)
+						std::cout<<"Paused"<<std::endl;
+					else
+						std::cout<<"Returned !!"<<std::endl;
+					break;
 				case '+':
 					Manager->rate++;
 					std::cout<<"Frame Rate : "<<Manager->rate<<std::endl;

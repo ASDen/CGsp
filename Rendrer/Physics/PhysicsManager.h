@@ -112,14 +112,16 @@ public:
 	{
 		return gScene->createActor((Pn->ActorDesc));
 	}
+		
+	NxSceneDesc sceneDesc;
 
 	void UpdateScene()
 	{
 		//update scence
+		
 		gScene->simulate(1/rate);
 		gScene->flushStream();
 		gScene->fetchResults(NX_ALL_FINISHED, true);
-		std::cout<<"Frame #"<<fnum<<std::endl;
 	}
 
 	PhysicsManager()
