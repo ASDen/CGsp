@@ -3,7 +3,7 @@ class CGSP_CC XPlane
 {
 public:
 
-	static NxActor* Construct(NxScene* scene,PolyhedronNode* Pn)
+	static NxActor* Construct(NxScene* scene,PolyhedronNode* Pn,bool StaticObj = false)
 	{
 		NxPlaneShapeDesc planeDesc;
 		//planeDesc.normal = NxVec3(0.0f,1.0f,0.0f);

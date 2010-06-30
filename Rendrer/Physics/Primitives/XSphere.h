@@ -10,7 +10,7 @@ class CGSP_CC XSphere
 {
 public:
 
-	static NxActor* Construct(NxScene* scene,PolyhedronNode* Pn)
+	static NxActor* Construct(NxScene* scene,PolyhedronNode* Pn,bool StaticObj = false)
 	{
 		NxBodyDesc BodyDesc;
 		BodyDesc.angularDamping	= 0.0f;
@@ -29,7 +29,7 @@ public:
 		
 		NxActorDesc ActorDesc;
 		ActorDesc.shapes.pushBack(&SphereDesc);
-		ActorDesc.body			= &BodyDesc;
+		ActorDesc.body			= (StaticObj)?NULL : &BodyDesc;
 		ActorDesc.density		= 10.0f;
 		ActorDesc.globalPose.t  = NxVec3 //get center of the box
 			(

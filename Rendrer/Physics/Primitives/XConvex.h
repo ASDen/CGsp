@@ -52,7 +52,7 @@ class CGSP_CC XConvex
 public:
 
 	template<class ReductionClass>
-	static NxActor* Construct(NxScene* scene,NxPhysicsSDK* gPhysicsSDK,PolyhedronNode* Pn)
+	static NxActor* Construct(NxScene* scene,NxPhysicsSDK* gPhysicsSDK,PolyhedronNode* Pn,bool StaticObj = false)
 	{
 		NxBodyDesc BodyDesc;
 		Polyhedron *CxP = new Polyhedron;
@@ -94,7 +94,7 @@ public:
 
 		NxActorDesc ActorDesc;
 		ActorDesc.shapes.pushBack(&convexShapeDesc);
-		ActorDesc.body			= &BodyDesc;
+		ActorDesc.body			= (StaticObj)?NULL : &BodyDesc;
 		ActorDesc.density		= 10.0f;
 		ActorDesc.globalPose.t  = NxVec3 
 			(

@@ -620,15 +620,15 @@
 						>
 					</File>
 					<File
-						RelativePath=".\Physics\Primitives\XCapsule.h"
-						>
-					</File>
-					<File
 						RelativePath=".\Physics\Primitives\XCloth.h"
 						>
 					</File>
 					<File
 						RelativePath=".\Physics\Primitives\XConvex.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Physics\Primitives\XLathe.h"
 						>
 					</File>
 					<File
