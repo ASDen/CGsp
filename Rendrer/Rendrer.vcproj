@@ -115,8 +115,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm250"
-				Optimization="2"
+				Optimization="0"
 				EnableIntrinsicFunctions="true"
+				WholeProgramOptimization="false"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;CGSP_CC="
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -141,6 +142,7 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="0"
 				TargetMachine="1"
 			/>
 			<Tool

@@ -13,6 +13,7 @@ public:
 	int fnum;
 	float T0,Telp;
 	float rate;
+	bool isPaused;
 
 	virtual void InitOsg(int width=640,int height=480) 
 	{
@@ -53,6 +54,7 @@ public:
 		fnum = 0 ;
 		T0 = Telp = 0;
 		rate = 20 ;
+		isPaused = false;
 	}
 
 	void setPolyManager(osgPolyManager* m)
@@ -71,17 +73,19 @@ public:
 			//do we need to update scene ?
 			Telp+=viewer->elapsedTime()-T0;
 			T0=viewer->elapsedTime();
-			if(Telp>=1/rate)
+			if(Telp>=1/rate && !isPaused)
 			{
 				//Telp = 0;
 				//Telp-=1/rate;
 				Telp = fmod(Telp,1/rate);
 				UpdateScene();
+				std::cout<<"Frame #"<<fnum<<std::endl;
 				viewer->updateTraversal();
-				
 				fnum++;
 				
 			}
+			if(isPaused)
+				viewer->updateTraversal();
 			viewer->renderingTraversals();
 		}
 	}

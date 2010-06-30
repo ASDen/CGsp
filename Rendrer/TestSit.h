@@ -34,8 +34,9 @@ void Box_Wall_Spring()
     cx->AntialisedLines = true;
     pman->AddPolyhedron<RigidBodyManager>(cx);   
    
-    PolyhedronNode* c3 = new PolyhedronNode(s6,osg::Vec3(50,50,200));
+    PolyhedronNode* c3 = new PolyhedronNode(s6,osg::Vec3(50,50,2000));
     c3->RigidActor = XSpring::Construct(pxm->gScene,pxm->gPhysicsSDK,c3);
+	c3->RigidActor->setMass(200000);
     c3->WireFrame = false;
     c3->AntialisedLines = true;
     pman->AddPolyhedron<RigidBodyManager>(c3);
@@ -59,7 +60,7 @@ void Spring_Test()
     for(int i=0;i<20;i++)
     {
         PolyhedronNode* c4 = new PolyhedronNode(s4,osg::Vec3(60,45,70+i*20));
-        c4->RigidActor = XTube::Construct(pxm->gScene,c4,10);
+        c4->RigidActor = XTube::Construct(pxm->gScene,pxm->gPhysicsSDK,c4,false);
         NxMat33 nx33;
         nx33.rotX(90);
         nx33.rotZ(45);
@@ -138,25 +139,25 @@ void Tube_Test()
     pman->AddPolyhedron<RigidBodyManager>(c2);
 
     PolyhedronNode* c1 = new PolyhedronNode(s4,osg::Vec3(50,50,200));
-    c1->RigidActor = XTube::Construct(pxm->gScene,c1,10,true);
+    c1->RigidActor = XTube::Construct(pxm->gScene,pxm->gPhysicsSDK,c1,true);
     c1->WireFrame = false;
     c1->AntialisedLines = true;
     pman->AddPolyhedron<RigidBodyManager>(c1);
 
     PolyhedronNode* c8 = new PolyhedronNode(s8,osg::Vec3(50,50,160));
-    c8->RigidActor = XTube::Construct(pxm->gScene,c8,10,true);
+    c8->RigidActor = XTube::Construct(pxm->gScene,pxm->gPhysicsSDK,c8,true);
     c8->WireFrame = false;
     c8->AntialisedLines = true;
     pman->AddPolyhedron<RigidBodyManager>(c8);
 
     PolyhedronNode* c9 = new PolyhedronNode(s9,osg::Vec3(50,50,120));
-    c9->RigidActor = XTube::Construct(pxm->gScene,c9,10,true);
+    c9->RigidActor = XTube::Construct(pxm->gScene,pxm->gPhysicsSDK,c9,true);
     c9->WireFrame = false;
     c9->AntialisedLines = true;
     pman->AddPolyhedron<RigidBodyManager>(c9);
 
     PolyhedronNode* c3 = new PolyhedronNode(s4,osg::Vec3(40,50,45));
-    c3->RigidActor = XTube::Construct(pxm->gScene,c3,10,true);
+    c3->RigidActor = XTube::Construct(pxm->gScene,pxm->gPhysicsSDK,c3,true);
     c3->WireFrame = false;
     c3->AntialisedLines = true;
     NxMat33 nx33;
@@ -240,7 +241,7 @@ void cloth_test()
     c6->PColor = osg::Vec3(0.2,0.7,.2);
     pman->AddPolyhedron<RigidBodyManager>(c6);
 
-    PolyhedronNode* ct = new PolyhedronNode(s45,osg::Vec3(-20,-5,12));
+    PolyhedronNode* ct = new PolyhedronNode(s45,osg::Vec3(-20,-5,62));
     ct->ClothActor = XCloth::Construct(pxm->gScene,pxm->gPhysicsSDK,ct,false);
     ct->ClothActor->setThickness(0.5);
     ct->WireFrame  = false;

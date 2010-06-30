@@ -15,6 +15,5 @@ public:
 		//update scence
 		//Man->UpdateFrame(fnum);
 		KeyFrameUpdateCallBack::fnum = fnum ;
-		std::cout<<"Frame #"<<fnum<<std::endl;
 	}
 };
