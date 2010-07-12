@@ -27,6 +27,20 @@
 #include <CGAL/Constrained_Delaunay_triangulation_2.h>
 #include <CGAL/Constrained_triangulation_plus_2.h>
 #include <CGAL/Triangulation_2_filtered_projection_traits_3.h>
+#include <CGAL/Timer.h>
+#include <CGAL/parameterize.h>
+#include <CGAL/Parameterization_mesh_patch_3.h>
+#include <CGAL/Circular_border_parameterizer_3.h>
+#include <CGAL/Square_border_parameterizer_3.h>
+#include <CGAL/Two_vertices_parameterizer_3.h>
+#include <CGAL/Barycentric_mapping_parameterizer_3.h>
+#include <CGAL/Discrete_conformal_map_parameterizer_3.h>
+#include <CGAL/Discrete_authalic_parameterizer_3.h>
+#include <CGAL/Mean_value_coordinates_parameterizer_3.h>
+#include <CGAL/LSCM_parameterizer_3.h>
+#include <CGAL/Parameterization_mesh_feature_extractor.h>
+#include <CGAL/Exact_predicates_exact_constructions_kernel.h>
+#include <CGAL/OpenNL/linear_solver.h>
 #include "CGAL/compute_normal.h"
 //Eigen
 #include <Eigen/Geometry>
@@ -40,4 +54,5 @@
 #include <vector>
 #include <fstream>
 #include <queue>
- 
+#include <ctype.h>
+#include <cassert>

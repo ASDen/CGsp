@@ -19,7 +19,7 @@ int main( int argc, char **argv )
 	//kfm->InitOsg();
 	pxm->setPolyManager(pman);
 
-	std::vector <Point_3> arr;
+	/*std::vector <Point_3> arr;
 	arr.push_back(Point_3 (2,0,2));
 	arr.push_back(Point_3 (6,0,3));
 	arr.push_back(Point_3 (8,0,4));
@@ -51,7 +51,7 @@ int main( int argc, char **argv )
     PolyhedronNode* c2 = new PolyhedronNode(s,osg::Vec3(0,0,0));
     c2->RigidActor = XLathe::Construct(pxm->gScene,pxm->gPhysicsSDK,c2);
     c2->WireFrame = true;
-    pman->AddPolyhedron<RigidBodyManager>(c2);
+    pman->AddPolyhedron<RigidBodyManager>(c2);*/
 
 	//Lathe();
 	//cloth_test();
@@ -108,7 +108,7 @@ int main( int argc, char **argv )
 
 	
 
-	//Box_Wall_Spring();
+	Box_Wall_Spring();
 	//Spring_Test();
 	//Spring_Test_2();
 	//Tube_Test();

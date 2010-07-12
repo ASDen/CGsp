@@ -2,6 +2,7 @@ void Box_Wall_Spring()
 {
     Box_3* s = new Box_3(4,8,4,2,2,2);
     Cylinder_3* s4 = new Cylinder_3(6,10,2,2,15);
+	//Sphere_3* s4 = new Sphere_3(8,20);
     Spindle_3* s5 = new Spindle_3(4,5,2,48,48,48);
     Plane_3* s2 = new Plane_3(100);
     Spring_3* s6 = new Spring_3(10,2.5,40,3,20,30);
@@ -15,24 +16,26 @@ void Box_Wall_Spring()
     PolyhedronNode* c2 = new PolyhedronNode(s2,osg::Vec3(0,0,0));
     c2->RigidActor = XPlane::Construct(pxm->gScene,c2);
     c2->WireFrame = true;
-    pman->AddPolyhedron<RigidBodyManager>(c2);
+	c2->PColor = osg::Vec3(1,1,1);
+	pman->AddPolyhedron<RigidBodyManager>(c2,std::string("C:\\index.jpg"));
 
-    for(int i=0;i<10;i++)
+    for(int i=0;i<=0;i++)
     {
-        for(int j=0;j<10-i;j++)
+        for(int j=0;j<=10-10;j++)
         {
             PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3((14+0.5*8*i)+j*8,50,i*4+2));
             c1->RigidActor = XBox::Construct(pxm->gScene,c1);
             c1->WireFrame = true;
             c1->AntialisedLines = true;
-            pman->AddPolyhedron<RigidBodyManager>(c1);
+            pman->AddPolyhedron<RigidBodyManager>(c1,std::string("C:\\index___.jpg"),Tex_Box);
         }
     }
     PolyhedronNode* cx = new PolyhedronNode(s4,osg::Vec3(50,20,20));
-    cx->RigidActor = XConvex::Construct<ConvexHullReducer>(pxm->gScene,pxm->gPhysicsSDK,cx);
+    cx->RigidActor = XSphere::Construct(pxm->gScene,cx);
     cx->WireFrame = true;
     cx->AntialisedLines = true;
-    pman->AddPolyhedron<RigidBodyManager>(cx);   
+	cx->PColor = osg::Vec3(1,1,1);
+	pman->AddPolyhedron<RigidBodyManager>(cx,std::string("C:\\index.jpg"),Tex_Box); 
    
     PolyhedronNode* c3 = new PolyhedronNode(s6,osg::Vec3(50,50,2000));
     c3->RigidActor = XSpring::Construct(pxm->gScene,pxm->gPhysicsSDK,c3);

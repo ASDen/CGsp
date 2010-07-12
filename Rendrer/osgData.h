@@ -1,6 +1,7 @@
 #pragma once
 
 typedef Polyhedron::Edge_iterator	Edge_iterator;
+typedef Polyhedron::Halfedge_const_iterator Halfedge_const_iterator;
 typedef Primitives* pPrimitive;
 typedef NxActorDesc* pNxActorDesc;
 typedef KeyFrameModifier* pKeyFrameModifier;
@@ -43,9 +44,10 @@ public:
 	osg::Vec3 PColor;
 	bool WireFrame;
 	bool AntialisedLines;
+	TexType TextureType;
 
 	PolyhedronNode():WireFrame(true){}
-	PolyhedronNode(pPrimitive iP,osg::Vec3 Pos=osg::Vec3(0,0,0)):P(iP),Position(Pos),PColor(0.0f,0.0f,1.0f) {}
+	PolyhedronNode(pPrimitive iP,osg::Vec3 Pos=osg::Vec3(0,0,0)):P(iP),Position(Pos),PColor(1.0f,1.0f,1.0f) {}
 	PolyhedronNode(const PolyhedronNode& poly,const osg::CopyOp& copyop=osg::CopyOp::SHALLOW_COPY):
 	osg::Drawable(poly,copyop) {}
 
@@ -61,6 +63,7 @@ public:
 		DrawPolyhedron();
 		const_cast<PolyhedronNode*>(this)->dirtyBound();
 	}
+
 	virtual osg::BoundingBox computeBound() const
 	{
 		osg::BoundingBox bbox;
@@ -68,6 +71,7 @@ public:
 		bbox.set (CGAL::to_double(c3.xmin()),CGAL::to_double(c3.ymin()),CGAL::to_double(c3.zmin()),CGAL::to_double(c3.xmax()),CGAL::to_double(c3.ymax()),CGAL::to_double(c3.zmax()));
 		return bbox;
 	}
+
 	void DrawPolyhedron() const
 	{
 		::glColor3f(PColor.x(),PColor.y(),PColor.z()); // change the color of facets
@@ -84,6 +88,8 @@ public:
 			CGAL_For_all(he,end)
 			{
 				const Point_3& p = he->vertex()->point();
+
+				::glTexCoord2f(he->u(),he->v());
 				::glVertex3d(CGAL::to_double(p.x()),CGAL::to_double(p.y()),CGAL::to_double(p.z()));
 			}
 			::glEnd();
@@ -145,13 +151,47 @@ public:
 	~LightNode(){};
 };
 
+class MyGraphicsContext {
+public:
+	MyGraphicsContext()
+	{
+		osg::ref_ptr<osg::GraphicsContext::Traits> traits = new osg::GraphicsContext::Traits;
+		traits->x = 0;
+		traits->y = 0;
+		traits->width = 1;
+		traits->height = 1;
+		traits->windowDecoration = false;
+		traits->doubleBuffer = false;
+		traits->sharedContext = 0;
+		traits->pbuffer = true;
+
+		_gc = osg::GraphicsContext::createGraphicsContext(traits.get());
+
+		if (!_gc)
+		{
+			traits->pbuffer = false;
+			_gc = osg::GraphicsContext::createGraphicsContext(traits.get());
+		}
+
+		if (_gc.valid()) 
+		{
+			_gc->realize();
+			_gc->makeCurrent();
+		}
+	}
+
+	bool valid() const { return _gc.valid() && _gc->isRealized(); }
+
+private:
+	osg::ref_ptr<osg::GraphicsContext> _gc;
+};
+
 class CGSP_CC osgPolyManager
 {
 public:
 	std::vector<PolyhedronNode*> PolyBag;
 	osg::ref_ptr<osg::Group> root;
 	osg::Group* lightGroup;
-	//osg::Group* root;
 
 	osgPolyManager()
 	{
@@ -161,36 +201,87 @@ public:
 	}
 
 	template <class Manager>
-	void AddPolyhedron(PolyhedronNode* Pn)
+	void AddPolyhedron(PolyhedronNode* Pn, std::string fname = std::string(""), TexType ty = Tex_CGAL_General, int val = 0, float Hor = 0.09 , float Ver = 0.1)
 	{
 		typedef typename Manager::UpdateCallback UC;
 
 		Pn->setUseDisplayList( false );
-		//Pn->setUseVertexBufferObjects( false ); 
 		PolyBag.push_back(Pn);
-		osg::PositionAttitudeTransform* pat=new osg::PositionAttitudeTransform();
+		osg::PositionAttitudeTransform* pat = new osg::PositionAttitudeTransform();
 		pat->setPosition(Pn->Position);
 		root->addChild(pat);
 		osg::Geode* g = new osg::Geode();
 		g->addDrawable(Pn);
+		if(fname.size()>0)
+		{
+			g->setStateSet(AddTex(fname));
+			Traingulate tr;
+			switch(ty)
+			{
+			case Tex_CGAL_General:
+				tr.Do(Pn->P->ModifiedMesh );
+				Texture::CalcUV<Tex_CGAL_General>(Pn->P->ModifiedMesh, Pn->P, val, Hor, Ver);
+				break;
+			case Tex_Sphere:
+				Texture::CalcUV<Tex_Sphere>(Pn->P->ModifiedMesh, Pn->P, val, Hor, Ver);
+				break;
+			case Tex_Box:
+				Texture::CalcUV<Tex_Box>(Pn->P->ModifiedMesh, Pn->P, val, Hor, Ver);
+				break;
+			case Tex_Cylinder:
+				Texture::CalcUV<Tex_Cylinder>(Pn->P->ModifiedMesh, Pn->P, val, Hor, Ver);
+				break;
+			case Tex_Torus:
+				Texture::CalcUV<Tex_Torus>(Pn->P->ModifiedMesh, Pn->P, val, Hor, Ver);
+				break;
+			case Tex_Tube:
+				Texture::CalcUV<Tex_Tube>(Pn->P->ModifiedMesh, Pn->P, val, Hor, Ver);
+				break;
+			}
+			
+			Pn->P->setMesh(Pn->P->ModifiedMesh);
+		}
 		pat->setUpdateCallback(new UC(Pn));
 		pat->addChild(g);
 
 		Pn->Pos         = static_cast<osg::PositionAttitudeTransform*> (pat->clone(osg::CopyOp::DEEP_COPY_ALL));
 		Pn->ModifiedPos = static_cast<osg::PositionAttitudeTransform*> (pat->clone(osg::CopyOp::DEEP_COPY_ALL));
-		
-		//*(Pn->ModifiedPos) = *pat;
+	}
+
+
+	osg::StateSet* AddTex(std::string fname)
+	{
+		MyGraphicsContext gc;
+		if (!gc.valid()) 
+		{
+			osg::notify(osg::NOTICE)<<"Unable to create the graphics context required to build 3d image."<<std::endl;
+			return 0;
+		}
+
+
+		osg::ref_ptr<osg::Image> image = osgDB::readImageFile(fname.c_str());
+
+		if (!image) 
+		{    
+			std::cout << "Couldn't load texture." << std::endl;    
+			return 0;
+		} 
+		GLint textureSize = osg::Texture3D::getExtensions(0,true)->maxTexture3DSize();
+		if (textureSize > 256)
+			int  textureSize = 256;
+		image->scaleImage(textureSize,textureSize,1);  
+		osg::Texture3D* texture = new osg::Texture3D; 
+		texture->setFilter(osg::Texture3D::MIN_FILTER,osg::Texture3D::LINEAR);
+		texture->setFilter(osg::Texture3D::MAG_FILTER,osg::Texture3D::LINEAR);
+		texture->setWrap(osg::Texture3D::WRAP_R,osg::Texture3D::REPEAT);
+		texture->setImage(image);
+		osg::StateSet* stateset = new osg::StateSet;
+		stateset->setTextureAttributeAndModes(0,texture,osg::StateAttribute::ON);
+		return stateset;
 	}
 
 	void addlight(LightNode* lightSrc)
 	{
-		//osg::LightSource* lightS1 = new osg::LightSource; 
-		//osg::StateSet* rootStateSet=new osg::StateSet;
-		
-		//lightS1->setLight(light1);
-		//lightS1->setLocalStateSetModes(osg::StateAttribute::ON); 
-
-		//lightS1->setStateSetModes(*rootStateSet,osg::StateAttribute::ON);
 		lightGroup->addChild(lightSrc->lightS);
 
 	}
