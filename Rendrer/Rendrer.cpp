@@ -106,9 +106,36 @@ int main( int argc, char **argv )
 	//c2->ApplyModifier(sr);
 	//FrameCreater::FillFrames(40,4.0,&Scale::sx,*sr);
 
-	
+	Plane_3* s = new Plane_3(30,30,100,100);
 
-	Box_Wall_Spring();
+	s->Draw();
+	PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(0,0,0));
+
+	pman->AddPolyhedron<KeyFrameManager>(c1);
+	//Noise* No = new Noise(5,0.3,0,s->Center,Z_ax);
+	//s->ApplyModifier(No);
+
+	LightNode* l1 = new LightNode();
+	l1->myLight->setDirection(osg::Vec3(10,0,0));
+	l1->myLight->setDiffuse(osg::Vec4(1,1,0.7,0.1));
+		
+	LightNode* l2 = new LightNode();
+	l2->myLight->setDirection(osg::Vec3(-10,0,0));
+	l2->myLight->setDiffuse(osg::Vec4(0,1,0.7,0.1));
+
+	LightNode* l3 = new LightNode();
+	l3->myLight->setDirection(osg::Vec3(0,10,0));
+	l3->myLight->setDiffuse(osg::Vec4(1,0,0.7,0.1));
+		
+	LightNode* l4 = new LightNode();
+	l4->myLight->setDirection(osg::Vec3(0,-10,0));
+
+	pman->addlight(l1);
+	pman->addlight(l2);
+	pman->addlight(l3);
+	pman->addlight(l4);
+
+	//Box_Wall_Spring();
 	//Spring_Test();
 	//Spring_Test_2();
 	//Tube_Test();

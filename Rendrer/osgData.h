@@ -133,7 +133,7 @@ public:
 	{
 		myLight = new osg::Light;
 		myLight->setLightNum(0);
-		myLight->setPosition(osg::Vec4(50.0,30.0,25.0,1.0f));
+		myLight->setPosition(osg::Vec4(0.0,0.0,0.0,1.0f));
 		myLight->setAmbient(osg::Vec4(0.0f,0.0f,1.0f,1.0f));
 		myLight->setDiffuse(osg::Vec4(0.0f,0.0f,1.0f,1.0f));
 		myLight->setSpecular(osg::Vec4(0.0f,0.0f,0.0f,1.0f));
@@ -283,7 +283,6 @@ public:
 	void addlight(LightNode* lightSrc)
 	{
 		lightGroup->addChild(lightSrc->lightS);
-
 	}
 
 	void UpdateFrame(int Fnum)

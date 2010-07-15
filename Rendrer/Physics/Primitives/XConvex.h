@@ -17,7 +17,7 @@ public:
 		//	CGAL::vertex_index_map(boost::get(CGAL::vertex_external_index,*CxP))
 		//	.edge_index_map(boost::get(CGAL::edge_external_index,*CxP)));
 
-		std::cout<<"Reduced geometry simplification to " << CxP->size_of_facets() << " Faces " << std::endl;
+		//std::cout<<"Reduced geometry simplification to " << CxP->size_of_facets() << " Faces " << std::endl;
 	}
 };
 
