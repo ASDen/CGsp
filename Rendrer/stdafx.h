@@ -12,17 +12,16 @@
 #include <tchar.h>
 //#include <stdint.h>
 
-//#define BOOST_ALL_NO_LIB
-//#define CGAL_NO_AUTOLINK
 //CGsp
 #include "../CGsp/stdafx.h"
 
-//typedef CGAL::Simple_cartesian<double>                 Kernel;
+
 typedef CGAL::Exact_predicates_inexact_constructions_kernel Kernel;
-typedef Kernel::Point_3										Point_3;
-typedef Kernel::Vector_3									Vector_3;
-typedef CGAL::Polyhedron_traits_with_normals_3<Kernel>		Traits;
-typedef CGAL::Polyhedron_3<Traits>							Polyhedron;
+#include "Texture/Polyhedron_ex.h"
+
+typedef Polyhedron_ex                                       Polyhedron;
+typedef Polyhedron::Point_3                                 Point_3;
+typedef Polyhedron::Vector_3                                Vector_3;
 typedef Polyhedron::HalfedgeDS								HalfedgeDS;
 typedef Polyhedron::Facet_iterator							Facet_iterator;
 typedef Polyhedron::Vertex_iterator							Vertex_iterator;
@@ -51,6 +50,11 @@ typedef Kernel::Aff_transformation_3						Aff3;
 #include <osgViewer/Viewer>
 #include <osgViewer/ViewerEventHandlers>
 #include <osgGA/TrackballManipulator>
+#include <osgDB/ImagePager>
+#include <osgDB/Registry>
+#include <osgDB/ReadFile>
+#include <osg/Material>
+#include <osg/Texture3D>
 
 //GLUT
 #ifdef WIN32

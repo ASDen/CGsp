@@ -65,12 +65,12 @@ int main() {
 	//Plane_3 s(30,30,10,10);
 	//Rectangle_2 s(20,10);
 
-	//Box_3 s(20,20,20,15,15,15);
+	Box_3 s(20,20,20,15,15,15);
 	//Capsule_3 s(30,200,10,10);
 	//ChamferCyl_3 s(60,100,30,10,5,5,15);
 	//Cone_3 s(2,5,10,3,3,3);
 	//Cylinder_3 s(3,20,20,9,30);
-	Lathe_3 s(arr,Center,Z_ax,20,360);
+	//Lathe_3 s(arr,Center,Z_ax,20,360);
 	//Pyramid_3 s(100,200,200,4,4,4);
 	//Sphere_3 s(20,50);
 	//Spindle_3 s(10,30,20,10,5,15);
@@ -79,9 +79,10 @@ int main() {
 	//Tube_3 s(14,13,15,20,20,10);
 
 	Polyhedron P;
+	P = s.Draw();
 	Traingulate trg;
-	P=s.Draw();
-	std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
+	//P=s.Draw();
+	//std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
 	/*Eigen::Transform3d T;
 	Eigen::Vector3d Original(0,0,10);
 	T.setIdentity();
@@ -99,7 +100,7 @@ int main() {
 	//Br.Do(P);
 
 	Extrude Ex(45,15);
-	//Ex.Do(P);
+	Ex.Do(P);
 	
 	Outline Ou(45,1.5);
 	//Ou.Do(P);
@@ -119,12 +120,16 @@ int main() {
 	Linear_Wave LiWaY(2,10,0,s.Center,Z_ax,Y_ax);
 	//LiWaY.Do(P);
 
-	//Polyhedron E;
-	//E = s1.Draw();
-	//Morph Mor(E,50);
-	//Mor.Do(P);
+	/*ChamferCyl_3 n(1,50,5,10,10,10,40);
+	Spindle_3 p(5,30,5,10,20,40);
+	Polyhedron P;
+	Polyhedron E;
+	E = p.Draw();
+	P = n.Draw();
+	Morph Mor(E,50);
+	Mor.Do(P);*/
 
-	Noise No(5,0.3,0,s.Center,Z_ax);
+	//Noise No(5,0.3,0,s.Center,Z_ax);
 	//No.Do(P);
 
 	Skew Sk(30,s.Center,Z_ax,false,20,-20);
@@ -137,7 +142,7 @@ int main() {
 	//Sph.Do(P);
 
 	Squeeze Sq(-30,s.Center,Z_ax,false,10,0);
-	Sq.Do(P);
+	//Sq.Do(P);
 
 	Stretch St(-20,s.Center,Z_ax,true,50,-50);
 	//St.Do(P);

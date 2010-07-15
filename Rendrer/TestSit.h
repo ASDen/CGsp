@@ -1,45 +1,45 @@
 void Box_Wall_Spring()
 {
-    Box_3* s = new Box_3(4,8,4,2,2,2);
-    Cylinder_3* s4 = new Cylinder_3(6,10,2,2,15);
-    Spindle_3* s5 = new Spindle_3(4,5,2,48,48,48);
+    Pyramid_3* s = new Pyramid_3(2,4,8,5,5,5);
+
+    //Cylinder_3* s = new Cylinder_3(10,50,10,5,50);
+	//Tube_3* s = new Tube_3(10,20,30,10,10,20);
+	//Sphere_3* s = new Sphere_3(5,20);
+	Spindle_3* s5 = new Spindle_3(4,5,2,48,48,48);
     Plane_3* s2 = new Plane_3(100);
     Spring_3* s6 = new Spring_3(10,2.5,40,3,20,30);
    
     s->Draw();
     s2->Draw();
-    s4->Draw();
+    /*s4->Draw();
     s5->Draw();
-    s6->Draw();
+    s6->Draw();*/
 
     PolyhedronNode* c2 = new PolyhedronNode(s2,osg::Vec3(0,0,0));
     c2->RigidActor = XPlane::Construct(pxm->gScene,c2);
-    c2->WireFrame = true;
-    pman->AddPolyhedron<RigidBodyManager>(c2);
+    c2->WireFrame = false;
+	c2->PColor = osg::Vec3(1,1,1);
+	pman->AddPolyhedron<RigidBodyManager>(c2);
+ 
+	PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3(0,0,4));
+	c1->RigidActor = XConvex::Construct<ConvexHullReducer>(pxm->gScene,pxm->gPhysicsSDK,c1);
+	c1->WireFrame = false;
+	c1->AntialisedLines = true;
+	pman->AddPolyhedron<RigidBodyManager>(c1,std::string("C:\\index1.jpg"),Tex_Box,1,0.09);
 
-    for(int i=0;i<10;i++)
-    {
-        for(int j=0;j<10-i;j++)
-        {
-            PolyhedronNode* c1 = new PolyhedronNode(s,osg::Vec3((14+0.5*8*i)+j*8,50,i*4+2));
-            c1->RigidActor = XBox::Construct(pxm->gScene,c1);
-            c1->WireFrame = true;
-            c1->AntialisedLines = true;
-            pman->AddPolyhedron<RigidBodyManager>(c1);
-        }
-    }
-    PolyhedronNode* cx = new PolyhedronNode(s4,osg::Vec3(50,20,20));
+    /*PolyhedronNode* cx = new PolyhedronNode(s4,osg::Vec3(50,20,20));
     cx->RigidActor = XConvex::Construct<ConvexHullReducer>(pxm->gScene,pxm->gPhysicsSDK,cx);
     cx->WireFrame = true;
     cx->AntialisedLines = true;
-    pman->AddPolyhedron<RigidBodyManager>(cx);   
+	cx->PColor = osg::Vec3(1,1,1);
+	pman->AddPolyhedron<RigidBodyManager>(cx,std::string("C:\\index1.jpg"),Tex_Cylinder,0.01,0.05); 
    
     PolyhedronNode* c3 = new PolyhedronNode(s6,osg::Vec3(50,50,2000));
     c3->RigidActor = XSpring::Construct(pxm->gScene,pxm->gPhysicsSDK,c3);
 	c3->RigidActor->setMass(200000);
     c3->WireFrame = false;
     c3->AntialisedLines = true;
-    pman->AddPolyhedron<RigidBodyManager>(c3);
+    pman->AddPolyhedron<RigidBodyManager>(c3);*/
    
 }
 

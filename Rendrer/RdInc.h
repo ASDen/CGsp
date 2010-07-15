@@ -5,6 +5,10 @@
 
 #include "KeyFrame/KeyFrameModifier.h"
 
+//Texturing
+#include "Texture/Texture.h"
+
+//Bases
 #include "osgData.h"
 //#include "glutViewer.h"
 #include "BaseUpdate.h"
@@ -38,4 +42,5 @@
 #include "Physics/PhysicsManager.h"
 #include "Physics/Managers/RigidBodyManager.h"
 #include "Physics/Managers/ClothManager.h"
+
 

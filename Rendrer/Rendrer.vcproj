@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib osgGAd.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib user32.lib gdi32.lib Winmm.lib"
+				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib osgDBd.lib osgGAd.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib user32.lib gdi32.lib Winmm.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -136,7 +136,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib OpenThreads.lib osg.lib osgUtil.lib osgViewer.lib osgWidget.lib osgGA.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib OpenThreads.lib osg.lib osgUtil.lib osgDB.lib osgViewer.lib osgWidget.lib osgGA.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -212,7 +212,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="osgd.lib osgUtild.lib osgViewerd.lib osgGAd.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib user32.lib gdi32.lib Winmm.lib"
+				AdditionalDependencies="osgd.lib osgDBd.lib osgUtild.lib osgViewerd.lib osgGAd.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib user32.lib gdi32.lib Winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName)d.dll"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
@@ -289,7 +289,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib OpenThreads.lib osg.lib osgUtil.lib osgViewer.lib osgWidget.lib osgGA.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib OpenThreads.lib osg.lib osgDB.lib osgUtil.lib osgViewer.lib osgWidget.lib osgGA.lib gsl.lib PhysXLoader.lib NxCharacter.lib NxCooking.lib"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
@@ -704,6 +704,26 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Texture"
+				>
+				<File
+					RelativePath=".\Texture\Mesh_cutter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Texture\Parameterization_polyhedron_adaptor_ex.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Texture\Polyhedron_ex.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Texture\Texture.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

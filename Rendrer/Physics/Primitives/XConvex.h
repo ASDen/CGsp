@@ -10,14 +10,14 @@ public:
 		tr.Do(*CxP);
 
 		//Simplify
-		int numE = 384; // resulting in 254 faces < 255
-		namespace SMS = CGAL::Surface_mesh_simplification;
-		SMS::Count_stop_predicate< Polyhedron > stop(numE); // target #edges
-		SMS::edge_collapse( *CxP, stop,
-			CGAL::vertex_index_map(boost::get(CGAL::vertex_external_index,*CxP))
-			.edge_index_map(boost::get(CGAL::edge_external_index,*CxP)));
+		//int numE = 384; // resulting in 254 faces < 255
+		//namespace SMS = CGAL::Surface_mesh_simplification;
+		//SMS::Count_stop_predicate< Polyhedron > stop(numE); // target #edges
+		//SMS::edge_collapse( *CxP, stop,
+		//	CGAL::vertex_index_map(boost::get(CGAL::vertex_external_index,*CxP))
+		//	.edge_index_map(boost::get(CGAL::edge_external_index,*CxP)));
 
-		std::cout<<"Reduced geometry simplification to "<<CxP->size_of_facets()<<" Faces "<<std::endl;
+		std::cout<<"Reduced geometry simplification to " << CxP->size_of_facets() << " Faces " << std::endl;
 	}
 };
 
