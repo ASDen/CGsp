@@ -1,5 +1,7 @@
 #define MAX_NX_CX_FACES 255
 
+typedef CGAL::Polyhedron_3< CGAL::Polyhedron_traits_with_normals_3<My_kernel> ,My_items   > thingP;
+
 class CGSP_CC GeometrySimplifyReducer
 {
 public:
@@ -12,10 +14,10 @@ public:
 		//Simplify
 		//int numE = 384; // resulting in 254 faces < 255
 		//namespace SMS = CGAL::Surface_mesh_simplification;
-		//SMS::Count_stop_predicate< Polyhedron > stop(numE); // target #edges
-		//SMS::edge_collapse( *CxP, stop,
-		//	CGAL::vertex_index_map(boost::get(CGAL::vertex_external_index,*CxP))
-		//	.edge_index_map(boost::get(CGAL::edge_external_index,*CxP)));
+		//SMS::Count_stop_predicate< thingP > stop(numE); // target #edges
+		//SMS::edge_collapse( (thingP)(*CxP), stop,
+		//	CGAL::vertex_index_map(boost::get(CGAL::vertex_external_index,(thingP)(*CxP)))
+		//	.edge_index_map(boost::get(CGAL::edge_external_index,(thingP)(*CxP))));
 
 		//std::cout<<"Reduced geometry simplification to " << CxP->size_of_facets() << " Faces " << std::endl;
 	}
@@ -39,7 +41,7 @@ public:
 				break;
 			oldF = newF;
 		}
-		std::cout<<"Reduced using Convex Hulls to "<<newF<<" Faces "<<std::endl;
+		//std::cout<<"Reduced using Convex Hulls to "<<newF<<" Faces "<<std::endl;
 
 		if (newF > MAX_NX_CX_FACES)
 			GeometrySimplifyReducer::Reduce(CxP);

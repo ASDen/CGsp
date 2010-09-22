@@ -17,6 +17,7 @@ typedef Polyhedron::Plane_const_iterator			   Plane_const_iterator;
 typedef Kernel::Aff_transformation_3                   Aff3;
 
 #include "Zre.h"
+#include "CBench.h"
 
 struct Normal_vector {
     template <class Facet>
@@ -31,7 +32,12 @@ struct Normal_vector {
 };
 
 int main() {
-	std::ofstream of("C:\\123.off");
+
+	
+	//std::cout<<CGBench::BendBench::Run(CGBench::VMag::M1)<<std::endl;
+	//CGBench::BenchLanuch(CGBench::VMag::M3,CGBench::VMag::M3);
+
+	/*std::ofstream of("C:\\123.off");
 
 	std::vector <Point_3> arr;
 	arr.push_back(Point_3 (2,0,2));
@@ -57,7 +63,7 @@ int main() {
 	arr.push_back(Point_3 (0,1.75,3));
 
 	
-	Point_3* Center = new Point_3(0,0,0);
+	Point_3* Center = new Point_3(0,0,0);*/
 
 	//Arc_2 s(30,270,30,true);
 	//Circle_2 s(4,20);
@@ -70,7 +76,7 @@ int main() {
 	//ChamferCyl_3 s(60,100,30,10,5,5,15);
 	//Cone_3 s(2,5,10,3,3,3);
 	//Cylinder_3 s(3,20,20,9,30);
-	Lathe_3 s(arr,Center,Z_ax,20,360);
+	//Lathe_3 s(arr,Center,Z_ax,20,360);
 	//Pyramid_3 s(100,200,200,4,4,4);
 	//Sphere_3 s(20,50);
 	//Spindle_3 s(10,30,20,10,5,15);
@@ -78,10 +84,11 @@ int main() {
 	//Torus_3 s(20,5,0,0,30,40);
 	//Tube_3 s(14,13,15,20,20,10);
 
-	Polyhedron P;
-	Traingulate trg;
-	P=s.Draw();
-	std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
+	//Polyhedron P;
+	//P = s.Draw();
+	//Traingulate trg;
+	//P=s.Draw();
+	//std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
 	/*Eigen::Transform3d T;
 	Eigen::Vector3d Original(0,0,10);
 	T.setIdentity();
@@ -89,66 +96,96 @@ int main() {
 	trg.ApplyTransformToPolyhedron(P,T);*/
 
 
-	Traingulate tr;
+	//Traingulate tr;
 	//tr.Do(P);
 
-	Bevel Be(400,-4,1.25);
+	//Bevel Be(400,-4,1.25);
 	//Be.Do(P);
 
-	Bridge Br(18,20);
+	//Bridge Br(18,20);
 	//Br.Do(P);
 
-	Extrude Ex(45,15);
+	//Extrude Ex(45,15);
 	//Ex.Do(P);
 	
-	Outline Ou(45,1.5);
+	//Outline Ou(45,1.5);
 	//Ou.Do(P);
 
 
-	Bend Ben(90,s.Center,Y_ax,false,20,-20);
+	//Bend Ben(90,s.Center,Y_ax,false,20,-20);
 	//Ben.Do(P);
 
-	Bulge Bu(40,s.Center,Z_ax,BRadial,false,45,-45);
+	//Bulge Bu(40,s.Center,Z_ax,BRadial,false,45,-45);
 	//Bu.Do(P);
 
-	Cylindrical_Wave CylWa(2,8,12,s.Center,Z_ax);
+	//Cylindrical_Wave CylWa(2,8,12,s.Center,Z_ax);
 	//CylWa.Do(P);
 
-	Linear_Wave LiWaX(1,10,0,s.Center,Z_ax,X_ax);
+	//Linear_Wave LiWaX(1,10,0,s.Center,Z_ax,X_ax);
 	//LiWaX.Do(P);
-	Linear_Wave LiWaY(2,10,0,s.Center,Z_ax,Y_ax);
+	//Linear_Wave LiWaY(2,10,0,s.Center,Z_ax,Y_ax);
 	//LiWaY.Do(P);
 
-	//Polyhedron E;
-	//E = s1.Draw();
-	//Morph Mor(E,50);
-	//Mor.Do(P);
+	/*ChamferCyl_3 n(1,50,5,10,10,10,40);
+	Spindle_3 p(5,30,5,10,20,40);
+	Polyhedron P;
+	Polyhedron E;
+	E = p.Draw();
+	P = n.Draw();
+	Morph Mor(E,50);
+	Mor.Do(P);*/
 
-	Noise No(5,0.3,0,s.Center,Z_ax);
+	//Noise No(5,0.3,0,s.Center,Z_ax);
 	//No.Do(P);
 
-	Skew Sk(30,s.Center,Z_ax,false,20,-20);
+	//Skew Sk(30,s.Center,Z_ax,false,20,-20);
 	//Sk.Do(P);
 
-	Smooth Sm(1);
+	//Smooth Sm(1);
 	//Sm.Do(P);
 
-	Spherify Sph(50);
+	//Spherify Sph(50);
 	//Sph.Do(P);
 
-	Squeeze Sq(-30,s.Center,Z_ax,false,10,0);
-	Sq.Do(P);
+	//Squeeze Sq(-30,s.Center,Z_ax,false,10,0);
+	//Sq.Do(P);
 
-	Stretch St(-20,s.Center,Z_ax,true,50,-50);
+	//Stretch St(-20,s.Center,Z_ax,true,50,-50);
 	//St.Do(P);
 	
-	Taper Ta(3,s.Center,X_ax,false,20,-20);
+	//Taper Ta(3,s.Center,X_ax,false,20,-20);
 	//Ta.Do(P);
 
-	Twist Tw(270,s.Center,Z_ax,true,-5,15);
+	//Twist Tw(270,s.Center,Z_ax,true,-5,15);
 	//Tw.Do(P);
 
-	// Write polyhedron in Object File Format (OFF).
+	/*Box_3 B(20, 30, 60, 20, 30, 30); 
+	Polyhedron P = B.Draw();
+	Twist Tw1(270, B.Center, Z_ax, true, 30, 10);
+	Twist Tw2(-270, B.Center, Z_ax, true, -10, -30);
+	Stretch St(30, B.Center, Z_ax, true, 20,-20);
+	Squeeze Sq(15, B.Center, Z_ax);
+	Tw1.Do(P);
+	Tw2.Do(P);
+	Sq.Do(P);
+	St.Do(P);*/
+
+	std::ofstream of("C:\\123.off");
+
+	Box_3 B(20, 30, 60, 20, 30, 30); 
+Polyhedron P = B.Draw();
+Twist Tw1(270, B.Center, Z_ax, true, 30, 10);
+Twist Tw2(-270, B.Center, Z_ax, true, -10, -30);
+Stretch St(30, B.Center, Z_ax, true, 20,-20);
+Squeeze Sq(15, B.Center, Z_ax);
+Tw1.Do(P);
+Tw2.Do(P);
+Sq.Do(P);
+St.Do(P);
+
+
+
+	//// Write polyhedron in Object File Format (OFF).
 	CGAL::set_ascii_mode( of );
 	of << "OFF" << std::endl << P.size_of_vertices() << ' ' << P.size_of_facets() << " 0" << std::endl;
 	std::copy( P.points_begin(), P.points_end(), std::ostream_iterator<Point_3>( of, "\n"));

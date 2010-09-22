@@ -3,6 +3,20 @@ class CGSP_CC Extrude : public Modifier
 public:
 	AnimatablePropery<int,Interpolator> Fnum;
 	AnimatablePropery<double,Interpolator> ExAmount;
+
+	struct Normal_vector 
+	{
+		template <class Facet>
+		typename Facet::Plane_3 operator()( Facet& f) 
+		{
+			typename Facet::Halfedge_handle h = f.halfedge();
+			// Facet::Plane_3 is the normal vector type. We assume the
+			// CGAL Kernel here and use its global functions.
+			return CGAL::cross_product( h->next()->vertex()->point() - h->vertex()->point(),
+										h->next()->next()->vertex()->point() - h->next()->vertex()->point() );
+		}
+	};
+
 	
 	Extrude(int FaceNum) : Fnum(FaceNum),ExAmount(5)
 	{
@@ -20,6 +34,8 @@ public:
 	{
 		if(Fnum.val < 0 || Fnum.val > P.size_of_facets())
 			return;
+
+		std::transform(P.facets_begin(), P.facets_end(), P.planes_begin(), Normal_vector());
 
 		Plane_const_iterator px = P.planes_begin();
 		Facet_iterator iter = P.facets_begin();

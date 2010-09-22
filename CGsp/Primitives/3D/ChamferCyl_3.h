@@ -180,11 +180,11 @@ public:
 	{}
 
 	//Set the parameters with user defined values
-	ChamferCyl_3(double r):radius(r),height(2*r),fillet(r),height_Seg(1),fillet_Seg(1),cap_Seg(1),side_Seg(24)
+	ChamferCyl_3(double r):radius(r),height(2*r),fillet(r/2),height_Seg(1),fillet_Seg(1),cap_Seg(1),side_Seg(24)
 	{}
 
 	//Set the parameters with user defined values
-	ChamferCyl_3(double r,int S):radius(r),height(2*r),fillet(r),height_Seg(S),fillet_Seg(S),cap_Seg(S),side_Seg(S)
+	ChamferCyl_3(double r,int S):radius(r),height(2*r),fillet(r/2),height_Seg(S),fillet_Seg(S),cap_Seg(S),side_Seg(S)
 	{}
 
 	//Set the parameters with user defined values
@@ -206,10 +206,6 @@ public:
 		min(radius,0);
 		min(height,0);
 		min(fillet,0);
-		maxmin(height_Seg,0,200);
-		maxmin(fillet_Seg,0,200);
-		maxmin(cap_Seg,0,200);
-		maxmin(side_Seg,0,200);
 
 		Build_ChamferCyl<HalfedgeDS> ChamferCyl(radius,height,fillet,height_Seg,fillet_Seg,cap_Seg,side_Seg);
 		P.delegate( ChamferCyl );

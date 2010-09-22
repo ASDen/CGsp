@@ -178,7 +178,7 @@ public:
 				face_queue.pop();
 				CGAL_assertion(cdt.is_infinite(fh));
 				if(fh->info().is_external) continue;
-				std::cerr << (void*)(&*fh) << std::endl;
+				//std::cerr << (void*)(&*fh) << std::endl;
 				fh->info().is_external = true;
 				for(int i = 0; i <3; ++i) {
 					if(!cdt.is_constrained(std::make_pair(fh, i)))

@@ -4,72 +4,57 @@ public:
 	AnimatablePropery<double,Interpolator> SqAmount;
 	Point_3* Center;
 	Axis RoAxis;
-	bool Limited;
-	AnimatablePropery<double,Interpolator> Upper;
-	AnimatablePropery<double,Interpolator> Lower;
 
 	AnimatablePropery<double,Interpolator> X_Center;
 	AnimatablePropery<double,Interpolator> Y_Center;
 	AnimatablePropery<double,Interpolator> Z_Center;
 
-	Squeeze() : SqAmount(0),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	Squeeze() : SqAmount(0),Center(NULL),RoAxis(Z_ax),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&SqAmount);
 		props.push_back(&X_Center);
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
-		props.push_back(&Upper);
-		props.push_back(&Lower);
 	}
 
-	Squeeze(double SAmount) : SqAmount(SAmount),Center(NULL),RoAxis(Z_ax),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	Squeeze(double SAmount) : SqAmount(SAmount),Center(NULL),RoAxis(Z_ax),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&SqAmount);
 		props.push_back(&X_Center);
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
-		props.push_back(&Upper);
-		props.push_back(&Lower);
 	}
 
-	Squeeze(double SAmount, Axis RAxis) : SqAmount(SAmount),Center(NULL),RoAxis(RAxis),Limited(false),Upper(0),Lower(0),X_Center(0),Y_Center(0),Z_Center(0)
+	Squeeze(double SAmount, Axis RAxis) : SqAmount(SAmount),Center(NULL),RoAxis(RAxis),X_Center(0),Y_Center(0),Z_Center(0)
 	{
 		props.push_back(&SqAmount);
 		props.push_back(&X_Center);
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
-		props.push_back(&Upper);
-		props.push_back(&Lower);
 	}
 
-	Squeeze(double SAmount, Point_3* C, Axis RAxis) : SqAmount(SAmount),Center(C),RoAxis(RAxis),Limited(false),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	Squeeze(double SAmount, Point_3* C, Axis RAxis) : SqAmount(SAmount),Center(C),RoAxis(RAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&SqAmount);
 		props.push_back(&X_Center);
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
-		props.push_back(&Upper);
-		props.push_back(&Lower);
 	}
 
-	Squeeze(double SAmount, Point_3* C, Axis RAxis, bool Limit) : SqAmount(SAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(0),Lower(0),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	Squeeze(double SAmount, Point_3* C, Axis RAxis, bool Limit) : SqAmount(SAmount),Center(C),RoAxis(RAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&SqAmount);
 		props.push_back(&X_Center);
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
-		props.push_back(&Upper);
-		props.push_back(&Lower);
 	}
 
-	Squeeze(double SAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : SqAmount(SAmount),Center(C),RoAxis(RAxis),Limited(Limit),Upper(max),Lower(min),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
+	Squeeze(double SAmount, Point_3* C, Axis RAxis, bool Limit, double max, double min) : SqAmount(SAmount),Center(C),RoAxis(RAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&SqAmount);
 		props.push_back(&X_Center);
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
-		props.push_back(&Upper);
-		props.push_back(&Lower);
 	}
 
 	void Do(Polyhedron &P)

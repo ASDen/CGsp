@@ -140,7 +140,7 @@ public:
 	{}
 
 	//Set the parameters with user defined values
-	Spindle_3(double r):radius(r),height(2*r),cap_height(r),height_Seg(1),cap_Seg(1),side_Seg(24)
+	Spindle_3(double r):radius(r),height(2*r),cap_height(r/2),height_Seg(1),cap_Seg(1),side_Seg(24)
 	{}
 
 	//Set the parameters with user defined values
@@ -166,9 +166,6 @@ public:
 		min(radius,0);
 		min(cap_height,0);
 		min(height,0);
-		maxmin(height_Seg,0,200);
-		maxmin(cap_Seg,0,200);
-		maxmin(side_Seg,0,200);
 
 		Build_Spindle<HalfedgeDS> Spindle(radius,height,cap_height,height_Seg,cap_Seg,side_Seg);
 		P.delegate( Spindle );

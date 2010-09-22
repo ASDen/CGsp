@@ -122,16 +122,6 @@ public:
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
 	}
-	
-	Noise(double Amp, double wavlen, Point_3* C, Axis RAxis) : Amplitude(Amp),Frequency(wavlen),Offset(0),Center(C),RoAxis(RAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
-	{
-		props.push_back(&Amplitude);
-		props.push_back(&Frequency);
-		props.push_back(&Offset);
-		props.push_back(&X_Center);
-		props.push_back(&Y_Center);
-		props.push_back(&Z_Center);
-	}
 
 	Noise(double Amp, double wavlen, double pha, Point_3* C, Axis RAxis) : Amplitude(Amp),Frequency(wavlen),Offset(pha),Center(C),RoAxis(RAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{

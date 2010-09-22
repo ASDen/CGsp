@@ -131,28 +131,8 @@ public:
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
 	}
-	
-	Linear_Wave(double Amp, double wavlen, Point_3* C, Axis RAxis) : Amplitude(Amp),Wavelength(wavlen),Phase(0),Center(C),RoAxis(RAxis),AfAxis(X_ax),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
-	{
-		props.push_back(&Amplitude);
-		props.push_back(&Wavelength);
-		props.push_back(&Phase);
-		props.push_back(&X_Center);
-		props.push_back(&Y_Center);
-		props.push_back(&Z_Center);
-	}
 
 	Linear_Wave(double Amp, double wavlen, Axis RAxis, Axis afAxis) : Amplitude(Amp),Wavelength(wavlen),Phase(0),Center(NULL),RoAxis(RAxis),AfAxis(afAxis),X_Center(0),Y_Center(0),Z_Center(0)
-	{
-		props.push_back(&Amplitude);
-		props.push_back(&Wavelength);
-		props.push_back(&Phase);
-		props.push_back(&X_Center);
-		props.push_back(&Y_Center);
-		props.push_back(&Z_Center);
-	}
-		
-	Linear_Wave(double Amp, Point_3* C, Axis RAxis, Axis afAxis) : Amplitude(Amp),Wavelength(10),Phase(0),Center(C),RoAxis(RAxis),AfAxis(afAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&Amplitude);
 		props.push_back(&Wavelength);
@@ -173,16 +153,6 @@ public:
 	}
 
 	Linear_Wave(double Amp, double wavlen, double pha, Axis RAxis, Axis afAxis) : Amplitude(Amp),Wavelength(wavlen),Phase(pha),Center(NULL),RoAxis(RAxis),AfAxis(afAxis),X_Center(0),Y_Center(0),Z_Center(0)
-	{
-		props.push_back(&Amplitude);
-		props.push_back(&Wavelength);
-		props.push_back(&Phase);
-		props.push_back(&X_Center);
-		props.push_back(&Y_Center);
-		props.push_back(&Z_Center);
-	}
-
-	Linear_Wave(double Amp, double wavlen, Point_3* C, Axis RAxis, Axis afAxis) : Amplitude(Amp),Wavelength(wavlen),Phase(0),Center(C),RoAxis(RAxis),AfAxis(afAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{
 		props.push_back(&Amplitude);
 		props.push_back(&Wavelength);

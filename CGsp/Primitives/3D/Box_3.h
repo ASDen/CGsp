@@ -47,9 +47,6 @@ public:
 		min(length,0);
 		min(width,0);
 		min(height,0);
-		maxmin(length_Seg,0,200);
-		maxmin(width_Seg,0,200);
-		maxmin(height_Seg,0,200);
 
         Halfedge_handle a, b, c, d;
         //Starting the BOX with tetrahedron, with width, length and height
@@ -83,7 +80,7 @@ public:
         Halfedge_handle* arr_lR = new Halfedge_handle[length_Seg];
 
         //Segments in any of the three faces must be more than 1 Segment
-        if (width_Seg>1 || length_Seg>1 || height_Seg>1)
+        if (width_Seg > 1 || length_Seg > 1 || height_Seg > 1)
         {
             double w = width / width_Seg, l = length / length_Seg, ht = height / height_Seg;
             //Every time we must reset them to not ovelap

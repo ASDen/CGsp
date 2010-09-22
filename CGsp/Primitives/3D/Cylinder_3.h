@@ -14,11 +14,11 @@ public:
 	{}
 
 	//Set the parameters with user defined values
-	Cylinder_3(double x):radius(x),height(x),height_Seg(1),cap_Seg(1),side_Seg(24)
+	Cylinder_3(double x):radius(x),height(2*x),height_Seg(1),cap_Seg(1),side_Seg(24)
 	{}
 
 	//Set the parameters with user defined values
-	Cylinder_3(double r,int x):radius(r),height(r),height_Seg(x),cap_Seg(x),side_Seg(x)
+	Cylinder_3(double r,int x):radius(r),height(2*r),height_Seg(x),cap_Seg(x),side_Seg(x)
 	{}
 
 	//Set the parameters with user defined values
@@ -36,9 +36,6 @@ public:
 
 		min(radius,0);
 		min(height,0);
-		maxmin(height_Seg,0,200);
-		maxmin(cap_Seg,0,200);
-		maxmin(side_Seg,0,200);
 
 		//Starting the cone with tetrahedron, with radius and height
 		Halfedge_handle h = P.make_tetrahedron( Point( radius, 0	 ,-height/2 ),

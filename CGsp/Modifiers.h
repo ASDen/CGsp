@@ -109,7 +109,7 @@ public:
 		}
 	}
 
-	Point_3 calc_Center(Polyhedron P)
+	Point_3 calc_Center(Polyhedron& P)
 	{
 		double x = 0, y = 0, z = 0;
 		int num = 0;

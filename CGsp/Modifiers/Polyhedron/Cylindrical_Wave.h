@@ -120,16 +120,6 @@ public:
 		props.push_back(&Y_Center);
 		props.push_back(&Z_Center);
 	}
-	
-	Cylindrical_Wave(double Amp, double wavlen, Point_3* C, Axis afAxis) : Amplitude(Amp),Wavelength(wavlen),Phase(0),Center(C),AfAxis(afAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
-	{
-		props.push_back(&Amplitude);
-		props.push_back(&Wavelength);
-		props.push_back(&Phase);
-		props.push_back(&X_Center);
-		props.push_back(&Y_Center);
-		props.push_back(&Z_Center);
-	}
 
 	Cylindrical_Wave(double Amp, double wavlen, double pha, Point_3* C, Axis afAxis) : Amplitude(Amp),Wavelength(wavlen),Phase(pha),Center(C),AfAxis(afAxis),X_Center(C->x()),Y_Center(C->y()),Z_Center(C->z())
 	{

@@ -10,11 +10,11 @@ public:
     Point_3* Center;
 
     //Set the default parameters in the plane
-    Plane_3():width(25.0),length(25.0),width_Seg(4),length_Seg(4)
+    Plane_3():width(25.0),length(25.0),width_Seg(1),length_Seg(1)
     {}
 
     //Set the parameters with user defined values
-    Plane_3(double w):width(w),length(w),width_Seg(4),length_Seg(4)
+    Plane_3(double w):width(w),length(w),width_Seg(1),length_Seg(1)
     {}
 
     //Set the parameters with user defined values

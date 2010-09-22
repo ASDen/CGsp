@@ -12,15 +12,15 @@ public:
 	Point_3* Center;
 
 	//Set the default parameters in the Cone
-	Cone_3():radius1(15.0),radius2(0),height(25.0),height_Seg(5),cap_Seg(1),side_Seg(24)
+	Cone_3():radius1(15.0),radius2(0),height(25.0),height_Seg(1),cap_Seg(1),side_Seg(24)
 	{}
 
 	//Set the parameters with user defined values
-	Cone_3(double r):radius1(r),radius2(r),height(r),height_Seg(5),cap_Seg(1),side_Seg(24)
+	Cone_3(double r):radius1(r),radius2(3*r/2),height(2*r),height_Seg(1),cap_Seg(1),side_Seg(24)
 	{}
 
 	//Set the parameters with user defined values
-	Cone_3(double r,int x):radius1(r),radius2(r),height(r),height_Seg(x),cap_Seg(x),side_Seg(x)
+	Cone_3(double r,int x):radius1(r),radius2(3*r/2),height(2*r),height_Seg(x),cap_Seg(x),side_Seg(x)
 	{}
 	
 	//Set the parameters with user defined values
@@ -44,9 +44,6 @@ public:
 		min(radius1,0);
 		min(radius2,0);
 		min(height,0);
-		maxmin(height_Seg,0,200);
-		maxmin(cap_Seg,0,200);
-		maxmin(side_Seg,0,200);
 
 		//Starting the cone with tetrahedron, with radius1, radius2 and height
 		Halfedge_handle h = P.make_tetrahedron( Point( radius1, 0	   ,-height/2 ),

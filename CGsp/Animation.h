@@ -1,5 +1,3 @@
-
-
 class CGSP_CC AnimatableProperyParent
 {
 public:

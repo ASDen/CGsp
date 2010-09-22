@@ -16,8 +16,9 @@ public:
 	};
 
 	std::vector<pKeyFrameModifier> ModStack;
-	osg::PositionAttitudeTransform* Pos;
-	osg::PositionAttitudeTransform* ModifiedPos;
+
+	osg::ref_ptr<osg::PositionAttitudeTransform> Pos;
+	osg::ref_ptr<osg::PositionAttitudeTransform> ModifiedPos;
 
 	void ApplyModifier(pKeyFrameModifier M)
 	{
@@ -31,7 +32,8 @@ public:
 		const_cast<PolyhedronNode*>(this)->getParent(0)->getParent(0)->asTransform()->asPositionAttitudeTransform()->setScale(ModifiedPos->getScale());
 
 		std::vector<pKeyFrameModifier>::iterator i;
-		ModifiedPos=static_cast<osg::PositionAttitudeTransform*> (Pos->clone(osg::CopyOp::DEEP_COPY_ALL));;
+		ModifiedPos = dynamic_cast<osg::PositionAttitudeTransform*> (Pos->clone(osg::CopyOp::DEEP_COPY_ALL));
+
 		for(i=ModStack.begin();i!=ModStack.end();i++)
 		{
 			(*i)->DoAtFrame(ModifiedPos,Fnum);
@@ -129,20 +131,42 @@ public:
 	osg::LightSource* lightS;
 	osg::StateSet* rootStateSet;
 
+	
+	osg::Vec4 Position;
+	osg::Vec3 Direction;
+	osg::Vec4 Ambient;
+	osg::Vec4 Diffuse;
+	osg::Vec4 Specular;
+	double SpotCutoff;
+	double SpotExponent;
+	double ConstantAttenuation;
+
 	LightNode()
 	{
 		myLight = new osg::Light;
 		myLight->setLightNum(0);
-		myLight->setPosition(osg::Vec4(0.0,0.0,0.0,1.0f));
-		myLight->setAmbient(osg::Vec4(0.0f,0.0f,1.0f,1.0f));
-		myLight->setDiffuse(osg::Vec4(0.0f,0.0f,1.0f,1.0f));
-		myLight->setSpecular(osg::Vec4(0.0f,0.0f,0.0f,1.0f));
-		myLight->setSpotCutoff(20.0f);
-		myLight->setSpotExponent(5.0f);
-		myLight->setDirection(osg::Vec3(1.0f,1.0f,-0.5f));
-		myLight->setConstantAttenuation(0.5f);
+		
+		Position = osg::Vec4(0.0,0.0,0.0,1.0f);
+		Direction = osg::Vec3(1.0f,1.0f,-0.5f);
+		Ambient = osg::Vec4(0.0f,0.0f,1.0f,1.0f);
+		Diffuse = osg::Vec4(0.0f,0.0f,1.0f,1.0f);
+		Specular = osg::Vec4(0.0f,0.0f,0.0f,1.0f);
+		SpotCutoff = 20.0f;
+		SpotExponent = 5.0f;
+		ConstantAttenuation = 0.5f;
+
+		myLight->setPosition(Position);
+		myLight->setAmbient(Ambient);
+		myLight->setDiffuse(Diffuse);
+		myLight->setSpecular(Specular);
+		myLight->setSpotCutoff(SpotCutoff);
+		myLight->setSpotExponent(SpotExponent);
+		myLight->setDirection(Direction);
+		myLight->setConstantAttenuation(ConstantAttenuation);
+		
 		lightS = new osg::LightSource; 
-		rootStateSet=new osg::StateSet;
+		rootStateSet = new osg::StateSet;
+
 		lightS->setLight(myLight);
 		lightS->setLocalStateSetModes(osg::StateAttribute::ON); 
 		lightS->setStateSetModes(*rootStateSet,osg::StateAttribute::ON);
@@ -219,10 +243,11 @@ public:
 			switch(ty)
 			{
 			case Tex_CGAL_General:
-				tr.Do(Pn->P->ModifiedMesh );
+				tr.Do(Pn->P->ModifiedMesh);
 				Texture::CalcUV<Tex_CGAL_General>(Pn->P->ModifiedMesh, Pn->P, val, Hor, Ver);
 				break;
 			case Tex_Sphere:
+				tr.Do(Pn->P->ModifiedMesh);
 				Texture::CalcUV<Tex_Sphere>(Pn->P->ModifiedMesh, Pn->P, val, Hor, Ver);
 				break;
 			case Tex_Box:
@@ -280,7 +305,7 @@ public:
 		return stateset;
 	}
 
-	void addlight(LightNode* lightSrc)
+	void AddLight(LightNode* lightSrc)
 	{
 		lightGroup->addChild(lightSrc->lightS);
 	}

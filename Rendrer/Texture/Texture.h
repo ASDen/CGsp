@@ -22,7 +22,7 @@ Mesh_patch_polyhedron;
 // Type describing a border or seam as a vertex list
 typedef std::list<Parameterization_polyhedron_adaptor::Vertex_handle>
 Seam;
-class Texture{
+class Texture {
 public:
 	static Seam cut_mesh(Parameterization_polyhedron_adaptor& mesh_adaptor)
 	{
@@ -257,6 +257,32 @@ public:
 		template<>
 		static int CalcUV<Tex_Box> (Polyhedron& mesh, pPrimitive P, int val, float HorScale, float VerScale)
 		{
+			Box_3* Obj0  = dynamic_cast<Box_3*>(P);
+			Pyramid_3* Obj1	  = dynamic_cast<Pyramid_3*>(P);
+
+			double width, length, height;
+
+			if (val == 1)
+			{
+				width = Obj1->width;
+				length = Obj1->depth;
+				height = Obj1->height;
+			}
+
+			else
+			{
+				width = Obj0->width;
+				length = Obj0->length;
+				height = Obj0->height;
+			}
+
+			Traingulate trg;
+			Eigen::Transform3d T;
+			Eigen::Vector3d Original(width/2,length/2,height/2);
+			T.setIdentity();
+			T.pretranslate (Original);
+			trg.ApplyTransformToPolyhedron(mesh,T);
+
 			Facet_iterator f;
 			for(f = mesh.facets_begin(); f != mesh.facets_end(); f++)
 			{
@@ -266,18 +292,27 @@ public:
 				CGAL_For_all(he,end)
 				{
 					const Point_3& p = he->vertex()->point();
+
 					int x[3] = {1,0,0};
 					int y[3] = {0,1,0};
 					int z[3] = {0,0,1};
 
-					if((n.x()*x[0]+n.y()*x[1]+n.z()*x[2])!=0)
-						he->uv( p.y()*HorScale, p.z()*HorScale );
-					else if((n.x()*y[0]+n.y()*y[1]+n.z()*y[2])!=0)
-						he->uv( p.x()*HorScale, p.z()*HorScale );
-					else if((n.x()*z[0]+n.y()*z[1]+n.z()*z[2])!=0)
-						he->uv( p.x()*HorScale, p.y()*HorScale );
+
+					if((n.x() * x[0] + n.y() * x[1] + n.z() * x[2]) != 0)
+						he->uv(p.y() * HorScale, p.z() * HorScale);
+                           
+					else if((n.x() * y[0] + n.y() * y[1] + n.z() * y[2]) != 0)
+						he->uv(p.x() * HorScale, p.z() * HorScale);
+
+					else if((n.x() * z[0] + n.y() * z[1] + n.z() * z[2]) != 0)
+						he->uv(p.x() * HorScale, p.y() * HorScale);
+					
 				}
 			}
+
+			T.setIdentity();
+			T.pretranslate (-Original);
+			trg.ApplyTransformToPolyhedron(mesh,T);
 
 			return 1;
 		}
@@ -317,6 +352,46 @@ public:
 		template<>
 		static int CalcUV<Tex_Cylinder> (Polyhedron& mesh, pPrimitive P, int val, float HorScale, float VerScale)
 		{
+			Cylinder_3* Obj0  = dynamic_cast<Cylinder_3*>(P);
+			Capsule_3* Obj1	  = dynamic_cast<Capsule_3*>(P);
+			ChamferCyl_3* Obj2 = dynamic_cast<ChamferCyl_3*>(P);
+			Cone_3* Obj3	  = dynamic_cast<Cone_3*>(P);
+			Spindle_3* Obj4	  = dynamic_cast<Spindle_3*>(P);
+			
+			double height;
+
+			if (val == 1)
+			{
+				height = Obj1->height;
+			}
+
+			else if (val == 2)
+			{
+				height = Obj2->height;
+			}
+
+			else if (val == 3)
+			{
+				height = Obj3->height;
+			}
+			
+			else if (val == 4)
+			{
+				height = Obj4->height;
+			}
+
+			else
+			{
+				height = Obj0->height;
+			}
+
+			Traingulate trg;
+			Eigen::Transform3d T;
+			Eigen::Vector3d Original(0,0,height/2);
+			T.setIdentity();
+			T.pretranslate (Original);
+			trg.ApplyTransformToPolyhedron(mesh,T);
+
 			Facet_iterator f;
 			for(f = mesh.facets_begin(); f != mesh.facets_end(); f++)
 			{
@@ -326,11 +401,7 @@ public:
 				CGAL_For_all(he,end)
 				{
 					const Point_3& p = he->vertex()->point();
-					Capsule_3* Obj1	  = dynamic_cast<Capsule_3*>(P);
-					ChamferCyl_3* Obj2 = dynamic_cast<ChamferCyl_3*>(P);
-					Cone_3* Obj3	  = dynamic_cast<Cone_3*>(P);
-					Cylinder_3* Obj0  = dynamic_cast<Cylinder_3*>(P);
-					Spindle_3* Obj4	  = dynamic_cast<Spindle_3*>(P);
+
 
 					//v = p.z() / side_Seg * scale + 0.08
 					//decreasing scale streaching the image "vertical" --number of checkboard squares decrease
@@ -373,6 +444,10 @@ public:
 					he->uv(u, v);
 				}
 			}
+			
+			T.setIdentity();
+			T.pretranslate (-Original);
+			trg.ApplyTransformToPolyhedron(mesh,T);
 
 			return 1;
 		}
@@ -380,6 +455,13 @@ public:
 		template<>
 		static int CalcUV<Tex_Tube> (Polyhedron& mesh, pPrimitive P, int val, float HorScale, float VerScale)
 		{
+			Traingulate trg;
+			Eigen::Transform3d T;
+			Eigen::Vector3d Original(0,0,25);
+			T.setIdentity();
+			T.pretranslate (Original);
+			trg.ApplyTransformToPolyhedron(mesh,T);
+
 			Facet_iterator f;
 			for(f = mesh.facets_begin(); f != mesh.facets_end(); f++)
 			{
@@ -403,6 +485,10 @@ public:
 				}
 			}
 
+			T.setIdentity();
+			T.pretranslate (-Original);
+			trg.ApplyTransformToPolyhedron(mesh,T);
+
 			return 1;
 		}
 
@@ -412,7 +498,7 @@ public:
 			CGAL::Timer total_timer;
 			total_timer.start();
 
-			std::cerr << "PARAMETERIZATION" << std::endl;
+			//std::cerr << "PARAMETERIZATION" << std::endl;
 
 			//***************************************
 			// Read options on the command line
@@ -464,14 +550,14 @@ public:
 				return EXIT_FAILURE;
 			}
 
-			std::cerr << "Mesh cutting: " << task_timer.time() << " seconds." << std::endl;
+			//std::cerr << "Mesh cutting: " << task_timer.time() << " seconds." << std::endl;
 			task_timer.reset();
 
 			//***************************************
 			// switch parameterization
 			//***************************************
 
-			std::cerr << "Parameterization..." << std::endl;
+			//std::cerr << "Parameterization..." << std::endl;
 
 			// Defines the error codes
 			typedef CGAL::Parameterizer_traits_3<Mesh_patch_polyhedron> Parameterizer;
@@ -501,7 +587,7 @@ public:
 				break;
 			};
 
-			std::cerr << "Parameterization: " << task_timer.time() << " seconds." << std::endl;
+			//std::cerr << "Parameterization: " << task_timer.time() << " seconds." << std::endl;
 			task_timer.reset();
 
 			return EXIT_SUCCESS;

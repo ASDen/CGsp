@@ -97,11 +97,11 @@ public:
 	int Segs;
 
 	//Set the default parameters in the Sphere
-	Sphere_3():radius(25.0),Segs(4)
+	Sphere_3():radius(25.0),Segs(24)
 	{}
 
 	//Set the parameters with user defined values
-	Sphere_3(double r):radius(r),Segs(4)
+	Sphere_3(double r):radius(r),Segs(24)
 	{}
 
 	//Set the parameters with user defined values
@@ -113,7 +113,6 @@ public:
 		Polyhedron P;
 
 		min(radius,0);
-		maxmin(Segs,0,200);
 
 		Build_sphere<HalfedgeDS> sphere(radius,Segs);
 		P.delegate( sphere );

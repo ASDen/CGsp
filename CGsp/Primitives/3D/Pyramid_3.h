@@ -46,9 +46,6 @@ public:
 		min(width,0);
 		min(depth,0);
 		min(height,0);
-		maxmin(width_Seg,0,200);
-		maxmin(depth_Seg,0,200);
-		maxmin(height_Seg,0,200);
 
 		//Starting the Pyramid with tetrahedron, with width, depth and height
         Halfedge_handle h1 = P.make_tetrahedron( Point(  width/2, -depth/2, -height/2),

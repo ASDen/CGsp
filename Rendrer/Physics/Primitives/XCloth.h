@@ -13,7 +13,8 @@ public:
         clothDesc.flags |= NX_CLF_COLLISION_TWOWAY;
         clothDesc.flags |= NX_CLF_VISUALIZATION;
         clothDesc.flags |= NX_CLF_SELFCOLLISION;
-        if(app_press)
+        //clothDesc.flags |= NX_CLF_HARDWARE;
+		if(app_press)
             clothDesc.flags |= NX_CLF_PRESSURE;
 
         genPolyMeshDesc(meshDesc,Pn);

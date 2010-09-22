@@ -90,7 +90,7 @@ public:
 	{}
 
 	//Set the parameters with user defined values
-	Torus_3(double r):radius1(r),radius2(10.0),rotation(0),twist(0),Seg(24),side_Seg(12)
+	Torus_3(double r):radius1(r),radius2(3*r/2),rotation(0),twist(0),Seg(24),side_Seg(12)
 	{}
 
 	//Set the parameters with user defined values
@@ -109,8 +109,6 @@ public:
 		min(radius2,0);
 		min(rotation,0);
 		min(twist,0);
-		maxmin(Seg,0,200);
-		maxmin(side_Seg,0,200);
 
 		Build_torus<HalfedgeDS> torus(radius1,radius2,rotation,twist,Seg,side_Seg);
 		P.delegate( torus );

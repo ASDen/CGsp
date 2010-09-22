@@ -8,7 +8,7 @@ class CGSP_CC Spring_3 : public Primitives
 		int turn;//number of turns
 		double h;//height of the Spring
 		double r1;//radius of the Spring
-		double r2;//radius of the Tube
+		double r2;//radius of Spring + 2 * radius of tube
 		
 		//make the constructor with input values
 		Build_Spring(double rad1,double rad2,double height,int turn_num,int Seg,int s_Seg):r1(rad1),r2(rad2),turn(turn_num),h(height),segm(Seg),side(s_Seg)
@@ -32,14 +32,14 @@ class CGSP_CC Spring_3 : public Primitives
 			for (int e = 0; e < segm; e++)
 			{
 				//get the radius of each circle
-				double rad = r1 + r2 * cos(2 * e * CGAL_PI / segm);
+				double rad = r1 + (r2 - r1) / 2 * cos(2 * e * CGAL_PI / segm);
 
 				for (int s = 0; s < numberOfSeparators; s++)
 				{
 					double x_t = rad * cos(2 * s * CGAL_PI / side);
 					double y_t = rad * sin(2 * s * CGAL_PI / side);
 					//get the Z point
-					double z_t = r2 * sin(2 * e * CGAL_PI / segm) + s * h / (side * turn) - h/2;
+					double z_t = (r2 - r1) / 2 * sin(2 * e * CGAL_PI / segm) + s * h / (side * turn) - h/2;
 					B.add_vertex( Point( x_t, y_t, z_t) );
 				}
 			}
@@ -105,11 +105,11 @@ public:
 	{}
 
 	//Set the parameters with user defined values
-	Spring_3(double r1):radius1(r1),radius2(10),height(0),turn_number(1),Seg(24),side_Seg(12)
+	Spring_3(double r):radius1(r),radius2(3*r/2),height(0),turn_number(1),Seg(24),side_Seg(12)
 	{}
 
 	//Set the parameters with user defined values
-	Spring_3(double r,int n):radius1(r),radius2(10),height(0),turn_number(1),Seg(n),side_Seg(n/2)
+	Spring_3(double r,int n):radius1(r),radius2(3*r/2),height(0),turn_number(1),Seg(n),side_Seg(n/2)
 	{}
 	
 	//Set the parameters with user defined values
@@ -131,9 +131,6 @@ public:
 		min(radius1,0);
 		min(radius2,0);
 		min(height,0);
-		maxmin(turn_number,0,200);
-		maxmin(Seg,0,200);
-		maxmin(side_Seg,0,200);
 
 		Build_Spring<HalfedgeDS> Spring(radius1,radius2,height,turn_number,Seg,side_Seg);
 		P.delegate( Spring );

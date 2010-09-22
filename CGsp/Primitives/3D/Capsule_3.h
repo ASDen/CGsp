@@ -135,11 +135,11 @@ public:
 	int h_Segs;
 
 	//Set the default parameters in the Capsule
-	Capsule_3 ():radius(15.0),height(25.0),Segs(4),h_Segs(1)
+	Capsule_3 ():radius(15.0),height(25.0),Segs(24),h_Segs(1)
 	{}
 
 	//Set the parameters with user defined values
-	Capsule_3 (double r):radius(r),height(2*r),Segs(4),h_Segs(1)
+	Capsule_3 (double r):radius(r),height(2*r),Segs(24),h_Segs(1)
 	{}
 	
 	//Set the parameters with user defined values
@@ -160,8 +160,6 @@ public:
 
 		min(radius,0);
 		min(height,0);
-		maxmin(h_Segs,0,200);
-		maxmin(Segs,0,200);
 
 		Build_capsule<HalfedgeDS> capsule(radius,height,Segs,h_Segs);
 		P.delegate( capsule );

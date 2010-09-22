@@ -141,7 +141,7 @@ public:
 	{}
 
 	//Set the parameters with user defined values
-	Tube_3(double r):radius1(r),radius2(20.0),height(50),height_Seg(1),cap_Seg(1),side_Seg(24)
+	Tube_3(double r):radius1(r),radius2(3*r/2),height(2*r),height_Seg(1),cap_Seg(1),side_Seg(24)
 	{}
 
 	//Set the parameters with user defined values
@@ -167,9 +167,6 @@ public:
 		min(radius1,0);
 		min(radius2,0);
 		min(height,0);
-		maxmin(height_Seg,0,200);
-		maxmin(cap_Seg,0,200);
-		maxmin(side_Seg,0,200);
 
 		Build_tube<HalfedgeDS> tube(radius1,radius2,height,height_Seg,cap_Seg,side_Seg);
 		P.delegate( tube );		

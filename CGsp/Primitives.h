@@ -13,8 +13,13 @@ public:
 
 	inline void setMesh(Polyhedron& P)
 	{
-		Mesh=P;
-		ModifiedMesh=P;
+		Mesh = P;
+		ModifiedMesh = P;
+	}
+
+	Polyhedron getPolyhedron()
+	{
+		return Mesh;
 	}
 
 	void ApplyModifier(pModifier M)
@@ -25,7 +30,7 @@ public:
 	void UpdateAtFrame(int Fnum)
 	{
 		std::vector<pModifier>::iterator i;
-		ModifiedMesh=Mesh;
+		ModifiedMesh = Mesh;
 		for(i=ModStack.begin();i!=ModStack.end();i++)
 		{
 			(*i)->DoAtFrame(ModifiedMesh,Fnum);
@@ -36,8 +41,8 @@ public:
 	{
 		if (value < min)
 			value = min;
-		else if (value > max)
-			value = max;
+		//else if (value > max)
+		//	value = max;
 	}
 
 	void min(double &value, double min)
